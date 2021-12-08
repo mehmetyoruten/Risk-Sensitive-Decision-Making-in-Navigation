@@ -1,0 +1,108 @@
+
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+
+body {
+  font-family: 'Muli', sans-serif;
+  margin:30px;
+}
+
+
+/*
+================================================================================
+Block: begin-content
+================================================================================
+*/
+.welcome {
+}
+
+.consent{
+  display:none;
+}
+
+.return-hit{
+  display:none;
+}
+
+
+/*
+================================================================================
+Block: custom-button
+================================================================================
+*/
+
+.custom-button{
+  width: 100%;
+  border-radius: 10px;
+  padding: 5px; /*so content doesn't touch the edge of the tile*/
+  margin-top: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+  margin-bottom: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+
+  /* For Safari 3.1 to 6.0 */
+  -webkit-transition-duration: .3s;
+  /* Standard syntax */
+  transition-duration: .3s;
+  border-style: solid;
+  border-width: thin;
+  text-align: center;
+  font-size: x-large;
+}
+
+
+.custom-button_disabled {
+  background: #8fbc8f;
+  border-color: #404040;
+  color: #404040;
+}
+.custom-button_disabled:hover {
+  cursor: default;
+}
+
+.custom-button_enabled {
+  background: #8fbc8f;
+  border-color: #000000;
+  box-shadow: 5px 10px 10px #101010;
+}
+
+.custom-button_enabled:hover {
+  background: #404040;
+  /*background: #8fbc8f;*/
+  border-color: #FFD119;
+  cursor: pointer;
+}
+
+#theImage { visibility: hidden; }
+
+
+/*
+================================================================================
+Block: Grids
+================================================================================
+*/
+
+.grids {
+  display: none;
+}
+
+
+.row-no-padding {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+[class*="col-"],
+[class^="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.square:before{
+  content: "";
+  display: block;
+  padding-top: 100%;  /* initial ratio of 1:1*/
+  border: 1px solid rgb(0, 0, 0);   
+}
+
+.square.active {
+  background: #fefefe;
+  border: 5px solid rgb(216, 198, 39);
+}
