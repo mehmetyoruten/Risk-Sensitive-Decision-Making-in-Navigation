@@ -87,14 +87,36 @@
             <div class="col-xs-2 col-md-2"></div>
         </div>
     </div>
-    
+
+    <!-- return hit after disagreeing with consent -->
+    <div class="container return-hit">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1> Please return the HIT </h1>
+                <p> Please return the HIT if you are not comfortable with our experiment and data policies.</p>
+                <p> If you clicked 'disagree' by mistake, please click here to go back to the consent form.</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- button back to consent form -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id = 'return-hit__button'  class='return-hit__button custom-button custom-button_enabled'> Back to consent form</div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+
     <div class="container debriefing-instructions">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-8 col-md-8">
                 <h1>Debriefing</h1>
                 <p>Well done! </p>                 
-                <p>Number of clicks is <span id="myText"></span> </p>
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -132,22 +154,22 @@
 
     <div class="container warning-no-cell-selected">
         <div class="row">
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8">
                 <h1>No path selected!</h1>
                 <p>Please, make your choice!</p>
-                <p>Click on "Next" to go back to the trial.</p>
+                <p>Click on "Back to Trial" to go back to the trial.</p>
             </div>
-            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
         <div class="row">
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8">
                 <div id="warning-button" class='custom-button custom-button_enabled'>
-                    Next
+                    Back to Trial
                 </div>
             </div>
-            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
     </div>
 
@@ -179,49 +201,49 @@
 
         <div class="row row-no-padding justify-content-center" id = "r1">
           <div class="col-xs-2"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
+          <div class="col-xs-1 square" data-y="4" data-x="1" data-tile-no='41'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="2" data-tile-no='42'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="3" data-tile-no='43'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="4" data-tile-no='44'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="5" data-tile-no='45'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="6" data-tile-no='46'></div>
+          <div class="col-xs-1 square" data-y="4" data-x="7" data-tile-no='47'></div>
           <div class="col-xs-2"></div>
 
         </div>
       <div class="row row-no-padding justify-content-center" id = "r2">
           <div class="col-xs-2"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
+          <div class="col-xs-1 square" data-y="3" data-x="1" data-tile-no='31'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="2" data-tile-no='32'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="3" data-tile-no='33'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="4" data-tile-no='34'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="5" data-tile-no='35'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="6" data-tile-no='36'></div>
+          <div class="col-xs-1 square" data-y="3" data-x="7" data-tile-no='37'></div>
           <div class="col-xs-2"></div>
 
       </div>
       <div class="row row-no-padding justify-content-center" id = "r3">
           <div class="col-xs-2"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
+          <div class="col-xs-1 square" data-y="2" data-x="1" data-tile-no='21'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="2" data-tile-no='22'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="3" data-tile-no='23'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="4" data-tile-no='24'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="5" data-tile-no='25'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="6" data-tile-no='26'></div>
+          <div class="col-xs-1 square" data-y="2" data-x="7" data-tile-no='27'></div>
           <div class="col-xs-2"></div>
 
       </div>
       <div class="row row-no-padding justify-content-center" id = "r4">          
           <div class="col-xs-2"></div>
-          <div id="start__square" class="col-xs-1 square processed" style="background-color: lightgray"></div>          
-          <div class="col-xs-1 square" ></div>
-          <div id="obstacle__square" class="col-xs-1 square" ></div>
-          <div class="col-xs-1 square" id="r4c4s"></div>
-          <div class="col-xs-1 square"></div>
-          <div class="col-xs-1 square"></div>
-          <div id="end__square" class="col-xs-1 square" style="background-color: lightgray"></div>
+          <div id='start__square' class="col-xs-1 square processed" data-y="1" data-x="1" style="background-color: lightgray"></div>          
+          <div class="col-xs-1 square" data-y="1" data-x="2"></div>
+          <div id='obstacle__square' class="col-xs-1 square" data-y="1" data-x="3"></div>
+          <div class="col-xs-1 square" data-y="1" data-x="4"></div>
+          <div class="col-xs-1 square" data-y="1" data-x="5"></div>
+          <div class="col-xs-1 square" data-y="1" data-x="6"></div>
+          <div id='end__square' class="col-xs-1 square" data-y="1" data-x="7"style="background-color: lightgray"></div>
           <div class="col-xs-2"></div>
       </div>          
     

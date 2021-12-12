@@ -1,11 +1,10 @@
 
 /*
 ================================================================================
-Functions
+ Global Variables
 ================================================================================
 */
 
-// Global Variables
 var nclicks = 0
 var trial_count = 1
 var num_trials = 5
@@ -16,10 +15,16 @@ var experimentState = {
 var timer = null; 
 var background_color = "#FFFFFF";  // set the default background color for animations
 
+var last_tile = {
+  "trial_n": 0,                 
+  "response_time": 0,
+  "submitted_x": 1,
+  "submitted_y": 1  
+};
 
 /*
 ================================================================================
-jQuery Flow
+ jQuery Flow
 ================================================================================
 */
 
@@ -35,6 +40,16 @@ $(document).ready(function(){
     Start_New_Trial()
     });
 
+  $("#consent__button__disagree").click(function() {
+    $(".consent").slideUp();    
+    $(".return-hit").slideDown()
+    });
+
+  $("#return-hit__button").click(function() {
+    $(".return-hit").slideUp();    
+    $(".consent").slideDown()
+    });
+
 
   $(".square").click(function() {
     if ($('.square.active').length == 0) {
@@ -44,19 +59,27 @@ $(document).ready(function(){
     }
   })
 
-
   $("#warning-button").click(function() {
     $(".warning-no-cell-selected").slideUp();    
     $(".grids").slideDown()
     });
 
+  
+  $(".square").mouseover(function() {
+    var target_tile_x = $(this).data('x');
+    var target_tile_y = $(this).data('y');
+    var last_tile_x = last_tile.submitted_x;
+    var last_tile_y = last_tile.submitted_y;
+    
+    var target_resp = calc_range(last_tile_x, last_tile_y, target_tile_x, target_tile_y);
+    console.log(target_resp)    
+  });
 
 
   $(".trial-content__submit-button").click( function() {    
     // Grab the submission data.
-    responseMs = new Date().getTime();
-    var submittedResponse = $(this).data("submit-button");
-    
+    responseMs = new Date().getTime();        
+
     if ($('.square.active').length == 0) {
       Flash_Background_Incorrect()
       $(".grids").slideUp();    
@@ -64,17 +87,31 @@ $(document).ready(function(){
     }
 
     else if (($('.square.active').length + $('.square.processed').length)==trial_count+1) {
+        // Get data about the trial
         trialEndTimeMs = new Date().getTime();     
-        Flash_Background_Correct()   
-        console.log(trialEndTimeMs)
+        var response_time = (trialEndTimeMs-trialStartTimeMs)/1000
+        var submittedX = $('.active').data('x');
+        var submittedY = $('.active').data('y');        
+        var last_tile = saveTrial(trial_count, response_time, submittedX, submittedY);
+        window.last_tile = last_tile;
+        console.log(last_tile);
+        Flash_Background_Correct();   
+        
         // Start the next trial.
         trial_count += 1;    
         $('.square.active').addClass("processed")
         $('.square.processed').removeClass("active")              
         Start_New_Trial()      
     }
-
   });
+
+
+
+  /*
+  ================================================================================
+   Functions
+  ================================================================================
+  */
 
   function Start_New_Trial(experimentState) {
     correct_Sol = [];
@@ -86,9 +123,8 @@ $(document).ready(function(){
     }
     //start new timer
     // start_timer(); 
-    trialStartTimeMs = new Date().getTime();
-    timestamp = trialStartTimeMs; 
-    
+    trialStartTimeMs = new Date().getTime();    
+
     if (trial_count > num_trials) {
         // The experimet is done, conclude the experiment.
         //clearTimeout(timer);
@@ -104,6 +140,19 @@ $(document).ready(function(){
     }
   }
 
+  // Calculate the movement range
+  function calc_range(last_tile_x, last_tile_y, target_tile_x, target_tile_y){        
+    var x_diff = Math.abs(last_tile_x - target_tile_x);
+    var y_diff = Math.abs(last_tile_y - target_tile_y);
+    
+    if ((x_diff < 2) && (y_diff < 2)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+
   function start_timer(){
     console.log("Start timer with " +  time_limit +" s");
     timer = setTimeout(time_limit_exeeded, time_limit * 1000)
@@ -115,12 +164,23 @@ $(document).ready(function(){
     $(".time_limit").slideDown()
   }
 
+
+  function saveTrial(trial_count, response_time, submittedX, submittedY){  
+    saved_response = {
+      "trial_n": trial_count,                 
+      "response_time": response_time,
+      "submitted_x": submittedX,
+      "submitted_y": submittedY
+    };    
+    return saved_response    
+  }
+
   // Count the number of trials
   $("#trial_count").html("Trial "+(trial_count)+" / "+num_trials);
   
   /*
   ================================================================================
-  Animations
+   Flash Animations
   ================================================================================
   */
 

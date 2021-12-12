@@ -152,6 +152,10 @@ Block: Grids
   border: 5px solid rgb(216, 198, 39);
 }
 
+.obstacle__square:hover {
+  background-color: rgb(167, 63, 63);
+  border: 5px solid rgb(216, 198, 39);
+}
 
 .square.processed {
   background: #fefefe;
