@@ -167,3 +167,9 @@ Block: Grids
   border: 5px solid rgb(219, 24, 24);
 }
 
+#keyboard_pic {
+  /* margin-left: auto; */
+  width: 30%;
+  float: none;
+  margin: 0 auto;
+}
