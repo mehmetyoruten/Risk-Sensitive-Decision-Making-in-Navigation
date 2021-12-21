@@ -7,7 +7,7 @@
 
 var nclicks = 0
 var trial_count = 1
-var num_trials = 5
+var num_trials = 20
 var time_limit = 10
 var experimentState = {
   completedScreenCounter : 0
@@ -19,7 +19,8 @@ var last_tile = {
   "trial_n": 0,                 
   "response_time": 0,
   "submitted_x": 1,
-  "submitted_y": 1  
+  "submitted_y": 1,
+  "key"  : 0
 };
 
 /*
@@ -116,7 +117,9 @@ $(document).ready(function(){
   function Start_New_Trial(experimentState) {
     correct_Sol = [];
     chosen_Sol = [];
-    $("#trial_count").html("Trial "+(trial_count)+" / "+num_trials);
+    // Count the number of trials
+    $("#trial_count").html("Number of moves: "+trial_count);
+    // $("#trial_count").html("Trial "+(trial_count)+" / "+num_trials);
     //stop current timer
     if (timer){
         clearTimeout(timer);
@@ -137,7 +140,10 @@ $(document).ready(function(){
         // id = load_next_silhouette(); 
         // saveTrial(trialStartTimeMs, id)
         $(".trial-content__submit-button").slideDown();
-    }
+    } else if (($('.processed').data('x') === 7) && ($('.processed').data('y')===1)){
+        $(".grids").slideUp();
+        $(".debriefing-instructions").slideDown();  
+    }    
   }
 
   // Calculate the movement range
@@ -165,19 +171,18 @@ $(document).ready(function(){
   }
 
 
-  function saveTrial(trial_count, response_time, submittedX, submittedY){  
+  function saveTrial(trial_count, response_time, submittedX, submittedY, key){  
     saved_response = {
       "trial_n": trial_count,                 
       "response_time": response_time,
       "submitted_x": submittedX,
-      "submitted_y": submittedY
+      "submitted_y": submittedY,
+      "key": key
     };    
     return saved_response    
   }
 
-  // Count the number of trials
-  $("#trial_count").html("Trial "+(trial_count)+" / "+num_trials);
-  
+ 
   /*
   ================================================================================
    Flash Animations
@@ -199,7 +204,93 @@ $(document).ready(function(){
   }
 
 
+  /*
+  ================================================================================
+   Keyboard Control
+  ================================================================================
+  */
+  function Get_Position() {      
+    var x_pos = $(".active").data('x');
+    var y_pos = $(".active").data('y');
+    $('.active').removeClass('active')
+    return [x_pos, y_pos]
+  }
+
+  function Submit_Response(key) {
+    setTimeout(function(){
+      trialEndTimeMs = new Date().getTime();     
+      var response_time = (trialEndTimeMs-trialStartTimeMs)/1000
+      var submittedX = $('.active').data('x');
+      var submittedY = $('.active').data('y');        
+      var last_tile = saveTrial(trial_count, response_time, submittedX, submittedY, key);
+      window.last_tile = last_tile;
+      console.log(last_tile);
+      Flash_Background_Correct();   
+      
+      // Start the next trial.
+      trial_count += 1;    
+      $('.processed').removeClass('processed')
+      $('.active').addClass('processed')      
+      Start_New_Trial()           
+    }, 2000);
+  }
+
+  $(document).keydown(function(e){   
+    switch (e.which){    
+    case 37:    //left arrow key       
+        setTimeout(function(){
+        var [x_pos, y_pos] = Get_Position()
+        if (x_pos == 1) {
+          x_pos += 0;
+        } else {
+          x_pos -= 1;
+        }           
+        $('[data-x=' + x_pos + '][data-y='+y_pos +']').addClass('active')                
+      },500);
+      Submit_Response('left');
+      break;
+    case 38:    //up arrow key
+        setTimeout(function(){
+        var [x_pos, y_pos] = Get_Position()
+        if (y_pos == 4) {
+          y_pos += 0;
+        } else {
+          y_pos += 1;
+        }        
+        $('[data-x=' + x_pos + '][data-y='+y_pos +']').addClass('active');
+      },500);
+      Submit_Response('up');
+      break;
+    case 39:    //right arrow key        
+        setTimeout(function(){
+        var [x_pos, y_pos] = Get_Position()
+        if (x_pos == 7) {
+          x_pos += 0;
+        } else {
+          x_pos += 1;
+        }    
+        $('[data-x=' + x_pos + '][data-y='+y_pos +']').addClass('active');
+        Submit_Response('right');
+      }, 500);
+      break;
+    case 40:    //bottom arrow key
+      setTimeout(function(){
+        var [x_pos, y_pos] = Get_Position()
+        if (y_pos == 1) {
+          y_pos += 0;
+        } else {
+          y_pos -= 1;
+        }    
+        $('[data-x=' + x_pos + '][data-y='+y_pos +']').addClass('active');                
+      },500);
+      Submit_Response('bottom');
+      break;
+    }
+  });
 });
+
+
+
 
 /*
 $(function (){
@@ -214,4 +305,5 @@ else if ($('#end__square').hasClass('active') == true) {
   $(".grids").slideUp();          
   $(".win-page").slideDown()              
 }
+
 */
