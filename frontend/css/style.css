@@ -40,6 +40,19 @@ Block: begin-content
   display: none;
 }
 
+.instructions {
+  display: none;
+}
+
+.inter-trial {
+  display: none;
+}
+
+.practice-end {
+  display: none;
+}
+
+
 /*
 ================================================================================
 Block: custom-button
@@ -99,7 +112,7 @@ Block: Grids
 ================================================================================
 */
 
-#trial_count {  
+#progress {  
   background: #8fbc8f;
   border-color: #000000;
   border-radius: 25px;
@@ -110,6 +123,9 @@ Block: Grids
   display: none;
 }
 
+.grids-practice {
+  display: None;
+}
 
 .row-no-padding {
   margin-left: 0 !important;
@@ -169,9 +185,15 @@ Block: Grids
 
 #keyboard_pic {
   /* margin-left: auto; */
-  width: 30%;
-  float: none;
-  margin: 0 auto;
+  width: 60%;
+  padding-left: 180px;
+}
+
+#instructions_grid {
+  /* margin-left: auto; */
+  width: 90%;
+  text-align: center;  
+  padding: 5%;
 }
 
 .circle {
@@ -181,3 +203,11 @@ Block: Grids
   border-radius: 50%;
   display: inline-block;
 }
+ /*
+#keyboard_pic {
+  margin-left: auto; 
+  width: 30%;
+  float: none;
+  margin: 0 auto;
+}
+*/
