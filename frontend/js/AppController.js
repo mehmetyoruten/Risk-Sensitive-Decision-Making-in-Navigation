@@ -1,20 +1,25 @@
+/*
+================================================================================
+ Experiment Settings
+================================================================================
+*/
+
+var time_limit = 200 // in ms
+var max_practice = 2
+var max_moves = 20
+var max_trials = 3
 
 /*
 ================================================================================
  Global Variables
 ================================================================================
 */
-
-var nclicks = 0
 var number_of_moves = 0
-var max_moves = 20
-var time_limit = 2000 // in ms
-var max_practice = 2
 var experimentState = {
   completedScreenCounter : 0
 }
 var n_keypress = 0
-var trial_n = 0
+var trial_n = 1
 var timer = null; 
 var background_color = "#FFFFFF";  // set the default background color for animations
 var last_tile = {
@@ -65,6 +70,7 @@ $(document).ready(function(){
   $("#next-button-trials").click(function() {
     $(".inter-trial").slideUp();
     $(".grids").slideDown();    
+    Start_New_Trial();
     Start_New_Move();    
     });
 
@@ -72,6 +78,7 @@ $(document).ready(function(){
   $("#start-button").click(function() {
     $(".practice-end").slideUp();
     $(".grids").slideDown();    
+    Start_New_Trial();
     Start_New_Move();    
     });
 
@@ -159,7 +166,7 @@ $(document).ready(function(){
     // start_timer(); 
     trialStartTimeMs = new Date().getTime();    
 
-    if (number_of_moves > max_moves) {
+    if (trial_n > max_trials) {
         // The experimet is done, conclude the experiment.
         //clearTimeout(timer);
         //load_next_debriefing_silhouettes();
@@ -174,8 +181,6 @@ $(document).ready(function(){
     }
     number_of_moves += 1;
     var [x_pos, y_pos] = Get_Position();
-    console.log(x_pos)
-    console.log(y_pos)    
     window.x_pos = x_pos
     window.y_pos = y_pos
   }
@@ -279,13 +284,13 @@ $(document).ready(function(){
         trial_n +=1;
         $(".grids").slideUp();    
         
-        if (trial_n === max_practice) {
+        if (trial_n === (max_practice+1)) {
           $(".practice-end").slideDown();             
-        }
-        else {
+          Start_New_Trial();
+        } else {
           $(".inter-trial").slideDown();             
-        }        
-        Start_New_Trial();
+          Start_New_Trial();
+        }                
 
       } else {
         // Start the next move, if it is not reached               
@@ -315,11 +320,10 @@ $(document).ready(function(){
       var [new_x_pos, new_y_pos] = Get_Position();      
 
       if ((Math.abs(new_x_pos - x_pos)) < 2){
-        Submit_Response('left');
-        break;
-      } else {
-        break;
-      }            
+        Submit_Response('left');        
+      }; 
+      break;
+                 
       
 
     case 38:    //up arrow key    
@@ -336,11 +340,9 @@ $(document).ready(function(){
       var [new_x_pos, new_y_pos] = Get_Position();
 
       if ((Math.abs(new_y_pos - y_pos)) < 2){
-        Submit_Response('up');
-        break;
-      } else {
-        break;
-      }       
+        Submit_Response('up');        
+      };  
+      break;
            
     case 39:    //right arrow key              
       if (x_pos == 7) {
@@ -356,10 +358,8 @@ $(document).ready(function(){
       var [new_x_pos, new_y_pos] = Get_Position();
       if ((Math.abs(new_x_pos - x_pos)) < 2){
         Submit_Response('right');
-        break;
-      } else {
-        break;
-      }       
+      };
+      break;
 
     case 40:    //down arrow key      
       if (y_pos == 1) {
@@ -374,11 +374,9 @@ $(document).ready(function(){
 
       var [new_x_pos, new_y_pos] = Get_Position();
       if ((Math.abs(new_y_pos - y_pos)) < 2){
-        Submit_Response('down');
-        break;
-      } else {
-        break;
-      }       
+        Submit_Response('down');        
+      };  
+      break;
     }
   });
 });
