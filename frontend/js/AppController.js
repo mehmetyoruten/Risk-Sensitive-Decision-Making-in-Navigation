@@ -4,7 +4,7 @@
 ================================================================================
 */
 
-var time_limit = 200 // in ms
+var time_limit = 1000 // in ms
 var max_practice = 2
 var max_moves = 20
 var max_trials = 3
