@@ -1,0 +1,9 @@
+{
+    "time_limit" : 1000,
+    "max_practice" : 2,
+    "max_moves" : 20,
+    "max_trials" : 3,
+    "max_grids" : 1,
+    "obstacle_x": 4,
+    "obstacle_y": 1
+  }

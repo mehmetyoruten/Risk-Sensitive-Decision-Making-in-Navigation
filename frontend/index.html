@@ -110,12 +110,12 @@
         </div>
     </div>
 
-
-    <div class="container debriefing-instructions">
+    <!-- End Session Page-->
+    <div class="container session-end">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-8 col-md-8">
-                <h1>Debriefing</h1>
+                <h1>Session Ended</h1>
                 <p>Well done! </p>                 
             </div>
             <div class="col-xs-2 col-md-2"></div>
@@ -123,8 +123,35 @@
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-8 col-md-8">
-                <div id="debriefing-next-button" class='custom-button custom-button_enabled'>
+                <div id="session-end-button" class='custom-button custom-button_enabled'>
                     Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+    <div class="container debriefing">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Debriefing</h1>                
+                <p>In every trial, you will see a grid which consists of 28 rectangles in total. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
+                <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow frame. If you wait for a second, the color of the frame will be darker yellow and the selection will be made. If you would like to change your selection, you can press on another arrow key before the time to process is completed. If your selection is valid, then the background will flash green. If your selection is not valid, the background will flash red and you will need to reselect the tile.</p>
+                <p>Each time you select your move, there will be some probability of falling off from the row. You are required to reach end point without falling off the grid. Additionally, you should avoid the red tile.</p>
+                <p>After you reach the end point or fail, a new trial will start.</p>
+                <p>The first 10 trials will be practice trials to familiarize you with the experiment.</p>                
+                <p>Good luck, and thank you for participating</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="finish-button" class='custom-button custom-button_enabled'>
+                    Finish the Experiment
                 </div>
             </div>
             <div class="col-xs-2 col-md-2"></div>
@@ -243,7 +270,6 @@
         </div>
     </div>
 
-
     <div class="container inter-trial" >
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
@@ -312,7 +338,7 @@
           <div class="col-xs-2"></div>
           <div id='start__square' class="col-xs-1 square processed active" data-y="1" data-x="1" style="background-color: lightgray"></div>          
           <div class="col-xs-1 square" data-y="1" data-x="2"></div>
-          <div id='obstacle__square' class="col-xs-1 square" data-y="1" data-x="3"></div>
+          <div id='obstacle__square' class="col-xs-1 square obstacle" data-y="1" data-x="3"></div>
           <div class="col-xs-1 square" data-y="1" data-x="4"></div>
           <div class="col-xs-1 square" data-y="1" data-x="5"></div>
           <div class="col-xs-1 square" data-y="1" data-x="6"></div>

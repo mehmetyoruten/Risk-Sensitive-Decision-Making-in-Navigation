@@ -24,7 +24,7 @@ Block: begin-content
   display:none;
 }
 
-.debriefing-instructions {
+.debriefing {
   display: none;
 }
 
@@ -51,6 +51,13 @@ Block: begin-content
 .practice-end {
   display: none;
 }
+
+.session-end {
+  display: none;
+}
+
+
+
 
 
 /*
@@ -159,9 +166,10 @@ Block: Grids
   position: relative;
 }
 
-#obstacle__square {
+.obstacle {
   background-color: rgb(167, 63, 63);
 }
+
 
 .square:hover, .active {
   background: #fefefe;
