@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { ConfigService } from './config.service'
-import { Config } from './config.model'
+// import { Config } from './config.model'
+import { Config } from './config_dto'
 
 
 @Controller("config")
@@ -16,17 +17,21 @@ export class ConfigController {
 
     
     @Post()
-    saveConfig(
-        @Body('time_limit') confLim: number,
-        @Body('max_practice') confPrac: number,
-        @Body('max_moves') confMov: number,
-        @Body('max_trials') confTr: number,
-        @Body('max_grids') confGr: number,
-        @Body('obstacle_x') confX: number,
-        @Body('obstacle_y') confY: number
-    ) {
-        this.configService.saveConfig(confLim, confPrac,confMov,confTr,confGr,confX, confY);
+    saveConfig(@Body() config: Config) {
+        this.configService.saveConfig(config);
     }
     
 }
 
+/*
+@Post()
+saveConfig(
+    @Body('time_limit') confLim: number,
+    @Body('max_practice') confPrac: number,
+    @Body('max_moves') confMov: number,
+    @Body('max_trials') confTr: number,
+    @Body('max_grids') confGr: number
+) {
+    this.configService.saveConfig(confLim, confPrac,confMov,confTr,confGr);
+}
+*/

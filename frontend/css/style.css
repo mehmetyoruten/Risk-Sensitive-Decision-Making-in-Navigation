@@ -56,7 +56,10 @@ Block: begin-content
   display: none;
 }
 
-
+/* Create empty row between grids and keyboard*/
+.spacer {
+  height: 40px;
+}
 
 
 
@@ -166,6 +169,19 @@ Block: Grids
   position: relative;
 }
 
+.key:before{
+  content: "";
+  display: block;
+  padding-top: 100%;  /* initial ratio of 1:1*/
+  border: 2px solid rgb(0, 0, 0);   
+  text-align: center;
+}
+
+.key.navigate {
+  background: #fefefe;
+  border: 5px solid rgb(216, 198, 39);
+}
+
 .obstacle {
   background-color: rgb(167, 63, 63);
 }
@@ -176,10 +192,6 @@ Block: Grids
   border: 5px solid rgba(216, 198, 39, 0.358);
 }
 
-.obstacle__square:hover {
-  background-color: rgb(167, 63, 63);
-  border: 5px solid rgb(216, 198, 39);
-}
 
 .square.processed {
   background: #fefefe;

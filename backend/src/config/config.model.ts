@@ -1,5 +1,4 @@
 
-
 export class Config {
     constructor(
         public time_limit: number,
@@ -7,8 +6,6 @@ export class Config {
         public max_moves: number,
         public max_trials: number,
         public max_grids: number,
-        public obstacle_x: number,
-        public obstacle_y: number
     ) {}
 }
 

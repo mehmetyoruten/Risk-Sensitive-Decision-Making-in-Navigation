@@ -13,7 +13,7 @@
     
     <!-- Custom Files -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/AppController.js"></script>
+    <script type ="module" src="js/AppController.js"></script>
 
   </head>
 
@@ -338,30 +338,31 @@
           <div class="col-xs-2"></div>
           <div id='start__square' class="col-xs-1 square processed active" data-y="1" data-x="1" style="background-color: lightgray"></div>          
           <div class="col-xs-1 square" data-y="1" data-x="2"></div>
-          <div id='obstacle__square' class="col-xs-1 square obstacle" data-y="1" data-x="3"></div>
+          <div class="col-xs-1 square " data-y="1" data-x="3"></div>
           <div class="col-xs-1 square" data-y="1" data-x="4"></div>
           <div class="col-xs-1 square" data-y="1" data-x="5"></div>
           <div class="col-xs-1 square" data-y="1" data-x="6"></div>
           <div id='end__square' class="col-xs-1 square" data-y="1" data-x="7"style="background-color: lightgray"></div>
           <div class="col-xs-2"></div>
       </div>          
-    
-      <!-- Submit Response Button 
-      <div class="row row-no-padding justify-content-center"> 
-        <div class="col-xs-2 col-md-2"></div>
-        <div class="col-xs-7 col-md-7">
-        <div id="end__button" class='custom-button custom-button_enabled trial-content__submit-button' data-submit-button='Enter'> Submit Response</div>
-        </div>
-        <div class="col-xs-2 col-md-2"></div>
+      
+      <div class="row row-no-padding spacer">
+        <div class="col-xs-12 "></div>    
       </div>
-      -->
 
       <div class="row row-no-padding justify-content-center"> 
-        <div class="col-xs-2 col-md-2"></div>
-        <div class="col-xs-8 col-md-8">
-            <img id="keyboard_pic" src="pics/keyboard.png" class="img-fluid" alt="keyboard">
-        </div>
-        <div class="col-xs-2 col-md-2"></div>
+        <div class="col-xs-4 "></div>
+        <div class="col-xs-1"></div>
+        <div id='up' class="col-xs-1 key"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-5 "></div>
+      </div>
+      <div class="row row-no-padding justify-content-center"> 
+        <div class="col-xs-4 "></div>
+        <div id='left' class="col-xs-1 key"></div>
+        <div id='down' class="col-xs-1 key"></div>
+        <div id='right' class="col-xs-1 key"></div>
+        <div class="col-xs-5 "></div>
       </div>
     </div>
   
