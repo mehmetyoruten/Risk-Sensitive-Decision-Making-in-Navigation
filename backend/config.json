@@ -1,0 +1,15 @@
+{
+    "time_limit" : 1000,
+    "max_practice" : 2,
+    "max_moves" : 20,
+    "max_trials" : 3,
+    "max_grids" : 1,
+    "trial_n" : 1,
+    "session" : 1,
+    "gridWorld" : [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0]
+          ]
+}

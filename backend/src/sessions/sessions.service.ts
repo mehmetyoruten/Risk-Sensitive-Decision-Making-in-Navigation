@@ -3,12 +3,15 @@ import { Session } from './session.model'
 
 @Injectable()
 export class SessionsService {
-    private sessions: Session[] = [];
-    
+    private sessions: Session[] = [];    
+
     async saveSession(participant: number, code_version: string, comment: string) {        
         const sessId = Math.random().toString(); // Create random numbers for Id. But same number can be generated
         const newSession = new Session(sessId, participant, code_version, comment);
         this.sessions.push(newSession);
+
+        const fs = require('fs');
+        fs.writeFileSync('sessions.json', JSON.stringify(newSession))
         return sessId;
     }
 

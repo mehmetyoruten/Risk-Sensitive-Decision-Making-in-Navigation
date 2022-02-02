@@ -28,13 +28,6 @@ Block: begin-content
   display: none;
 }
 
-.time_limit {
-  display: none;
-}
-
-.warning-no-cell-selected {
-  display: none;
-}
 
 .win-page {
   display: none;
@@ -115,6 +108,13 @@ Block: custom-button
 
 #theImage { visibility: hidden; }
 
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 600px;   
+  position: relative; 
+}
 
 /*
 ================================================================================
@@ -133,9 +133,6 @@ Block: Grids
   display: none;
 }
 
-.grids-practice {
-  display: None;
-}
 
 .row-no-padding {
   margin-left: 0 !important;
@@ -147,27 +144,19 @@ Block: Grids
   padding-right: 0 !important;
 }
 
-.square:before{
-  content: "-";
-  display: block;
-  padding-top: 100%;  /* initial ratio of 1:1*/
-  border: 2px solid rgb(0, 0, 0);   
-  text-align: center;
+
+#instructions_grid {
+  /* margin-left: auto; */
+  width: 90%;
+  text-align: center;  
+  padding: 5%;
 }
 
-#start__square:before {
-  content: "Start";
-  display: block;
-  padding-top: 100%;
-  position: relative;
-}
-
-#end__square:before {
-  content: "End";
-  display: block;
-  padding-top: 100%;
-  position: relative;
-}
+/*
+================================================================================
+Keyboard Highlight
+================================================================================
+*/
 
 .key:before{
   content: "";
@@ -181,53 +170,3 @@ Block: Grids
   background: #fefefe;
   border: 5px solid rgb(216, 198, 39);
 }
-
-.obstacle {
-  background-color: rgb(167, 63, 63);
-}
-
-
-.square:hover, .active {
-  background: #fefefe;
-  border: 5px solid rgba(216, 198, 39, 0.358);
-}
-
-
-.square.processed {
-  background: #fefefe;
-  border: 5px solid rgb(216, 198, 39);
-}
-
-.square.active.wrong {
-  background: #fefefe;
-  border: 5px solid rgb(219, 24, 24);
-}
-
-#keyboard_pic {
-  /* margin-left: auto; */
-  width: 60%;
-  padding-left: 180px;
-}
-
-#instructions_grid {
-  /* margin-left: auto; */
-  width: 90%;
-  text-align: center;  
-  padding: 5%;
-}
-
-.circle {
-  height: 25px;
-  width: 25px;
-  background-color: rgb(121, 126, 196);
-  border-radius: 50%;
-  display: inline-block;
-}
- /*
-#keyboard_pic {
-  margin-left: auto; 
-  width: 30%;
-  float: none;
-  margin: 0 auto;
-}
-*/
