@@ -2,41 +2,61 @@ import { load_config } from "./module.js";
 
 const API_URL = "http://127.0.0.1:5502/backend"
 
-var number_of_moves = 0;
-var trial_n = 1;
+
 const gridWorld = [
 	[0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 1, 0, 0, 0, 0]
+	[0, 0, 0, 0, 0, 0, 1]
 	];
+
+
+const keyboardWorld = [[0,1,0],
+					   [1,1,1]];
+
+var background_color = "white";  
 
 // Position of the player
 var playerX = 0;
 var playerY = gridWorld.length-1;
+
 var matrix = gridWorld;
 window.matrix = matrix;
+
+var keyboardMatrix = keyboardWorld;
+window.keyboardMatrix = keyboardMatrix;
+
 var player = { x: playerX, y: playerY, color: "orange" };
 
+var gridContext = getContext(0, 0, "white");
 
-var uiContext =  getContext(1000, 650, "white");
-var outlineContext = getContext(0, 0, "white"); // color of the lines between tiles
-var topContext =  getContext(0, 0, "#111", true);
 var cellSize = 40;
 var padding = 3;
-matrix[playerY][playerX] = 2; // make value of the starting position 2, to highlight the pla
-
 
 // if there is no obstacle, and if you are in the grid, you can move
 function isValidMove(x, y) {
 	if ( matrix[ player.y + y][ player.x + x] === 0) {
 		return true;
+	} else if (matrix[ player.y + y][ player.x + x] === 1) {
+		Flash_Background_Incorrect();	
+		total_loss += 1;
+		$(".grids").slideUp();    
+		$(".lost-page").slideDown(); 		
+		document.removeEventListener('keydown', movePlayer);		
+		return true;
+
+
 	}
 	return false;
+	
 }
 
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
+}
+
+function updateKeyboardMatrix(y, x, val) {
+	keyboardWorld[y][x] = val;
 }
 
 var movePlayer = function( e ) {
@@ -46,23 +66,27 @@ var movePlayer = function( e ) {
 			n_keypress += 1; 
 			updateMatrix( player.y,  player.x, 0);
 			// Highlight the cell being processed
-			updateMatrix( player.y,  player.x - 1, 3);
-			render();
-
-			setTimeout(function(){
-				updateMatrix( player.y,  player.x -1 , 2);	
-				player.x --				
-				render();
-				// Submit the response        				
-			}, 500)
-					
-			Submit_Response('left')
+			updateMatrix( player.y,  player.x - 1, 3);	
 			
-			// Highlight the keyboard symbol
-			$('#left').addClass('navigate')                                 
+			// Highlight the keyboard
+			updateKeyboardMatrix(1,0,2);
+			renderKeyboard();
+			updateKeyboardMatrix(1,0,1);
 			setTimeout(function(){
-				$('.navigate').removeClass('navigate')
-			},200);
+				renderKeyboard();
+			}, 500);
+
+			// Render the grid
+			render();
+			updateMatrix( player.y,  player.x -1 , 2);	
+			player.x --	
+
+			setTimeout(function(){			
+				render();				      				
+			}, 500)
+			
+			// Submit the response  		
+			Submit_Response('left')
 
 			// Disable moving for a second
 			setTimeout(function(){
@@ -78,22 +102,26 @@ var movePlayer = function( e ) {
 			n_keypress += 1; 
 			updateMatrix( player.y,  player.x, 0);
 			updateMatrix( player.y,  player.x + 1, 3);
+
+			// Highlight the keyboard
+			updateKeyboardMatrix(1,2,2);
+			renderKeyboard();
+			updateKeyboardMatrix(1,2,1);
+			setTimeout(function(){
+				renderKeyboard();
+			}, 500);
+
+			// Render the grid
 			render();
+			updateMatrix( player.y,  player.x + 1, 2);
+			player.x ++;
 
 			setTimeout(function(){
-				updateMatrix( player.y,  player.x + 1, 2);
-				player.x ++;
 				render();
 			}, 500)
 			
 			// Submit the response        
 			Submit_Response('right');
-
-			// Highlight the keyboard symbol
-			$('#right').addClass('navigate')        
-			setTimeout(function(){
-				$('.navigate').removeClass('navigate');
-			},200);
 
 			// Disable moving for a second
 			setTimeout(function(){
@@ -108,22 +136,26 @@ var movePlayer = function( e ) {
 			n_keypress += 1; 
 			updateMatrix( player.y,  player.x, 0);
 			updateMatrix( player.y - 1,  player.x, 3);
-			render();
-
+			
+			// Highlight the keyboard
+			updateKeyboardMatrix(0,1,2);
+			renderKeyboard();
+			updateKeyboardMatrix(0,1,1);
 			setTimeout(function(){
-				updateMatrix( player.y - 1,  player.x, 2);
-				player.y --;
+				renderKeyboard();
+			}, 500);
+			
+			// Render the grid
+			render();
+			
+			updateMatrix( player.y - 1,  player.x, 2);
+			player.y --;
+			setTimeout(function(){
 				render();
 			}, 500)		
 			
 			// Submit the response        
-			Submit_Response('up')
-			
-			// Highlight the keyboard symbol
-			$('#up').addClass('navigate')
-			setTimeout(function(){
-				$('.navigate').removeClass('navigate')
-			},200);   
+			Submit_Response('up');
 
 			// Disable moving for a second
 			setTimeout(function(){
@@ -137,23 +169,28 @@ var movePlayer = function( e ) {
 		if ( isValidMove(0, 1)) {
 			n_keypress += 1; 
 			updateMatrix( player.y,  player.x, 0);
+			// Highlight the target tile as being processed
 			updateMatrix( player.y + 1,  player.x, 3);
+
+			// Highlight the keyboard
+			updateKeyboardMatrix(1,1,2);
+			renderKeyboard();
+			updateKeyboardMatrix(1,1,1);
+			setTimeout(function(){
+				renderKeyboard();
+			}, 500);
+
 			render();
+			updateMatrix( player.y + 1,  player.x, 2);
+			player.y ++;
 
 			setTimeout(function(){
-				updateMatrix( player.y + 1,  player.x, 2);
-				player.y ++;
 				render();
-			}, 500)			
-			
+			}, 500);					
+
 			// Submit the response        
 			Submit_Response('down');
-
-			// Highlight the keyboard symbol
-			$('#down').addClass('navigate')                                   
-			setTimeout(function(){
-			$('.navigate').removeClass('navigate');
-			},200);
+						
 
 			// Disable moving for a second
 			setTimeout(function(){
@@ -161,7 +198,8 @@ var movePlayer = function( e ) {
 				window.n_keypress = n_keypress;
 			},1000);    
 		}
-	} else if (max_practice > trial_n) {
+	// After practice trials don't show the alert menu
+	} else if ((max_practice+1) >= trial_n) {
 		if ((e.keyCode > 0) && (n_keypress == 1)){
 			alert("Please wait for your response to be processed!")
 		} else if ((e.which != 37 || e.which != 38 || e.which != 39 || e.which != 40 ) && (n_keypress == 0)) {
@@ -171,32 +209,61 @@ var movePlayer = function( e ) {
 	window.player = player;
 }
 
-function getCenter(w, h) {
-	return {
-		x: window.innerWidth / 2 - w / 2 + "px",
-		y: window.innerHeight / 2 - h / 2 + "px"
-	};
-}
-
-
 // Draw area
 function getContext(w, h, color = "#111", isTransparent = false) {
-	var canvas = document.getElementById('myCanvas');	
+	var canvas = document.getElementById('gridCanvas');	
 	var context =  canvas.getContext("2d");
 	canvas.style.background = color;
 	if (isTransparent) {
 		canvas.style.backgroundColor = "transparent";
 	}
-	const center =  getCenter(w, h);	
 
 	return context;
 }
 
+function renderKeyboard() {
+	var c = document.getElementById("keyboardCanvas");
+	var ctx = c.getContext("2d");
+
+	for (let row = 0; row <  keyboardMatrix.length; row ++) {
+		for (let col = 0; col <  keyboardMatrix[row].length; col ++) {			
+			let keyVal =  keyboardMatrix[row][col];
+			let color = 'white';
+
+			if (keyVal === 0) {
+				color = "white";
+
+			} else if (keyVal === 1) {										
+				ctx.rect(col * ( cellSize +  padding),
+				row * ( cellSize +  padding),
+				cellSize,  cellSize);	
+				
+				drawArrows(ctx, col, row, cellSize, padding);				
+
+			} else {
+				color = 'yellow';
+
+			} 		
+			
+			ctx.fillStyle = color;
+			ctx.fillRect(col * ( cellSize +  padding),
+				row * ( cellSize +  padding),
+				cellSize,  cellSize);	
+			
+
+			ctx.lineWidth = 1;
+			ctx.strokeStyle="black";			
+			ctx.stroke();
+		}		
+
+	}	
+	
+}
+
+
 function render() {
 	const w = ( cellSize +  padding) *  matrix[0].length - ( padding);
 	const h = ( cellSize +  padding) *  matrix.length - ( padding);
-
-	const center =  getCenter(w, h);
 
 	// Color every cell in the grid
 	for (let row = 0; row <  matrix.length; row ++) {
@@ -213,29 +280,26 @@ function render() {
 				color = "#d8c627"
 			}						
 
-			outlineContext.fillStyle = color;
-			outlineContext.fillRect(col * ( cellSize +  padding),
+			gridContext.fillStyle = color;
+			gridContext.fillRect(col * ( cellSize +  padding),
 			row * ( cellSize +  padding),
 			cellSize,  cellSize);
 
 			// Draw borders
-			outlineContext.rect(col * ( cellSize +  padding),
+			gridContext.rect(col * ( cellSize +  padding),
 			row * ( cellSize +  padding),
 			cellSize,  cellSize);
-			outlineContext.stroke();
+			gridContext.stroke();
 
-			outlineContext.lineWidth = "0.1"
-			outlineContext.strokeStyle="#000000";
-			outlineContext.stroke()
-
-			outlineContext.lineWidth = 2;
+			gridContext.lineWidth = 1;
+			gridContext.strokeStyle="#000000";
+			gridContext.stroke()			
 			
 		}
 	}
 }
 
-function Submit_Response(key) {          
-	
+function Submit_Response(key) {          	
 	// Save the response          
 	let moveEndTimeMs = new Date().getTime();           
 	let response_time = (moveEndTimeMs-MoveStartTimeMs)/1000    
@@ -248,26 +312,19 @@ function Submit_Response(key) {
 	console.log(last_move);      
 
 	// Check if the target is reached
-	if (matrix[3][6] === 3) {                 
-	trial_n +=1;      
-	window.trial_n = trial_n
-	$(document).off('keydown');          
+	if (matrix[3][1] === 2) {                 
+		document.removeEventListener('keydown', movePlayer);
+		Flash_Background_Correct();
 
-	$(".grids").slideUp();    
-		
-	if (trial_n === (max_practice+1)) {
-		$(".practice-end").slideDown();          
-		$(document).off('keydown');      
-		Start_New_Trial();              
-	} else {
-		$(".inter-trial").slideDown(); 
-		$(document).off('keydown');  
+		$(".grids").slideUp();    
 			
-		Start_New_Trial();                     
-	}                                               
-
-	} else {        
-	// Start the next move, if it is not reached               
+		if (trial_n === (max_practice+1)) {
+			$(".practice-end").slideDown();          
+		} else {
+			$(".inter-trial").slideDown(); 	 
+		}} else {        
+		
+		// Start the next move, if the end point is not reached               
 		setTimeout(function(){                     
 			Start_New_Move(max_trials, number_of_moves, max_moves); 
 		}, time_limit);
@@ -296,6 +353,10 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 }
 
 function Start_New_Trial() {
+	// Inrease the trial no
+	trial_n +=1;      
+	window.trial_n = trial_n
+
 	// Initiate keyboard controls
 	updateMatrix(player.y,  player.x, 0);
 	updateMatrix(3,6,0);
@@ -304,20 +365,25 @@ function Start_New_Trial() {
 	player.y = 3;
 	player.x = 0;	 
 	updateMatrix(player.y, player.x, 2);
+	
+	// Locate the obstacle
+	updateMatrix(player.y, 2, 1);
 	render();
+	renderKeyboard();
 
-	$(document).keydown(movePlayer); 	     
+	document.addEventListener('keydown', movePlayer);	     
 	window.number_of_moves = 0;
-	
-	
+		
 	// keyboard control
 	var n_keypress = 0;
-	window.n_keypress = n_keypress;
+	window.n_keypress = n_keypress;	
 }
 
 function Start_New_Move(max_trials, number_of_moves, max_moves) {    
 	window.MoveStartTimeMs = new Date().getTime();    
-	$("#progress").html(" &nbsp;&nbsp; Trial: "+ trial_n + "<br>" + " &nbsp;&nbsp; Number of moves: " + number_of_moves);         
+	$("#progress").html(" &nbsp;&nbsp; <strong>Trial: </strong> "+ trial_n + "<br>" + 
+	" &nbsp;&nbsp; <strong> Number of moves: </strong> " + number_of_moves 
+	+ "<br>" + "&nbsp;&nbsp; <strong> Total Loss:</strong> " + total_loss);         
 
 	var n_keypress = 0;
 	window.n_keypress = n_keypress;
@@ -330,16 +396,49 @@ function Start_New_Move(max_trials, number_of_moves, max_moves) {
 		
 		// Send session info to server        
 		// saveSessionResult("0");     		 
-
-	} else if (number_of_moves <= max_moves){
-		// The experiment is not done, display next stimulus.
-		$(".trial-content__submit-button").slideDown();
 	}
-	
-	number_of_moves += 1;
-	window.number_of_moves = number_of_moves
-}
-	
 
-export {render, movePlayer, Start_New_Trial, Start_New_Move }
+	number_of_moves += 1;	
+	window.number_of_moves = number_of_moves;
+}
+
+function Flash_Background_Correct() {
+	// Note: jquery-ui necessary to animate colors.
+	$('body').stop().animate({backgroundColor:'#006622'}, 10);
+	//$('body').animate({backgroundColor:'#333333'}, 1000);
+	$('body').animate({backgroundColor:background_color}, 1000);
+}
+
+function Flash_Background_Incorrect() {
+	// Note: jquery-ui necessary to animate colors.
+	$('body').stop().animate({backgroundColor:'#800000'}, 10);
+	//$('body').animate({backgroundColor:'#333333'}, 1000);
+	$('body').animate({backgroundColor:background_color}, 1000);
+}
+
+
+function drawArrows(ctx, col, row, cellSize, padding) {
+  const upArrow = new Image();
+  const downArrow = new Image();
+  const leftArrow = new Image();
+  const rightArrow = new Image();  
+ 
+  upArrow.src = 'js/utils/pics/up-arrow.png';
+  downArrow.src = 'js/utils/pics/down-arrow.png';
+  leftArrow.src = 'js/utils/pics/left-arrow.png';
+  rightArrow.src = 'js/utils/pics/right-arrow.png';
+  
+  const arrows = [[0, upArrow, 0],
+  [leftArrow,downArrow,rightArrow]];
+  window.arrows = arrows;
+
+  arrows[row][col].onload = function(){
+	ctx.drawImage(arrows[row][col], col * ( cellSize +  padding + 2),
+	row * ( cellSize +  padding + 2) ,
+	cellSize-5,  cellSize-5);	
+  }
+
+}
+
+export {render, renderKeyboard, movePlayer, Start_New_Trial, Start_New_Move}
 

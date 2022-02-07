@@ -16,6 +16,11 @@ Block: begin-content
 .welcome {
 }
 
+body {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 .consent{
   display:none;
 }
@@ -30,6 +35,10 @@ Block: begin-content
 
 
 .win-page {
+  display: none;
+}
+
+.lost-page {
   display: none;
 }
 
@@ -49,12 +58,9 @@ Block: begin-content
   display: none;
 }
 
-/* Create empty row between grids and keyboard*/
-.spacer {
-  height: 40px;
+.comment{
+  display: none;
 }
-
-
 
 /*
 ================================================================================
@@ -97,7 +103,6 @@ Block: custom-button
 
 .custom-button_enabled:hover {
   background: #404040;
-  /*background: #8fbc8f;*/
   border-color: #FFD119;
   cursor: pointer;
 }
@@ -108,11 +113,20 @@ Block: custom-button
 
 #theImage { visibility: hidden; }
 
-canvas {
+#gridCanvas {
   padding: 0;
   margin: auto;
+  margin-top: 60px;
   display: block;
-  width: 600px;   
+  width: 700px;   
+  position: relative; 
+}
+
+#keyboardCanvas {
+  padding: 0;
+  margin-left: 30%;
+  display: block;
+  width: 500px;   
   position: relative; 
 }
 
@@ -133,7 +147,6 @@ Block: Grids
   display: none;
 }
 
-
 .row-no-padding {
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -145,28 +158,9 @@ Block: Grids
 }
 
 
-#instructions_grid {
+#instructions_grid_pic {
   /* margin-left: auto; */
   width: 90%;
   text-align: center;  
   padding: 5%;
-}
-
-/*
-================================================================================
-Keyboard Highlight
-================================================================================
-*/
-
-.key:before{
-  content: "";
-  display: block;
-  padding-top: 100%;  /* initial ratio of 1:1*/
-  border: 2px solid rgb(0, 0, 0);   
-  text-align: center;
-}
-
-.key.navigate {
-  background: #fefefe;
-  border: 5px solid rgb(216, 198, 39);
 }

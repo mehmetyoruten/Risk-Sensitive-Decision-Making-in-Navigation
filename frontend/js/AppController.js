@@ -1,6 +1,6 @@
 import { load_config, saveSession} from './utils/module.js' ;
 
-import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
+import { Start_New_Trial, Start_New_Move, movePlayer } from './utils/grid.js';
 
 
 /*
@@ -10,17 +10,18 @@ Global Variables
 */
 
 
-
 $(document).ready(function() {
-     
+  
+  
+  // Initialize variables
   load_config();
-  saveSession();
+  
   /*
   ================================================================================
   jQuery Flow
   ================================================================================
   */  
-  
+    
   $(".class").keydown(function(event) { 
     return false;
   });
@@ -45,16 +46,24 @@ $(document).ready(function() {
     $(".consent").slideDown();
     });
 
-
   $("#next-button-instructions").click(function() {
     $(".instructions").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
-    Start_New_Move(max_trials, number_of_moves, max_moves);    
+    Start_New_Move(max_trials, number_of_moves, max_moves);        
   });
 
+  
   $("#next-button-trials").click(function() {
     $(".inter-trial").slideUp();
+    $(".lost-page").slideUp();        
+    $(".grids").slideDown();   
+    Start_New_Trial();  
+    Start_New_Move(max_trials, number_of_moves, max_moves);
+  });
+
+  $("#next-button-lost-trials").click(function() {    
+    $(".lost-page").slideUp();        
     $(".grids").slideDown();   
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);
@@ -68,14 +77,26 @@ $(document).ready(function() {
     Start_New_Move(max_trials, number_of_moves, max_moves);
   });
 
-
   $("#session-end-button").click(function() {
     $(".session-end").slideUp();    
     $(".debriefing").slideDown()
   });
       
   $("#finish-button").click(function() {
-    $(".debriefing").slideUp();        
+    $(".debriefing").slideUp();   
+    $(".comment").slideDown();
+  });
+
+  // Add commment section
+  $("#submit-button").click(function() {
+    var comment = document.getElementById("userComments").value;
+    $('#userComments').prop('disabled', true);
+    $('#submit-button').removeClass('custom-button_enabled');
+    $('#submit-button').addClass('custom-button_disabled');
+    $('#submit-button').off('click');
+    
+    window.comment = comment;
+    saveSession();
   });
 
 })

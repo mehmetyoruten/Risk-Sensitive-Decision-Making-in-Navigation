@@ -38,10 +38,12 @@ function load_config(){
             // set number of different grids
             window.max_grids = config["max_grids"];  
             
-            // Initialize some variables
-            //window.number_of_moves = config["number_of_moves"];            
-            window.trial_n = config["trial_n"]
-            window.session = config["session"]
+            // Initialize some variables       
+            window.trial_n = config["trial_n"];
+
+            window.number_of_moves = config["number_of_moves"];
+            window.session = config["session"];
+            window.total_loss = config["total_loss"];
 
             // get the grid world
             window.gridWorld = config["gridWorld"];         
@@ -65,11 +67,11 @@ function saveSession(){
 
 
     // send Post request to API
-    let body = JSON.stringify({
+    var body = JSON.stringify({
         id: 2000,
         participant: participant,
         code_version: code_version,
-        comment : 2
+        comment : comment
         })
     
     xmlHttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -121,7 +123,8 @@ function saveTrial(timestamp, grid_id){
   ================================================================================
   */
 
+
 export {load_config, 
         saveSession, 
         saveSessionResult, 
-        saveTrial} ;
+        saveTrial } ;

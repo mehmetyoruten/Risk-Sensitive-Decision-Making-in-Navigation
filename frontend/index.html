@@ -176,6 +176,27 @@
         </div>
     </div>
 
+    <div class="container lost-page">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>You Lost!</h1>    
+                <p>You dropped into the lava pit.</p>
+                <p>Click next to proceed to next trial</p>            
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-lost-trials" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
     <div class="container instructions">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
@@ -183,7 +204,7 @@
                 <h1>Instructions</h1>                
                 <p>In every trial, you will see a grid which consists of 28 rectangles in total. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
                 <div class="instructions_img">
-                    <img  id="instructions_grid" src=pics/instructions_grid.png>
+                    <img  id="instructions_grid_pic" src=js/utils/pics/instructions_grid.png>
                 </div>
                 <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow frame. If you wait for a second, the color of the frame will be darker yellow and the selection will be made. If you would like to change your selection, you can press on another arrow key before the time to process is completed. If your selection is valid, then the background will flash green. If your selection is not valid, the background will flash red and you will need to reselect the tile.</p>
                 <p>Each time you select your move, there will be some probability of falling off from the row. You are required to reach end point without falling off the grid. Additionally, you should avoid the red tile.</p>
@@ -256,24 +277,36 @@
         </div>
         <div class = "row">
             <div class="col-xs-12 col-md-12">
-                <canvas id="myCanvas" height="200px"></canvas>
+                <canvas id="gridCanvas" height="200px">
+                    Sorry. Your browser does not support HTML5 canvas element.
+                </canvas>
             </div>
         </div>
-        <div class="row spacer"></div>
-        <div class="row row-no-padding justify-content-center"> 
-            <div class="col-xs-4 "></div>
-            <div class="col-xs-1"></div>
-            <div id='up' class="col-xs-1 key"></div>
-            <div class="col-xs-1"></div>
-            <div class="col-xs-5 "></div>
-          </div>          
-          <div class="row row-no-padding justify-content-center"> 
-            <div class="col-xs-4"></div>
-            <div id='left' class="col-xs-1 key"></div>
-            <div id='down' class="col-xs-1 key"></div>
-            <div id='right' class="col-xs-1 key"></div>
-            <div class="col-xs-5 "></div>
-          </div>
+        <div class = "row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8">
+                <canvas id='keyboardCanvas'></canvas>
+            </div>            
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+    </div>
+
+    <div class="container comment">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1> Thanks for your participation! </h1>
+                <p>You can help us to improve our experiment by sharing your opinions.</p>
+                <p>Your comments:</p>
+                <textarea rows="4" cols="70" id = "userComments"></textarea>
+                <div id="submit-button" class='custom-button custom-button_enabled'>
+                    Submit
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
     </div>
 
 
