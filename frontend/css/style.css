@@ -16,6 +16,11 @@ Block: begin-content
 .welcome {
 }
 
+body {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 .consent{
   display:none;
 }
@@ -24,19 +29,36 @@ Block: begin-content
   display:none;
 }
 
-.debriefing-instructions {
+.debriefing {
   display: none;
 }
 
-.time_limit {
-  display: none;
-}
-
-.warning-no-cell-selected {
-  display: none;
-}
 
 .win-page {
+  display: none;
+}
+
+.lost-page {
+  display: none;
+}
+
+.instructions {
+  display: none;
+}
+
+.inter-trial {
+  display: none;
+}
+
+.practice-end {
+  display: none;
+}
+
+.session-end {
+  display: none;
+}
+
+.comment{
   display: none;
 }
 
@@ -81,7 +103,6 @@ Block: custom-button
 
 .custom-button_enabled:hover {
   background: #404040;
-  /*background: #8fbc8f;*/
   border-color: #FFD119;
   cursor: pointer;
 }
@@ -92,6 +113,22 @@ Block: custom-button
 
 #theImage { visibility: hidden; }
 
+#gridCanvas {
+  padding: 0;
+  margin: auto;
+  margin-top: 60px;
+  display: block;
+  width: 700px;   
+  position: relative; 
+}
+
+#keyboardCanvas {
+  padding: 0;
+  margin-left: 30%;
+  display: block;
+  width: 500px;   
+  position: relative; 
+}
 
 /*
 ================================================================================
@@ -99,7 +136,7 @@ Block: Grids
 ================================================================================
 */
 
-#trial_count {  
+#progress {  
   background: #8fbc8f;
   border-color: #000000;
   border-radius: 25px;
@@ -109,7 +146,6 @@ Block: Grids
 .grids {
   display: none;
 }
-
 
 .row-no-padding {
   margin-left: 0 !important;
@@ -121,55 +157,10 @@ Block: Grids
   padding-right: 0 !important;
 }
 
-.square:before{
-  content: "-";
-  display: block;
-  padding-top: 100%;  /* initial ratio of 1:1*/
-  border: 2px solid rgb(0, 0, 0);   
-  text-align: center;
-}
 
-#start__square:before {
-  content: "Start";
-  display: block;
-  padding-top: 100%;
-  position: relative;
-}
-
-#end__square:before {
-  content: "End";
-  display: block;
-  padding-top: 100%;
-  position: relative;
-}
-
-#obstacle__square {
-  background-color: rgb(167, 63, 63);
-}
-
-.square:hover, .active {
-  background: #fefefe;
-  border: 5px solid rgb(216, 198, 39);
-}
-
-.obstacle__square:hover {
-  background-color: rgb(167, 63, 63);
-  border: 5px solid rgb(216, 198, 39);
-}
-
-.square.processed {
-  background: #fefefe;
-  border: 5px solid rgb(216, 198, 39);
-}
-
-.square.active.wrong {
-  background: #fefefe;
-  border: 5px solid rgb(219, 24, 24);
-}
-
-#keyboard_pic {
+#instructions_grid_pic {
   /* margin-left: auto; */
-  width: 30%;
-  float: none;
-  margin: 0 auto;
+  width: 90%;
+  text-align: center;  
+  padding: 5%;
 }

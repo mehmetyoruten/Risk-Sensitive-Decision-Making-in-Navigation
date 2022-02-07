@@ -4,17 +4,16 @@
     <title>Basic Grid Rows</title>
 
     <!-- jQuery -->
-    <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript" src="js/utils/jquery/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="js/utils/jquery/jquery-ui-1.12.1.min.js"></script>
     
     <!-- Bootstrap -->
     <link rel='stylesheet' href='css/bootstrap.css' type='text/css'>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/utils/bootstrap.js"></script>
     
     <!-- Custom Files -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/script.js"></script>
-
+    <script type ="module" src="js/AppController.js"></script>
   </head>
 
 
@@ -110,12 +109,12 @@
         </div>
     </div>
 
-
-    <div class="container debriefing-instructions">
+    <!-- End Session Page-->
+    <div class="container session-end">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-8 col-md-8">
-                <h1>Debriefing</h1>
+                <h1>Session Ended</h1>
                 <p>Well done! </p>                 
             </div>
             <div class="col-xs-2 col-md-2"></div>
@@ -123,7 +122,7 @@
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-8 col-md-8">
-                <div id="debriefing-next-button" class='custom-button custom-button_enabled'>
+                <div id="session-end-button" class='custom-button custom-button_enabled'>
                     Next
                 </div>
             </div>
@@ -131,42 +130,27 @@
         </div>
     </div>
 
-    <div class="container time_limit">
+    <div class="container debriefing">
         <div class="row">
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4">
-                <h1>Time Limit Exeeded</h1>
-                <p>Try to be faster next time!</p>
-                <p>Click on "Next" to start the next trial.</p>
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Debriefing</h1>                
+                <p>In every trial, you will see a grid which consists of 28 rectangles in total. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
+                <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow frame. If you wait for a second, the color of the frame will be darker yellow and the selection will be made. If you would like to change your selection, you can press on another arrow key before the time to process is completed. If your selection is valid, then the background will flash green. If your selection is not valid, the background will flash red and you will need to reselect the tile.</p>
+                <p>Each time you select your move, there will be some probability of falling off from the row. You are required to reach end point without falling off the grid. Additionally, you should avoid the red tile.</p>
+                <p>After you reach the end point or fail, a new trial will start.</p>
+                <p>The first 10 trials will be practice trials to familiarize you with the experiment.</p>                
+                <p>Good luck, and thank you for participating</p>
             </div>
-            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
-        <div class="row">
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4">
-                <div id="timelimit-button" class='custom-button custom-button_enabled'>
-                    Next
-                </div>
-            </div>
-            <div class="col-xs-4 col-md-4"></div>
-        </div>
-    </div>
 
-    <div class="container warning-no-cell-selected">
+        <!-- buttons -->
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
-            <div class="col-xs-8 col-md-8">
-                <h1>No path selected!</h1>
-                <p>Please, make your choice!</p>
-                <p>Click on "Back to Trial" to go back to the trial.</p>
-            </div>
-            <div class="col-xs-2 col-md-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-2 col-md-2"></div>
-            <div class="col-xs-8 col-md-8">
-                <div id="warning-button" class='custom-button custom-button_enabled'>
-                    Back to Trial
+            <div class="col-xs-9 col-md-9">
+                <div id="finish-button" class='custom-button custom-button_enabled'>
+                    Finish the Experiment
                 </div>
             </div>
             <div class="col-xs-2 col-md-2"></div>
@@ -192,78 +176,140 @@
         </div>
     </div>
 
-    <div class="container grids">     
+    <div class="container lost-page">
         <div class="row">
-            <div class="col-md-6 col-xs-6"></div>
-            <div class="col-md-4 col-xs-4"></div>            
-            <div class="col-md-2 col-xs-2 text-center" id = "trial_count"></div>
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>You Lost!</h1>    
+                <p>You dropped into the lava pit.</p>
+                <p>Click next to proceed to next trial</p>            
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
-
-        <div class="row row-no-padding justify-content-center" id = "r1">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-1 square" data-y="4" data-x="1" data-tile-no='41'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="2" data-tile-no='42'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="3" data-tile-no='43'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="4" data-tile-no='44'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="5" data-tile-no='45'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="6" data-tile-no='46'></div>
-          <div class="col-xs-1 square" data-y="4" data-x="7" data-tile-no='47'></div>
-          <div class="col-xs-2"></div>
-
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-lost-trials" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
-      <div class="row row-no-padding justify-content-center" id = "r2">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-1 square" data-y="3" data-x="1" data-tile-no='31'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="2" data-tile-no='32'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="3" data-tile-no='33'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="4" data-tile-no='34'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="5" data-tile-no='35'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="6" data-tile-no='36'></div>
-          <div class="col-xs-1 square" data-y="3" data-x="7" data-tile-no='37'></div>
-          <div class="col-xs-2"></div>
-
-      </div>
-      <div class="row row-no-padding justify-content-center" id = "r3">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-1 square" data-y="2" data-x="1" data-tile-no='21'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="2" data-tile-no='22'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="3" data-tile-no='23'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="4" data-tile-no='24'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="5" data-tile-no='25'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="6" data-tile-no='26'></div>
-          <div class="col-xs-1 square" data-y="2" data-x="7" data-tile-no='27'></div>
-          <div class="col-xs-2"></div>
-
-      </div>
-      <div class="row row-no-padding justify-content-center" id = "r4">          
-          <div class="col-xs-2"></div>
-          <div id='start__square' class="col-xs-1 square processed" data-y="1" data-x="1" style="background-color: lightgray"></div>          
-          <div class="col-xs-1 square" data-y="1" data-x="2"></div>
-          <div id='obstacle__square' class="col-xs-1 square" data-y="1" data-x="3"></div>
-          <div class="col-xs-1 square" data-y="1" data-x="4"></div>
-          <div class="col-xs-1 square" data-y="1" data-x="5"></div>
-          <div class="col-xs-1 square" data-y="1" data-x="6"></div>
-          <div id='end__square' class="col-xs-1 square" data-y="1" data-x="7"style="background-color: lightgray"></div>
-          <div class="col-xs-2"></div>
-      </div>          
-    
-      <div class="row row-no-padding justify-content-center"> 
-        <div class="col-xs-2 col-md-2"></div>
-        <div class="col-xs-7 col-md-7">
-        <div id="end__button" class='custom-button custom-button_enabled trial-content__submit-button' data-submit-button='Enter'> Submit Response</div>
-        </div>
-        <div class="col-xs-2 col-md-2"></div>
-      </div>
-
-      <div class="row row-no-padding justify-content-center"> 
-        <div class="col-xs-2 col-md-2"></div>
-        <div class="col-xs-7 col-md-7 col-centered">
-            <img id="keyboard_pic" src="pics/keyboard.png" class="img-fluid" alt="keyboard">
-        </div>
-        <div class="col-xs-2 col-md-2"></div>
-      </div>
     </div>
-  
+
+    <div class="container instructions">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Instructions</h1>                
+                <p>In every trial, you will see a grid which consists of 28 rectangles in total. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
+                <div class="instructions_img">
+                    <img  id="instructions_grid_pic" src=js/utils/pics/instructions_grid.png>
+                </div>
+                <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow frame. If you wait for a second, the color of the frame will be darker yellow and the selection will be made. If you would like to change your selection, you can press on another arrow key before the time to process is completed. If your selection is valid, then the background will flash green. If your selection is not valid, the background will flash red and you will need to reselect the tile.</p>
+                <p>Each time you select your move, there will be some probability of falling off from the row. You are required to reach end point without falling off the grid. Additionally, you should avoid the red tile.</p>
+                <p>After you reach the end point or fail, a new trial will start.</p>
+                <p>The first 10 trials will be practice trials to familiarize you with the experiment.</p>                
+                <p>Good luck, and thank you for participating</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-instructions" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+    <div class="container practice-end">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>You completed the practice trials!</h1>                                
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="start-button" class='custom-button custom-button_enabled'>
+                    Start Experiment
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+    <div class="container inter-trial" >
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">        
+                <h1>Trial Ended</h1>                
+                <p>To start next trial, click next:</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-trials" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+    
+    <div class="container grids">
+        <div class = "row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8"></div>
+            <div class="col-xs-2 col-md-2" id = "progress"></div>
+        </div>
+        <div class = "row">
+            <div class="col-xs-12 col-md-12">
+                <canvas id="gridCanvas" height="200px">
+                    Sorry. Your browser does not support HTML5 canvas element.
+                </canvas>
+            </div>
+        </div>
+        <div class = "row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8">
+                <canvas id='keyboardCanvas'></canvas>
+            </div>            
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+    </div>
+
+    <div class="container comment">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1> Thanks for your participation! </h1>
+                <p>You can help us to improve our experiment by sharing your opinions.</p>
+                <p>Your comments:</p>
+                <textarea rows="4" cols="70" id = "userComments"></textarea>
+                <div id="submit-button" class='custom-button custom-button_enabled'>
+                    Submit
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+    </div>
+
+
   </body>
 
 </html>
