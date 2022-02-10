@@ -112,7 +112,7 @@ function loadSessionInfo(){
             console.log(session);
 
             // set number of trials 
-            let session_id = session.id;
+            let session_id = session[0].id;
             console.log("Session id: " + session_id);
             
             window.session_id = session_id;
