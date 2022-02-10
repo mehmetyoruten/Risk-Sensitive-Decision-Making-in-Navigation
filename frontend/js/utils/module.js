@@ -117,7 +117,7 @@ function loadSessionInfo(){
             
             window.session_id = session_id;
 
-            //return session_id
+            return session_id
         }
     }    
     console.log("Loading session info..")
