@@ -112,12 +112,15 @@ function loadSessionInfo(){
             console.log(session);
 
             // set number of trials 
-            let id = session["id"];
+            let session_id = session.id;
+            console.log("Session id: " + session_id);
+            
+            window.session_id = session_id;
 
-            return id
+            //return session_id
         }
     }    
-    console.log("Loading config..")
+    console.log("Loading session info..")
     xmlHttp.open("GET", API_URL+"/sessions", true); // true for asynchronous 
     xmlHttp.send(null);            
 }
@@ -125,9 +128,9 @@ function loadSessionInfo(){
 function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
 
-    let id = loadSessionInfo();
+    //let id = loadSessionInfo();
     
-    xhr.open("PATCH", API_URL+"/sessions"+id);
+    xhr.open("PATCH", API_URL+"/sessions"+session_id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
         comment: comment
