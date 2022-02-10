@@ -128,9 +128,9 @@ function loadSessionInfo(){
 function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
 
-    //let id = loadSessionInfo();
+    let id = loadSessionInfo();
     
-    xhr.open("PATCH", API_URL+"/sessions"+session_id);
+    xhr.open("PATCH", API_URL+"/sessions"+id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
         comment: comment
