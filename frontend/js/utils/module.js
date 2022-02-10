@@ -118,7 +118,7 @@ function loadSessionInfo(){
         }
     }    
     console.log("Loading config..")
-    xmlHttp.open("GET", API_URL+"/session", true); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/sessions", true); // true for asynchronous 
     xmlHttp.send(null);            
 }
 
@@ -127,7 +127,7 @@ function saveSessionResult(comment){
 
     let id = loadSessionInfo();
     
-    xhr.open("PATCH", API_URL+"/session"+id);
+    xhr.open("PATCH", API_URL+"/sessions"+id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
         comment: comment
