@@ -47,7 +47,7 @@ function load_config(){
         }
     }    
     console.log("Loading config..")
-    xmlHttp.open("GET", API_URL+"/config.json", true); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/config", true); // true for asynchronous 
     xmlHttp.send(null);    
     
 }
@@ -70,7 +70,7 @@ function load_grid(){
         }
     }    
     console.log("Loading grid..")
-    xmlHttp.open("GET", API_URL+"/grids.json", true); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/grids", true); // true for asynchronous 
     xmlHttp.send(null);        
     
 }
@@ -81,7 +81,7 @@ function saveSession(){
     
     var xmlHttp = new XMLHttpRequest();
     // create API call to create new session 
-    xmlHttp.open("POST", API_URL+"/sessions.json");
+    xmlHttp.open("POST", API_URL+"/sessions");
 
 
     // send Post request to API
