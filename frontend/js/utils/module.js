@@ -86,9 +86,8 @@ function saveSession(){
             if (xmlHttp.status == 201){
                 // After successful post, receive id of the created trial 
                 var resp = xmlHttp.responseText;
-                id = parseInt(resp.id);
+                let id = parseInt(resp.id);
                 console.log("Received Session Id: "+id); 
-                trial_id = id;  
             }
         }
     }
