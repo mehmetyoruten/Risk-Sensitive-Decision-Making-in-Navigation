@@ -123,6 +123,8 @@ function loadSessionInfo(){
     console.log("Loading session info..")
     xmlHttp.open("GET", API_URL+"/sessions", true); // true for asynchronous 
     xmlHttp.send(null);            
+
+    
 }
 
 function saveSessionResult(comment){
@@ -130,7 +132,7 @@ function saveSessionResult(comment){
 
     let id = loadSessionInfo();
     
-    xhr.open("PATCH", API_URL+"/sessions"+id);
+    xhr.open("PATCH", API_URL+"/sessions/"+id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
         comment: comment
