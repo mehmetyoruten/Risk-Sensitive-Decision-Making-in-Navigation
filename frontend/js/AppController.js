@@ -1,4 +1,4 @@
-import { load_config, saveSession} from './utils/module.js' ;
+import { load_config, saveSession, saveSessionResult} from './utils/module.js' ;
 
 import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
 
@@ -15,6 +15,7 @@ $(document).ready(function() {
   
   // Initialize variables
   load_config();
+  saveSession();
   
   /*
   ================================================================================
@@ -95,8 +96,7 @@ $(document).ready(function() {
     $('#submit-button').addClass('custom-button_disabled');
     $('#submit-button').off('click');
     
-    window.comment = comment;
-    saveSession();
+    saveSessionResult(comment);
   });
 
 })

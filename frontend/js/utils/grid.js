@@ -173,14 +173,14 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 	var xhr = new XMLHttpRequest();
 	console.log("Sending API Call to save move choice")
 
-	var saved_response = {
-	"trial_n": trial_n,
-	"move_n": number_of_moves,                 
-	"response_time": response_time,
-	"submitted_x": submittedX,
-	"submitted_y": submittedY,
-	"key": key
-	};            
+	const saved_response = {
+		"trial_n": trial_n,
+		"move_n": number_of_moves.toString(),                 
+		"response_time": response_time,
+		"submitted_x": submittedX,
+		"submitted_y": submittedY,
+		"key": key
+		};            
 
 
 	xhr.open("POST", API_URL+"/move");

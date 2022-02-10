@@ -52,7 +52,6 @@ function load_config(){
     
 }
     
-
 function load_grid(){      
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
@@ -89,19 +88,39 @@ function saveSession(){
         id: 2000,
         participant: participant,
         code_version: code_version,
-        comment : comment
+        comment : 1
         })
     
     xmlHttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     xmlHttp.send(body);    
 }
 
+function loadSessionInfo(){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            let session = JSON.parse(xmlHttp.responseText);
+            console.log(session);
+
+            // set number of trials 
+            let id = session["id"];
+
+            return id
+        }
+    }    
+    console.log("Loading config..")
+    xmlHttp.open("GET", API_URL+"/session", true); // true for asynchronous 
+    xmlHttp.send(null);            
+}
+
 function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
-    xhr.open("PUT", API_URL+"/session");
+
+    let id = loadSessionInfo();
+    
+    xhr.open("PATCH", API_URL+"/session"+id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
-        id: session, 
         comment: comment
     }));
     }
@@ -132,8 +151,6 @@ function saveTrial(timestamp, grid_id){
         reward: reward
     }));
   }
-
-
 
 
 export {load_config, 
