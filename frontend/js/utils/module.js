@@ -131,6 +131,7 @@ function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
 
     let id = loadSessionInfo();
+    console.log(id)
     
     xhr.open("PATCH", API_URL+"/sessions/"+id);
     xhr.setRequestHeader("Content-Type", "application/json");
