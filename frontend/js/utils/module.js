@@ -76,12 +76,22 @@ function load_grid(){
 
 function saveSession(){
     let participant = 1337;
-    let code_version = 1; 
+    let code_version = "1"; 
     
     var xmlHttp = new XMLHttpRequest();
     // create API call to create new session 
-    xmlHttp.open("POST", API_URL+"/sessions");
-
+    xmlHttp.open("POST", API_URL+"/sessions");        
+    xmlHttp.onreadystatechange = function(){
+        if (xmlHttp.readyState == 4){
+            if (xmlHttp.status == 201){
+                // After successful post, receive id of the created trial 
+                var resp = xmlHttp.responseText;
+                id = parseInt(resp.id);
+                console.log("Received Session Id: "+id); 
+                trial_id = id;  
+            }
+        }
+    }
 
     // send Post request to API
     var body = JSON.stringify({
