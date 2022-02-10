@@ -1,4 +1,3 @@
-import { render, movePlayer } from './grid.js';
 
 /*
 ================================================================================
@@ -6,8 +5,8 @@ Experiment Settings
 ================================================================================
 */
 
-//const API_URL = "http://134.76.24.103/node"
-const API_URL = "http://127.0.0.1:5502/backend"
+const API_URL = "http://134.76.24.103/node"
+//const API_URL = "http://127.0.0.1:5502/backend"
 
 
 /*
@@ -45,9 +44,6 @@ function load_config(){
             window.session = config["session"];
             window.total_loss = config["total_loss"];
 
-            // get the grid world
-            window.gridWorld = config["gridWorld"];         
-
         }
     }    
     console.log("Loading config..")
@@ -56,6 +52,28 @@ function load_config(){
     
 }
     
+
+function load_grid(){      
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            let grids = JSON.parse(xmlHttp.responseText);
+            console.log(grids);
+
+            // set gridWorld
+            const gridWorld = grids["gridWorld"];
+
+            // set gridWorld for practice
+            const gridTrial = grids["gridPractice"]
+
+            return gridWorld
+        }
+    }    
+    console.log("Loading grid..")
+    xmlHttp.open("GET", API_URL+"/grids.json", true); // true for asynchronous 
+    xmlHttp.send(null);        
+    
+}
 
 function saveSession(){
     let participant = 1337;
@@ -116,15 +134,10 @@ function saveTrial(timestamp, grid_id){
   }
 
 
- 
- /*
-  ================================================================================
-   Functions
-  ================================================================================
-  */
 
 
 export {load_config, 
+        load_grid,
         saveSession, 
         saveSessionResult, 
         saveTrial } ;

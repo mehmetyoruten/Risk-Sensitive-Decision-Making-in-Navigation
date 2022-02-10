@@ -1,6 +1,6 @@
 import { load_config, saveSession} from './utils/module.js' ;
 
-import { Start_New_Trial, Start_New_Move, movePlayer } from './utils/grid.js';
+import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
 
 
 /*

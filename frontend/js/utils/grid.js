@@ -1,15 +1,13 @@
-import { load_config } from "./module.js";
+import { load_grid } from "./module.js";
 
-const API_URL = "http://127.0.0.1:5502/backend"
+//const API_URL = "http://127.0.0.1:5502/backend"
+const API_URL = "http://134.76.24.103/node"
 
 
-const gridWorld = [
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 1]
-	];
-
+const gridWorld = [[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0]];
 
 const keyboardWorld = [[0,1,0],
 					   [1,1,1]];
@@ -28,28 +26,16 @@ window.keyboardMatrix = keyboardMatrix;
 
 var player = { x: playerX, y: playerY, color: "orange" };
 
+var endLoc = {x: 6, y:3};
+var startLoc = {x:0, y:3};
+var obstacleLoc = {x: [2,3,4], y:3}
+
 var gridContext = getContext(0, 0, "white");
 
 var cellSize = 40;
 var padding = 3;
 
-// if there is no obstacle, and if you are in the grid, you can move
-function isValidMove(x, y) {
-	if ( matrix[ player.y + y][ player.x + x] === 0) {
-		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 1) {
-		Flash_Background_Incorrect();	
-		total_loss += 1;
-		$(".grids").slideUp();    
-		$(".lost-page").slideDown(); 		
-		document.removeEventListener('keydown', movePlayer);		
-		return true;
 
-
-	}
-	return false;
-	
-}
 
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
@@ -59,155 +45,6 @@ function updateKeyboardMatrix(y, x, val) {
 	keyboardWorld[y][x] = val;
 }
 
-var movePlayer = function( e ) {
-	//left arrow key
-	if ((e.keyCode === 37) && (n_keypress == 0)) { 
-		if ( isValidMove(-1, 0)) {
-			n_keypress += 1; 
-			updateMatrix( player.y,  player.x, 0);
-			// Highlight the cell being processed
-			updateMatrix( player.y,  player.x - 1, 3);	
-			
-			// Highlight the keyboard
-			updateKeyboardMatrix(1,0,2);
-			renderKeyboard();
-			updateKeyboardMatrix(1,0,1);
-			setTimeout(function(){
-				renderKeyboard();
-			}, 500);
-
-			// Render the grid
-			render();
-			updateMatrix( player.y,  player.x -1 , 2);	
-			player.x --	
-
-			setTimeout(function(){			
-				render();				      				
-			}, 500)
-			
-			// Submit the response  		
-			Submit_Response('left')
-
-			// Disable moving for a second
-			setTimeout(function(){
-				n_keypress = 0
-				window.n_keypress = n_keypress;
-			},1000);    
-
-		}
-		
-		// right arrow key
-	} else if ((e.keyCode === 39 && (n_keypress == 0))) { 
-		if ( isValidMove(1, 0)) {
-			n_keypress += 1; 
-			updateMatrix( player.y,  player.x, 0);
-			updateMatrix( player.y,  player.x + 1, 3);
-
-			// Highlight the keyboard
-			updateKeyboardMatrix(1,2,2);
-			renderKeyboard();
-			updateKeyboardMatrix(1,2,1);
-			setTimeout(function(){
-				renderKeyboard();
-			}, 500);
-
-			// Render the grid
-			render();
-			updateMatrix( player.y,  player.x + 1, 2);
-			player.x ++;
-
-			setTimeout(function(){
-				render();
-			}, 500)
-			
-			// Submit the response        
-			Submit_Response('right');
-
-			// Disable moving for a second
-			setTimeout(function(){
-				n_keypress = 0
-				window.n_keypress = n_keypress;
-			},1000);    
-		}
-
-		// up arrow key
-	} else if ((e.keyCode === 38) && (n_keypress == 0)) { 
-		if ( isValidMove(0, -1)) {
-			n_keypress += 1; 
-			updateMatrix( player.y,  player.x, 0);
-			updateMatrix( player.y - 1,  player.x, 3);
-			
-			// Highlight the keyboard
-			updateKeyboardMatrix(0,1,2);
-			renderKeyboard();
-			updateKeyboardMatrix(0,1,1);
-			setTimeout(function(){
-				renderKeyboard();
-			}, 500);
-			
-			// Render the grid
-			render();
-			
-			updateMatrix( player.y - 1,  player.x, 2);
-			player.y --;
-			setTimeout(function(){
-				render();
-			}, 500)		
-			
-			// Submit the response        
-			Submit_Response('up');
-
-			// Disable moving for a second
-			setTimeout(function(){
-				n_keypress = 0
-				window.n_keypress = n_keypress;
-			},1000);    
-		}
-
-		// down arrow key
-	} else if ((e.keyCode === 40) && (n_keypress == 0)) {
-		if ( isValidMove(0, 1)) {
-			n_keypress += 1; 
-			updateMatrix( player.y,  player.x, 0);
-			// Highlight the target tile as being processed
-			updateMatrix( player.y + 1,  player.x, 3);
-
-			// Highlight the keyboard
-			updateKeyboardMatrix(1,1,2);
-			renderKeyboard();
-			updateKeyboardMatrix(1,1,1);
-			setTimeout(function(){
-				renderKeyboard();
-			}, 500);
-
-			render();
-			updateMatrix( player.y + 1,  player.x, 2);
-			player.y ++;
-
-			setTimeout(function(){
-				render();
-			}, 500);					
-
-			// Submit the response        
-			Submit_Response('down');
-						
-
-			// Disable moving for a second
-			setTimeout(function(){
-				n_keypress = 0
-				window.n_keypress = n_keypress;
-			},1000);    
-		}
-	// After practice trials don't show the alert menu
-	} else if ((max_practice+1) >= trial_n) {
-		if ((e.keyCode > 0) && (n_keypress == 1)){
-			alert("Please wait for your response to be processed!")
-		} else if ((e.which != 37 || e.which != 38 || e.which != 39 || e.which != 40 ) && (n_keypress == 0)) {
-			alert("Please only use the arrow keys!") 
-		}
-	}
-	window.player = player;
-}
 
 // Draw area
 function getContext(w, h, color = "#111", isTransparent = false) {
@@ -357,17 +194,29 @@ function Start_New_Trial() {
 	trial_n +=1;      
 	window.trial_n = trial_n
 
+	// Update the grid world
+	var matrix = load_grid();
+	window.matrix = matrix;
+
 	// Initiate keyboard controls
-	updateMatrix(player.y,  player.x, 0);
-	updateMatrix(3,6,0);
+	updateMatrix(player.y,  player.x, 0);	
+
+	// Initialize the end point
+	updateMatrix(endLoc.y, endLoc.x,0);
 	
-	// Initialize the starting position of the player
+	// Initialize the starting position of the player	
+	updateMatrix(startLoc.y, startLoc.x, 2);
+	player.x = 0;
 	player.y = 3;
-	player.x = 0;	 
-	updateMatrix(player.y, player.x, 2);
 	
-	// Locate the obstacle
-	updateMatrix(player.y, 2, 1);
+	// Locate the obstacles if the player is not in the practice round
+	if (trial_n > (max_practice+1)) {
+		for( var i = 0; i < obstacleLoc.x.length; i++){
+			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 1);
+		}
+	}	
+	
+	// Render the updated locations
 	render();
 	renderKeyboard();
 
@@ -390,7 +239,7 @@ function Start_New_Move(max_trials, number_of_moves, max_moves) {
 
 	if (trial_n > max_trials) {
 		// The experimet is done, conclude the experiment.
-		$(document).off('keydown');    
+		document.removeEventListener('keydown', movePlayer);
 		$(".grids").slideUp();
 		$(".session-end").slideDown();        
 		
@@ -417,6 +266,7 @@ function Flash_Background_Incorrect() {
 }
 
 
+// Put arrow images on keyboard
 function drawArrows(ctx, col, row, cellSize, padding) {
   const upArrow = new Image();
   const downArrow = new Image();
@@ -440,5 +290,205 @@ function drawArrows(ctx, col, row, cellSize, padding) {
 
 }
 
-export {render, renderKeyboard, movePlayer, Start_New_Trial, Start_New_Move}
+ 
+/*
+================================================================================
+Move Player
+================================================================================
+*/
+
+// if there is no obstacle, and if you are in the grid, you can move
+function isValidMove(x, y) {
+	if ( matrix[ player.y + y][ player.x + x] === 0) {
+		return true;
+	} else if (matrix[ player.y + y][ player.x + x] === 1) {
+		Flash_Background_Incorrect();	
+		total_loss += 1;
+		$(".grids").slideUp();    
+		$(".lost-page").slideDown(); 		
+		document.removeEventListener('keydown', movePlayer);		
+		return true;
+	}
+	return false;	
+}
+
+function randomNum(e){    
+    let rnd = Math.random();
+	let arrowKeys = [37, 38, 39, 40];
+    
+	for( var i = 0; i < arrowKeys.length; i++){     
+        if ( arrowKeys[i] === e.keyCode) {     
+            arrowKeys.splice(i, 1); 
+        }    
+    }
+
+	if (rnd < 0.10) {
+        return arrowKeys[0]
+
+    } else if (0.21 > rnd >= 0.11 ){
+		return arrowKeys[1]
+
+	} else if (0.5 > rnd >= 0.21) {
+		return arrowKeys[2]
+
+	} else if (1 > rnd >= 0.5) {
+        return e.keyCode		
+    } 
+}
+
+var movePlayer = function (e) {	
+	if ((40 >= e.keyCode) && (e.keyCode >= 37)) {
+		let key = randomNum(e);
+		console.log(key);
+		if ((key === 37) && (n_keypress == 0)) { 
+			if ( isValidMove(-1, 0)) {
+				n_keypress += 1; 
+
+				updateMatrix( player.y,  player.x, 0);
+				// Highlight the cell being processed
+				updateMatrix( player.y,  player.x - 1, 3);	
+				
+				// Highlight the keyboard
+				updateKeyboardMatrix(1,0,2);
+				renderKeyboard();
+				updateKeyboardMatrix(1,0,1);
+				setTimeout(function(){
+					renderKeyboard();
+				}, 500);
+
+				// Render the grid
+				render();
+				updateMatrix( player.y,  player.x -1 , 2);	
+				player.x --	
+
+				setTimeout(function(){			
+					render();				      				
+				}, 500)
+				
+				// Submit the response  		
+				Submit_Response('left')
+
+				// Disable moving for a second
+				setTimeout(function(){
+					n_keypress = 0
+					window.n_keypress = n_keypress;
+				},1000);    
+
+			}
+			
+			// right arrow key
+		} else if ((key === 39 && (n_keypress == 0))) { 
+			if ( isValidMove(1, 0)) {
+				n_keypress += 1; 
+
+				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y,  player.x + 1, 3);
+
+				// Highlight the keyboard
+				updateKeyboardMatrix(1,2,2);
+				renderKeyboard();
+				updateKeyboardMatrix(1,2,1);
+				setTimeout(function(){
+					renderKeyboard();
+				}, 500);
+
+				// Render the grid
+				render();
+				updateMatrix( player.y,  player.x + 1, 2);
+				player.x ++;
+
+				setTimeout(function(){
+					render();
+				}, 500)
+				
+				// Submit the response        
+				Submit_Response('right');
+
+				// Disable moving for a second
+				setTimeout(function(){
+					n_keypress = 0
+					window.n_keypress = n_keypress;
+				},1000);    
+			}
+
+			// up arrow key
+		} else if ((key === 38) && (n_keypress == 0)) { 
+			if ( isValidMove(0, -1)) {
+				n_keypress += 1; 
+				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y - 1,  player.x, 3);
+				
+				// Highlight the keyboard
+				updateKeyboardMatrix(0,1,2);
+				renderKeyboard();
+				updateKeyboardMatrix(0,1,1);
+				setTimeout(function(){
+					renderKeyboard();
+				}, 500);
+				
+				// Render the grid
+				render();
+				
+				updateMatrix( player.y - 1,  player.x, 2);
+				player.y --;
+				setTimeout(function(){
+					render();
+				}, 500)		
+				
+				// Submit the response        
+				Submit_Response('up');
+
+				// Disable moving for a second
+				setTimeout(function(){
+					n_keypress = 0
+					window.n_keypress = n_keypress;
+				},1000);    
+			}
+
+			// down arrow key
+		} else if ((key === 40) && (n_keypress == 0)) {
+			if ( isValidMove(0, 1)) {
+				n_keypress += 1; 
+
+				updateMatrix( player.y,  player.x, 0);
+				// Highlight the target tile as being processed
+				updateMatrix( player.y + 1,  player.x, 3);
+
+				// Highlight the keyboard
+				updateKeyboardMatrix(1,1,2);
+				renderKeyboard();
+				updateKeyboardMatrix(1,1,1);
+				setTimeout(function(){
+					renderKeyboard();
+				}, 500);
+
+				render();
+				updateMatrix( player.y + 1,  player.x, 2);
+				player.y ++;
+
+				setTimeout(function(){
+					render();
+				}, 500);					
+
+				// Submit the response        
+				Submit_Response('down');
+							
+
+				// Disable moving for a second
+				setTimeout(function(){
+					n_keypress = 0
+					window.n_keypress = n_keypress;
+				},1000);    
+			}		    	
+		} else if (n_keypress == 1) {			
+			alert("Please wait for your response to be processed!");
+		}
+			window.player = player;
+
+	} else {
+		alert("Please use only the arrow keys!");
+	}	
+}
+
+export {render, renderKeyboard, Start_New_Trial, Start_New_Move}
 
