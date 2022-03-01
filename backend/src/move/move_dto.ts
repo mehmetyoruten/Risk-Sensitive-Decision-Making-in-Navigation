@@ -5,4 +5,5 @@ export class Move {
     submitted_x: number;
     submitted_y: number;
     key: string; 
+    move_direction: string;
 }

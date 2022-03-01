@@ -1,4 +1,4 @@
-import { load_config, saveSession, saveSessionResult} from './utils/module.js' ;
+import { load_config, load_grid, saveSession, saveSessionResult} from './utils/module.js' ;
 
 import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
 
@@ -11,12 +11,17 @@ Global Variables
 
 
 $(document).ready(function() {
-  
+  const API_URL = "http://134.76.24.103/node"
   
   // Initialize variables
   load_config();
   saveSession();
-  
+  load_grid();
+
+  var background_color = "white";  
+
+
+
   /*
   ================================================================================
   jQuery Flow
@@ -98,6 +103,7 @@ $(document).ready(function() {
     
     saveSessionResult(comment);
   });
+
 
 })
   

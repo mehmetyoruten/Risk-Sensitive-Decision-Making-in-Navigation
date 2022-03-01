@@ -5,5 +5,11 @@ export class Config {
     max_trials: number;
     max_grids: number;
     obstacle_x: number; 
-    obstacle_y: number
+    obstacle_y: number;
+    trial_n: number;
+    number_of_moves: number;
+    session: number;
+    total_loss: number;
+    timeLag: number;
+    background_color: string
 }

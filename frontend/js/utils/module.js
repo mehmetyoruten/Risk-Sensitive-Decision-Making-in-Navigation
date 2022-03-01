@@ -44,6 +44,10 @@ function load_config(){
             window.session = config["session"];
             window.total_loss = config["total_loss"];
 
+            window.timeLag = config["timeLag"];
+
+            window.background_color = config["white"];
+
         }
     }    
     console.log("Loading config..")
@@ -56,12 +60,22 @@ function load_grid(){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            let grids = JSON.parse(xmlHttp.responseText);
+            const grids = JSON.parse(xmlHttp.responseText);
             console.log(grids);
 
             // set gridWorld
             const gridWorld = grids["gridWorld"];
+            window.gridWorld = gridWorld;
+            
+            // set initialization parameters
+            window.endLoc = grids["endLoc"];
+            window.startLoc = grids["startLoc"];
+            window.obstacleLoc = grids["obstacleLoc"];
 
+            // grid visuals
+            window.cellSize = grids["cellSize"];
+            window.padding = grids["padding"]
+            
             // set gridWorld for practice
             const gridTrial = grids["gridPractice"]
 
