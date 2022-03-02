@@ -186,6 +186,7 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 }
 
 function Start_New_Trial() {
+	window.scrollTo(0, 0);
 	disableScroll();
 	// Inrease the trial no
 	trial_n +=1;      
