@@ -27,15 +27,49 @@ $(document).ready(function() {
   jQuery Flow
   ================================================================================
   */  
-    
+  
+  
   $(".class").keydown(function(event) { 
     return false;
   });
+  
 
-  $("#welcome__button").click(function() {    
+  // Count number of enters
+  //var i = 0;
+  //window.i = i;
+
+  var welcome_slide = function() {
     $(".welcome").slideUp();
-    $(".consent").slideDown()
-  });
+    $(".consent").slideDown();
+  }
+
+  $("#welcome__button").click(welcome_slide);
+  $(document).on("keypress", function(){
+    if(event.which == 13) welcome_slide();
+    });
+
+
+  var consent_agree_slide = function() {
+    $(".consent").slideUp();    
+    $(".instructions").slideDown();
+  }
+  
+  $("#consent__button__agree").click(consent_agree_slide);
+  $(document).on("keypress", function(){
+    if ($('.consent').is(':visible') && (event.which == 13)) consent_agree_slide();
+    //if((event.which == 13)) consent_agree_slide();
+    });
+
+
+  var consent_disagree_slide = function() {
+    $(".consent").slideUp();    
+    $(".return-hit").slideDown();
+  }
+
+  var return_hit_slide = function () {
+    $(".return-hit").slideUp();    
+    $(".consent").slideDown();
+  }
 
   $("#consent__button__agree").click(function() {
     $(".consent").slideUp();    
@@ -52,8 +86,20 @@ $(document).ready(function() {
     $(".consent").slideDown();
     });
 
+
+
+
+
+
   $("#next-button-instructions").click(function() {
     $(".instructions").slideUp();    
+    $(".grids").slideDown();              
+    Start_New_Trial();  
+    Start_New_Move(max_trials, number_of_moves, max_moves);        
+  });
+
+  $("#next-button-instructions-2").click(function() {
+    $(".instructions-obstacle").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);        
@@ -68,8 +114,17 @@ $(document).ready(function() {
     Start_New_Move(max_trials, number_of_moves, max_moves);
   });
 
+  // When the participant loses the trial due to the obstacle
   $("#next-button-lost-trials").click(function() {    
     $(".lost-page").slideUp();        
+    $(".grids").slideDown();   
+    Start_New_Trial();  
+    Start_New_Move(max_trials, number_of_moves, max_moves);
+  });
+
+  // When the maximum number of moves is reached
+  $("#next-button-max-moves").click(function() {    
+    $(".number-of-moves").slideUp();        
     $(".grids").slideDown();   
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);

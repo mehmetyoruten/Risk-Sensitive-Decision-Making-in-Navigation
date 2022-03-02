@@ -197,6 +197,28 @@
         </div>
     </div>
 
+    <div class="container number-of-moves">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Maximum number of moves was reached!</h1>    
+                <p>You cannot perform further moves</p>
+                <p>Click next to proceed to next trial</p>            
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-max-moves" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+
     <div class="container instructions">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
@@ -220,6 +242,33 @@
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
                 <div id="next-button-instructions" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+    <div class="container instructions-obstacle">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Instructions</h1>                
+                <p>Now in each trial, you will also see obstacles:</p>
+                <div class="instructions_img">
+                    <img  id="instructions_grid_pic" src=js/utils/pics/instructions_grid_2.png>
+                </div>
+                <p>Try to avoid the obstacles. If you step over them, you will lose that trial round.</p>                                
+                <p>Good luck, and thank you for participating</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-instructions-2" class='custom-button custom-button_enabled'>
                     Next
                 </div>
             </div>
@@ -275,12 +324,14 @@
             <div class="col-xs-8 col-md-8"></div>
             <div class="col-xs-2 col-md-2" id = "progress"></div>
         </div>
-        <div class = "row">
-            <div class="col-xs-12 col-md-12">
-                <canvas id="gridCanvas" height="200px">
+        <div class = "row justify-content-evenly">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-8 col-md-8">
+                <canvas id="gridCanvas" width="646px" height="300px">
                     Sorry. Your browser does not support HTML5 canvas element.
                 </canvas>
             </div>
+            <div class="col-xs-2 col-md-2"></div>
         </div>
         <div class = "row">
             <div class="col-xs-2 col-md-2"></div>
@@ -288,8 +339,7 @@
                 <canvas id='keyboardCanvas'></canvas>
             </div>            
             <div class="col-xs-2 col-md-2"></div>
-        </div>
-
+        </div>        
     </div>
 
     <div class="container comment">

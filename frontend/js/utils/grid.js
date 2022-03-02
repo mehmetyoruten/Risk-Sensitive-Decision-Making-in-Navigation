@@ -9,6 +9,8 @@ const keyboardWorld = [[0,1,0],
 
 var background_color = "white";  
 
+var max_n_moves = 20;
+window.max_n_moves = max_n_moves;
 
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
@@ -68,11 +70,12 @@ function renderKeyboard() {
 	}	
 	
 }
-
+	
 function render() {
 	const w = ( cellSize +  padding) *  matrix[0].length - ( padding);
 	const h = ( cellSize +  padding) *  matrix.length - ( padding);
-
+		
+	var cellSize = 60;
 	// Color every cell in the grid
 	for (let row = 0; row <  matrix.length; row ++) {
 		for (let col = 0; col <  matrix[row].length; col ++) {
@@ -92,26 +95,30 @@ function render() {
 
 			gridContext.fillStyle = color;
 			gridContext.fillRect(col * ( cellSize +  padding),
-			row * ( cellSize +  padding),
-			cellSize,  cellSize);
+				row * ( cellSize +  padding),
+				cellSize,  cellSize);
+			
+			if (cellVal === 1) {
+				drawFlames(gridContext, col, row, cellSize, padding);
+			} else if (cellVal == 4){
+				drawDoor(gridContext, col, row, cellSize, padding);	
+			}
+			
 
 			// Draw borders
 			gridContext.rect(col * ( cellSize +  padding),
-			row * ( cellSize +  padding),
-			cellSize,  cellSize);			
-			gridContext.stroke();
+				row * ( cellSize +  padding),
+				cellSize,  cellSize);			
+				gridContext.stroke();
 
 			gridContext.lineWidth = 1;
 			gridContext.strokeStyle="#000000";
-			gridContext.stroke()			
-					
-		}
-		
+			gridContext.stroke()										
+		}				
 	}
+
 	gridContext.font = "10px";
-	gridContext.fillStyle = "white";
-	gridContext.fillText("End", w - (cellSize - (cellSize/4)), h - (cellSize/2));
-	
+	gridContext.fillStyle = "white";	
 }
 
 function Submit_Response(keyPressed, moveDirection) {          	
@@ -126,24 +133,34 @@ function Submit_Response(keyPressed, moveDirection) {
 	window.last_move = last_move
 	console.log(last_move);      
 
-	// Check if the target is reached
-	if (matrix[endLoc.y][endLoc.x] === 2) {                 
-		document.removeEventListener('keydown', movePlayer);
-		Flash_Background_Correct();
-
-		$(".grids").slideUp();    
-			
-		if (trial_n === (max_practice+1)) {
-			$(".practice-end").slideDown();          
-		} else {
-			$(".inter-trial").slideDown(); 	 
-		}} else {        
-		
-		// Start the next move, if the end point is not reached               
-		setTimeout(function(){                     
-			Start_New_Move(max_trials, number_of_moves, max_moves); 
-		}, time_limit);
-	}                 
+	if (number_of_moves <= max_n_moves) {
+		// Check if the target is reached
+		if (matrix[endLoc.y][endLoc.x] === 2) {                 
+			document.removeEventListener('keydown', movePlayer);
+			setTimeout(function() {
+				Flash_Background_Correct();
+				$(".grids").slideUp();    					
+				
+				// First round of practice ends
+				if (trial_n === (max_practice+1)) {					
+					$(".instructions-obstacle").slideDown();
+				// Second round of practice ends
+				} else if (trial_n === (1 + (max_practice)*2)) {
+					$(".practice-end").slideDown(); 					
+				} else {
+					$(".inter-trial").slideDown(); 	 
+				}
+			}, 1000)
+		} else {        		
+			// Start the next move, if the end point is not reached               
+			setTimeout(function(){                     
+				Start_New_Move(max_trials, number_of_moves, max_moves); 
+			}, time_limit);
+		}  
+	} else {
+		$(".grids").slideUp();
+		$(".number-of-moves").slideDown()
+	}               
 }  
 
 function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection){          
@@ -169,6 +186,7 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 }
 
 function Start_New_Trial() {
+	disableScroll();
 	// Inrease the trial no
 	trial_n +=1;      
 	window.trial_n = trial_n
@@ -282,7 +300,6 @@ function Flash_Background_Incorrect() {
 	$('body').animate({backgroundColor:background_color}, 1000);
 }
 
-
 // Put arrow images on keyboard
 function drawArrows(ctx, col, row, cellSize, padding) {
   const upArrow = new Image();
@@ -307,6 +324,30 @@ function drawArrows(ctx, col, row, cellSize, padding) {
 
 }
 
+// Draw door image
+function drawDoor(ctx, col, row, cellSize, padding) {
+	const doorExit = new Image();	 
+	doorExit.src = 'js/utils/pics/double-door.png';
+		
+	doorExit.onload = function(){
+	  ctx.drawImage(doorExit, col * ( cellSize +  padding ),
+	  row * ( cellSize +  padding) ,
+	  cellSize-5,  cellSize-5);	
+	}  
+  }
+
+// Draw flame image
+function drawFlames(ctx, col, row, cellSize, padding) {
+const flame = new Image();	 
+flame.src = 'js/utils/pics/flame.png';
+	
+flame.onload = function(){
+	ctx.drawImage(flame, col * ( cellSize +  padding ),
+	row * ( cellSize +  padding) ,
+	cellSize-5,  cellSize-5);	
+}  
+}
+
  
 /*
 ================================================================================
@@ -319,11 +360,14 @@ function isValidMove(x, y) {
 	if ( matrix[ player.y + y][ player.x + x] === 0 ) {
 		return true;
 	} else if (matrix[ player.y + y][ player.x + x] === 1) {
-		Flash_Background_Incorrect();	
-		total_loss += 1;
-		$(".grids").slideUp();    
-		$(".lost-page").slideDown(); 		
-		document.removeEventListener('keydown', movePlayer);		
+		setTimeout(function() {
+			Flash_Background_Incorrect();	
+			total_loss += 1;
+			$(".grids").slideUp();    
+			$(".lost-page").slideDown(); 		
+			document.removeEventListener('keydown', movePlayer);		
+		}, 1000)		
+		
 		return true;
 	} else if (matrix[ player.y + y][ player.x + x] === 4) {
 		return true
@@ -509,5 +553,12 @@ var movePlayer = function (e) {
 	}	
 }
 
+function disableScroll() {
+    document.body.classList.add("stop-scrolling");
+}
+  
+function enableScroll() {
+    document.body.classList.remove("stop-scrolling");
+}
 export {render, renderKeyboard, Start_New_Trial, Start_New_Move}
 

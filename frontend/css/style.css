@@ -42,7 +42,15 @@ body {
   display: none;
 }
 
+.number-of-moves {
+  display: none;
+}
+
 .instructions {
+  display: none;
+}
+
+.instructions-obstacle {
   display: none;
 }
 
@@ -113,21 +121,28 @@ Block: custom-button
 
 #theImage { visibility: hidden; }
 
+
 #gridCanvas {
-  padding: 0;
+  padding: 10px;
   margin: auto;
-  margin-top: 60px;
-  display: block;
-  width: 700px;   
-  position: relative; 
+  margin-top: 10px;  
+  margin-left: 5%;  
+  display: block;  
+  position: relative;   
+  width: 150%;
 }
 
 #keyboardCanvas {
   padding: 0;
-  margin-left: 30%;
-  display: block;
-  width: 500px;   
+  margin-left: 40%;
+  display: block;  
   position: relative; 
+  width: 80%;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }
 
 /*
