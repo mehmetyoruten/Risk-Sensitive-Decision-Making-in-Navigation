@@ -37,28 +37,30 @@ $(document).ready(function() {
   // Count number of enters
   //var i = 0;
   //window.i = i;
-
-  var welcome_slide = function() {
-    $(".welcome").slideUp();
-    $(".consent").slideDown();
-  }
-
-  $("#welcome__button").click(welcome_slide);
-  $(document).on("keypress", function(){
-    if(event.which == 13) welcome_slide();
-    });
-
-
-  var consent_agree_slide = function() {
-    $(".consent").slideUp();    
-    $(".instructions").slideDown();
-  }
   
-  $("#consent__button__agree").click(consent_agree_slide);
-  $(document).on("keypress", function(){
-    if ($('.consent').is(':visible') && (event.which == 13)) consent_agree_slide();
-    //if((event.which == 13)) consent_agree_slide();
-    });
+  //document.removeEventListener('keydown', movePlayer);
+  
+  $("#welcome__button").click(function() {
+    $(".welcome").slideUp();
+    $(".consent").slideDown();    
+  });
+  
+  $("#welcome").keyup(function (e) {
+    if(e.keyCode == 13) {
+      $('#welcome__button').click()
+    };
+  });
+
+  
+  $(document).keyup(function (e) {
+    if (e.keyCode == 37) {
+        $('#prev').click();
+        return false;
+    }
+    if (e.keyCode == 13) {
+        $('#consent__button__agree').click();
+    }
+  });
 
 
   var consent_disagree_slide = function() {
@@ -85,10 +87,6 @@ $(document).ready(function() {
     $(".return-hit").slideUp();    
     $(".consent").slideDown();
     });
-
-
-
-
 
 
   $("#next-button-instructions").click(function() {
