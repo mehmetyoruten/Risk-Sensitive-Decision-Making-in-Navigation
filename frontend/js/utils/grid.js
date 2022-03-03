@@ -87,7 +87,9 @@ function render() {
 			// 3 highlights the location of the player
 			// 4 indicates that the move is in the process 
 			// 5 for target cell
-			if (cellVal === 2) {
+			if (cellVal === 0 ) {
+				color = 'white';
+			} else if (cellVal === 2) {
 				color = "red";				
 			} else if (cellVal === 3) {
 				color =  player.color;
@@ -97,35 +99,32 @@ function render() {
 				color = "green"						
 			}								
 
-
 			gridContext.lineWidth = 1;
 			gridContext.strokeStyle="#000000";
 			gridContext.stroke()										
 
-			if (cellVal > 0) {
-				gridContext.fillRect(col * ( cellSize +  padding),
-					row * ( cellSize +  padding),
-					cellSize,  cellSize);
+			gridContext.fillStyle = color;
+			gridContext.fillRect(col * ( cellSize +  padding),
+				row * ( cellSize +  padding),
+				cellSize,  cellSize);
 
-				// Draw borders
+			// Draw borders
+			if (cellVal > 0) {
 				gridContext.rect(col * ( cellSize +  padding),
 					row * ( cellSize +  padding),
 					cellSize,  cellSize);			
-					gridContext.stroke();
-
-				gridContext.fillStyle = color;
-
+					gridContext.stroke();	
+				// Draw images on tiles
 				if (cellVal === 2) {
 					drawFlames(gridContext, col, row, cellSize, padding);
 				} else if (cellVal === 5){
 					drawDoor(gridContext, col, row, cellSize, padding);	
 				} 
-			}						
-		}				
-	}
-
-	gridContext.font = "10px";
-	gridContext.fillStyle = "white";	
+			} 		
+		}									
+	}	
+		gridContext.font = "10px";
+		gridContext.fillStyle = "white";				
 }
 
 function Submit_Response(keyPressed, moveDirection) {          	
@@ -142,7 +141,7 @@ function Submit_Response(keyPressed, moveDirection) {
 
 	if (number_of_moves <= max_n_moves) {
 		// Check if the target is reached
-		if (matrix[endLoc.y][endLoc.x] === 2) {                 
+		if (matrix[endLoc.y][endLoc.x] === 3) {                 
 			document.removeEventListener('keydown', movePlayer);
 			setTimeout(function() {
 				Flash_Background_Correct();
@@ -201,15 +200,12 @@ function Start_New_Trial() {
 	window.trial_n = trial_n
 
 	// Grid info
-	const gridPractice = [[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0]];
+	const gridTrial =  [[0, 0, 1, 1, 1, 0, 0],
+						[0, 0, 0, 1, 1, 0, 0],
+						[0, 0, 1, 1, 1, 0, 0],
+						[0, 1, 1, 1, 1, 1, 1]];
 
-	const gridTrial = [[0, 0, 1, 1, 1, 0, 0],
-					[0, 0, 0, 1, 0, 0, 0],
-					[0, 0, 1, 1, 1, 0, 0],
-					[0, 1, 1, 1, 1, 1, 1]];
+	
 	
 	
 	var matrix = gridTrial;
@@ -239,7 +235,7 @@ function Start_New_Trial() {
 	updateMatrix(player.y,  player.x, 3);	
 
 	// Initialize the end point
-	updateMatrix(endLoc.y, endLoc.x,5);
+	updateMatrix(endLoc.y, endLoc.x,1);
 	
 	// Initialize the starting position of the player	
 	updateMatrix(startLoc.y, startLoc.x, 3);
@@ -378,7 +374,7 @@ function isValidMove(x, y) {
 		}, 1000)		
 		
 		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 4) {
+	} else if (matrix[ player.y + y][ player.x + x] === 5) {
 		return true
 	}
 	return false;	

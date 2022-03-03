@@ -69,15 +69,11 @@ function load_grid(){
             
             // set initialization parameters
             window.endLoc = grids["endLoc"];
-            window.startLoc = grids["startLoc"];
+            window.startLoc = grids["startLoc"];            
             window.obstacleLoc = grids["obstacleLoc"];
 
-            // grid visuals
-            window.cellSize = grids["cellSize"];
-            window.padding = grids["padding"]
-            
-            // set gridWorld for practice
-            const gridTrial = grids["gridPractice"]
+            // location of the player
+            window.player = grids["player"];            
 
             return gridWorld
         }

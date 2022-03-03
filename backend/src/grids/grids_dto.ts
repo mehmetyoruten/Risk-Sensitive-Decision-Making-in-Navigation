@@ -1,9 +1,8 @@
 export class Grid {
-    gridWorld: number;
-    gridPractice: number;
-    cellSize: number;    
-    padding: number;
+    id: string;
+    gridWorld: number;    
     endLoc: number;
     startLoc: number;
+    player: number;
     obstacleLoc: number;
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Param } from "@nestjs/common";
 import { GridService } from './grids.service'
 // import { Config } from './config.model'
 import { Grid } from './grids_dto'
@@ -13,6 +13,11 @@ export class GridController {
       let grid = this.gridService.readGrid();
       console.log(grid); 
       return grid; 
+    }
+    
+    @Get(':id')
+    async getGrid(@Param('id') gridId: string) {
+        return this.gridService.getSingleGrid(gridId)
     }
 
     

@@ -1,9 +1,9 @@
-import { Body, Injectable } from "@nestjs/common";
+import { Body, Injectable, NotFoundException } from "@nestjs/common";
 import { Grid } from './grids_dto'
 
 @Injectable()
 export class GridService {
-private grid: Grid[] = [];
+private grids: Grid[] = [];
 
   async readGrid(){
     const fs = require('fs');
@@ -22,5 +22,23 @@ private grid: Grid[] = [];
     const fs = require('fs');
     fs.writeFileSync('grids.json', JSON.stringify(grid))
   }
+
+  async getSingleGrid(gridId: string) {
+    const grid = this.findGrid(gridId)[0]; 
+    if (!grid) {
+        throw new NotFoundException('Could not find grid.');
+    }
+    return {...grid}; 
+  }
+
+  private findGrid(id: string): [Grid, number] { 
+    const sessionIndex = this.grids.findIndex(grid => grid.id === id);
+    const session = this.grids[sessionIndex];
+    if (!session) {
+      throw new NotFoundException('Could not find grid.');
+    }
+    return [session, sessionIndex]
+}
+
 }
 
