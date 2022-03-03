@@ -82,38 +82,45 @@ function render() {
 			const cellVal =  matrix[row][col];
 			let color = "gray"; // cell colors						
 			
-			// If the matrix value is 1, put red. If 2, yellow for the player. 4 for target cell
-			if (cellVal === 1) {
+			// If the matrix value is 1, generate tiles. 
+			// If 2, generate obstacles. 
+			// 3 highlights the location of the player
+			// 4 indicates that the move is in the process 
+			// 5 for target cell
+			if (cellVal === 2) {
 				color = "red";				
-			} else if (cellVal === 2) {
-				color =  player.color;
 			} else if (cellVal === 3) {
-				color = "#d8c627"				
+				color =  player.color;
 			} else if (cellVal === 4) {
+				color = "#d8c627"				
+			} else if (cellVal === 5) {
 				color = "green"						
 			}								
 
-			gridContext.fillStyle = color;
-			gridContext.fillRect(col * ( cellSize +  padding),
-				row * ( cellSize +  padding),
-				cellSize,  cellSize);
-			
-			if (cellVal === 1) {
-				drawFlames(gridContext, col, row, cellSize, padding);
-			} else if (cellVal == 4){
-				drawDoor(gridContext, col, row, cellSize, padding);	
-			}
-			
-
-			// Draw borders
-			gridContext.rect(col * ( cellSize +  padding),
-				row * ( cellSize +  padding),
-				cellSize,  cellSize);			
-				gridContext.stroke();
 
 			gridContext.lineWidth = 1;
 			gridContext.strokeStyle="#000000";
 			gridContext.stroke()										
+
+			if (cellVal > 0) {
+				gridContext.fillRect(col * ( cellSize +  padding),
+					row * ( cellSize +  padding),
+					cellSize,  cellSize);
+
+				// Draw borders
+				gridContext.rect(col * ( cellSize +  padding),
+					row * ( cellSize +  padding),
+					cellSize,  cellSize);			
+					gridContext.stroke();
+
+				gridContext.fillStyle = color;
+
+				if (cellVal === 2) {
+					drawFlames(gridContext, col, row, cellSize, padding);
+				} else if (cellVal === 5){
+					drawDoor(gridContext, col, row, cellSize, padding);	
+				} 
+			}						
 		}				
 	}
 
@@ -188,6 +195,7 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 function Start_New_Trial() {
 	window.scrollTo(0, 0);
 	disableScroll();
+
 	// Inrease the trial no
 	trial_n +=1;      
 	window.trial_n = trial_n
@@ -198,10 +206,10 @@ function Start_New_Trial() {
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0]];
 
-	const gridTrial = [[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0]];
+	const gridTrial = [[0, 0, 1, 1, 1, 0, 0],
+					[0, 0, 0, 1, 0, 0, 0],
+					[0, 0, 1, 1, 1, 0, 0],
+					[0, 1, 1, 1, 1, 1, 1]];
 	
 	
 	var matrix = gridTrial;
@@ -209,8 +217,8 @@ function Start_New_Trial() {
 	
 						
 	// Position of the player
-	var playerX = 0;
-	var playerY = matrix.length-1;
+	var playerX = 2;
+	var playerY = 0;
 	var player = { x: playerX, y: playerY, color: "orange" };
 	window.player = player;
 
@@ -223,34 +231,34 @@ function Start_New_Trial() {
 
 
 	var endLoc = {x: 6, y:3};
-	var startLoc = {x:0, y:3};
+	var startLoc = {x:2, y:0};
 	var obstacleLoc = {x: [2,3,4], y:3}
 		
 
 	// Initiate keyboard controls
-	updateMatrix(player.y,  player.x, 0);	
+	updateMatrix(player.y,  player.x, 3);	
 
 	// Initialize the end point
-	updateMatrix(endLoc.y, endLoc.x,0);
+	updateMatrix(endLoc.y, endLoc.x,5);
 	
 	// Initialize the starting position of the player	
-	updateMatrix(startLoc.y, startLoc.x, 2);
-	player.x = 0;
-	player.y = 3;
+	updateMatrix(startLoc.y, startLoc.x, 3);
+	player.x = startLoc.x;
+	player.y = startLoc.y;
 	
 	// Initialize the end point
-	updateMatrix(endLoc.y, endLoc.x,4);
+	updateMatrix(endLoc.y, endLoc.x,5);
 
 	// Locate the obstacles if the player is not in the practice round
 	if (trial_n === (max_practice+1+1)) {	
 		for( var i = 0; i < obstacleLoc.x.length; i++){
-			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 1);
+			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 2);
 		}
 	} else if (trial_n === (max_practice+1+2)) {
 		let obstacleLoc = {x: [2,3,4], y:[2,3]}
 		for( var k = 0; k < obstacleLoc.y.length; k++){
 			for( var i = 0; i < obstacleLoc.x.length; i++){
-				updateMatrix(obstacleLoc.y[k], obstacleLoc.x[i], 1);
+				updateMatrix(obstacleLoc.y[k], obstacleLoc.x[i], 2);
 			}
 		}}
 	
@@ -358,9 +366,9 @@ Move Player
 
 // if there is no obstacle, and if you are in the grid, you can move
 function isValidMove(x, y) {
-	if ( matrix[ player.y + y][ player.x + x] === 0 ) {
+	if ( matrix[ player.y + y][ player.x + x] === 1 ) {
 		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 1) {
+	} else if (matrix[ player.y + y][ player.x + x] === 2) {
 		setTimeout(function() {
 			Flash_Background_Incorrect();	
 			total_loss += 1;
@@ -408,9 +416,9 @@ var movePlayer = function (e) {
 			if ( isValidMove(-1, 0)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y,  player.x, 1);
 				// Highlight the cell being processed
-				updateMatrix( player.y,  player.x - 1, 3);	
+				updateMatrix( player.y,  player.x - 1, 4);	
 				
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,0,2);
@@ -422,7 +430,7 @@ var movePlayer = function (e) {
 
 				// Render the grid
 				render();
-				updateMatrix( player.y,  player.x -1 , 2);	
+				updateMatrix( player.y,  player.x -1 , 3);	
 				player.x --	
 
 				setTimeout(function(){			
@@ -445,8 +453,8 @@ var movePlayer = function (e) {
 			if ( isValidMove(1, 0)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
-				updateMatrix( player.y,  player.x + 1, 3);
+				updateMatrix( player.y,  player.x, 1);
+				updateMatrix( player.y,  player.x + 1, 4);
 
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,2,2);
@@ -458,7 +466,7 @@ var movePlayer = function (e) {
 
 				// Render the grid
 				render();
-				updateMatrix( player.y,  player.x + 1, 2);
+				updateMatrix( player.y,  player.x + 1, 3);
 				player.x ++;
 
 				setTimeout(function(){
@@ -479,8 +487,8 @@ var movePlayer = function (e) {
 		} else if ((key === 38) && (n_keypress == 0)) { 
 			if ( isValidMove(0, -1)) {
 				n_keypress += 1; 
-				updateMatrix( player.y,  player.x, 0);
-				updateMatrix( player.y - 1,  player.x, 3);
+				updateMatrix( player.y,  player.x, 1);
+				updateMatrix( player.y - 1,  player.x, 4);
 				
 				// Highlight the keyboard
 				updateKeyboardMatrix(0,1,2);
@@ -493,7 +501,7 @@ var movePlayer = function (e) {
 				// Render the grid
 				render();
 				
-				updateMatrix( player.y - 1,  player.x, 2);
+				updateMatrix( player.y - 1,  player.x, 3);
 				player.y --;
 				setTimeout(function(){
 					render();
@@ -514,9 +522,9 @@ var movePlayer = function (e) {
 			if ( isValidMove(0, 1)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y,  player.x, 1);
 				// Highlight the target tile as being processed
-				updateMatrix( player.y + 1,  player.x, 3);
+				updateMatrix( player.y + 1,  player.x, 4);
 
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,1,2);
@@ -527,7 +535,7 @@ var movePlayer = function (e) {
 				}, timeLag);
 
 				render();
-				updateMatrix( player.y + 1,  player.x, 2);
+				updateMatrix( player.y + 1,  player.x, 3);
 				player.y ++;
 
 				setTimeout(function(){
