@@ -12,6 +12,10 @@ var background_color = "white";
 var max_n_moves = 20;
 window.max_n_moves = max_n_moves;
 
+// config settings
+var cellSize = 60;
+var padding = 3;
+
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
 }
@@ -71,11 +75,10 @@ function renderKeyboard() {
 	
 }
 	
-function render() {
+function render() {	
 	const w = ( cellSize +  padding) *  matrix[0].length - ( padding);
 	const h = ( cellSize +  padding) *  matrix.length - ( padding);
 		
-	var cellSize = 60;
 	// Color every cell in the grid
 	for (let row = 0; row <  matrix.length; row ++) {
 		for (let col = 0; col <  matrix[row].length; col ++) {
@@ -192,6 +195,7 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 }
 
 function Start_New_Trial() {
+	// Scroll to top and disable further scrolls
 	window.scrollTo(0, 0);
 	disableScroll();
 
@@ -227,9 +231,16 @@ function Start_New_Trial() {
 
 
 	var endLoc = {x: 6, y:3};
+	window.endLoc = endLoc;
+
 	var startLoc = {x:2, y:0};
-	var obstacleLoc = {x: [2,3,4], y:3}
-		
+	window.startLoc = startLoc;
+
+	var obstacleLoc = {x: [2,3], y:3}
+	window.obstacleLoc = obstacleLoc;
+	
+	// Load grid from the server
+	//load_grid('1');
 
 	// Initiate keyboard controls
 	updateMatrix(player.y,  player.x, 3);	
@@ -251,7 +262,7 @@ function Start_New_Trial() {
 			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 2);
 		}
 	} else if (trial_n === (max_practice+1+2)) {
-		let obstacleLoc = {x: [2,3,4], y:[2,3]}
+		let obstacleLoc = {x: [2,3], y:[2,3]}
 		for( var k = 0; k < obstacleLoc.y.length; k++){
 			for( var i = 0; i < obstacleLoc.x.length; i++){
 				updateMatrix(obstacleLoc.y[k], obstacleLoc.x[i], 2);

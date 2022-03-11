@@ -5,6 +5,7 @@ import { Grid } from './grids_dto'
 export class GridService {
 private grids: Grid[] = [];
 
+  // try to call the grid with its Id
   async readGrid(){
     const fs = require('fs');
     return new Promise<Object>((resolve, reject) =>{

@@ -56,7 +56,7 @@ function load_config(){
     
 }
     
-function load_grid(){      
+function load_grid(gridId){      
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
@@ -65,7 +65,7 @@ function load_grid(){
 
             // set gridWorld
             const gridWorld = grids["gridWorld"];
-            window.gridWorld = gridWorld;
+            window.matrix = gridWorld;
             
             // set initialization parameters
             window.endLoc = grids["endLoc"];
@@ -79,7 +79,7 @@ function load_grid(){
         }
     }    
     console.log("Loading grid..")
-    xmlHttp.open("GET", API_URL+"/grids", true); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/grids/"+gridId, true); // true for asynchronous 
     xmlHttp.send(null);        
     
 }
