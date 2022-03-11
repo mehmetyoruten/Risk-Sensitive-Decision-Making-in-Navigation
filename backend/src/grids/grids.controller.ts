@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Param } from "@nestjs/common";
 import { GridService } from './grids.service'
-// import { Config } from './config.model'
-import { Grid } from './grids_dto'
+import { Grid } from './grids.model'
 
 
 @Controller("grids")

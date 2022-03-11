@@ -1,5 +1,5 @@
 import { Body, Injectable, NotFoundException } from "@nestjs/common";
-import { Grid } from './grids_dto'
+import { Grid } from './grids.model'
 
 @Injectable()
 export class GridService {
@@ -33,12 +33,12 @@ private grids: Grid[] = [];
   }
 
   private findGrid(id: string): [Grid, number] { 
-    const sessionIndex = this.grids.findIndex(grid => grid.id === id);
-    const session = this.grids[sessionIndex];
-    if (!session) {
+    const gridIndex = this.grids.findIndex(grid => grid.id === id);
+    const grid = this.grids[gridIndex];
+    if (!grid) {
       throw new NotFoundException('Could not find grid.');
     }
-    return [session, sessionIndex]
+    return [grid, gridIndex]
 }
 
 }
