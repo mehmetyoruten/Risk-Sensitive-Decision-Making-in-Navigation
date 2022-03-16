@@ -8,7 +8,8 @@ export class MoveService {
     async saveMove( move: Move) {                        
         this.moves.push(move);
         const fs = require('fs');
-        fs.writeFileSync('moves.json', JSON.stringify(move))
+        //fs.writeFileSync('moves.json', JSON.stringify(move))
+        fs.writeFileSync('moves.json', this.moves)
         return console.log("Move saved...");
     }
 

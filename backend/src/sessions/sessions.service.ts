@@ -11,7 +11,8 @@ export class SessionsService {
         this.sessions.push(newSession);
 
         const fs = require('fs');
-        fs.writeFileSync('sessions.json', JSON.stringify(newSession))
+        // fs.writeFileSync('sessions.json', JSON.stringify(newSession))
+        fs.writeFileSync('sessions.json', this.sessions)
         return sessId;
     }
 
@@ -53,5 +54,3 @@ export class SessionsService {
     }
 
 }
-
-
