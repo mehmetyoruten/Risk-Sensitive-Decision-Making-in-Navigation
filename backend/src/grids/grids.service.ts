@@ -6,26 +6,12 @@ export class GridService {
   //private grids: Grid[] = [];  
   private grids: Grid[] = [];
 
-  // try to call the grid with its Id
-  /*
   async readGrid(){
-    const fs = require('fs');
-    return new Promise<Object>((resolve, reject) =>{
-      fs.readFile('grids.json', (err, data) => {
-        if (err)
-          return reject(err);
-        resolve(JSON.parse(data));
-      });            
-    });        
-  }
-*/
-
-  async readGrid(){
-    const fs = require('fs');
-    const path = require('path');
-    let rawdata = fs.readFileSync(path.resolve(__dirname, 'grids.json'));
-    let data = JSON.parse(rawdata);
-    console.log(data);  
+    const fs = require('fs');    
+    // Get content from file
+    var contents = fs.readFileSync("grids.json");
+    // Define to JSON type
+    this.grids = JSON.parse(contents);        
   }
 
   async saveGrid(gridId: string, gridWorld: number, endLoc: number, startLoc: number, player: number, obstacleLoc: number){
@@ -43,6 +29,7 @@ export class GridService {
 
   async getSingleGrid(gridId: string) {
     console.log("Load grid "+ gridId);
+    this.readGrid();
     const grid = this.findGrid(gridId)[0]; 
     if (!grid) {
         throw new NotFoundException('Could not find grid.');

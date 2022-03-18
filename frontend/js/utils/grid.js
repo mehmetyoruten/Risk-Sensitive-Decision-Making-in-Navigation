@@ -203,24 +203,6 @@ function Start_New_Trial() {
 	trial_n +=1;      
 	window.trial_n = trial_n
 
-	// Grid info
-	const gridTrial =  [[0, 0, 1, 1, 1, 0, 0],
-						[0, 0, 0, 1, 1, 0, 0],
-						[0, 0, 1, 1, 1, 0, 0],
-						[0, 1, 1, 1, 1, 1, 1]];
-
-		
-	
-	var matrix = gridTrial;
-	window.matrix = matrix;
-	
-						
-	// Position of the player
-	var playerX = 2;
-	var playerY = 0;
-	var player = { x: playerX, y: playerY, color: "orange" };
-	window.player = player;
-
 
 	var keyboardMatrix = keyboardWorld;
 	window.keyboardMatrix = keyboardMatrix;
@@ -229,17 +211,9 @@ function Start_New_Trial() {
 	window.gridContext = gridContext;
 
 
-	var endLoc = {x: 6, y:3};
-	window.endLoc = endLoc;
-
-	var startLoc = {x:2, y:0};
-	window.startLoc = startLoc;
-
-	var obstacleLoc = {x: [2,3], y:3}
-	window.obstacleLoc = obstacleLoc;
-	
 	// Load grid from the server
-	//load_grid('1');
+	load_grid('3');
+
 
 	// Initiate keyboard controls
 	updateMatrix(player.y,  player.x, 3);	

@@ -55,34 +55,40 @@ function load_config(){
     xmlHttp.send(null);    
     
 }
-    
+
+
 function load_grid(gridId){      
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            const grids = JSON.parse(xmlHttp.responseText);
-            console.log(grids);
-
-            // set gridWorld
-            const gridWorld = grids["gridWorld"];
-            window.matrix = gridWorld;
-            
-            // set initialization parameters
-            window.endLoc = grids["endLoc"];
-            window.startLoc = grids["startLoc"];            
-            window.obstacleLoc = grids["obstacleLoc"];
-
-            // location of the player
-            window.player = grids["player"];            
-
-            return gridWorld
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp)
         }
-    }    
+
+    }            
     console.log("Loading grid with id: " + gridId + "...");
-    xmlHttp.open("GET", API_URL+"/grids/"+gridId, true); // true for asynchronous 
-    xmlHttp.send(null);        
-    
+    xmlHttp.open("GET", API_URL+"/grids/"+gridId, false); // true for asynchronous 
+    xmlHttp.send(null);                
 }
+
+function callback(xmlHttp) {    
+    // it should print grid info
+    const grids = JSON.parse(xmlHttp.responseText);    
+
+    // set gridWorld
+    const gridWorld = grids["gridWorld"];
+    window.matrix = gridWorld;
+    
+    // set initialization parameters
+    window.endLoc = grids["endLoc"];
+    window.startLoc = grids["startLoc"];            
+    window.obstacleLoc = grids["obstacleLoc"];
+
+    // location of the player
+    window.player = grids["player"];          
+
+    console.log(grids)
+}
+
 
 function saveSession(){
     let participant = 1337;
