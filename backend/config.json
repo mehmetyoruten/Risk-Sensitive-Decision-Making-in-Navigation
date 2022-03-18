@@ -1,6 +1,7 @@
 {
-    "time_limit" : 1000,
+    "time_limit" : 1000,    
     "max_practice" : 2,
+    "practice_obstacle": 2,
     "max_moves" : 20,
     "max_trials" : 5,
     "max_grids" : 1,

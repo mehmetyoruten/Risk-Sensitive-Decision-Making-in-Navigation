@@ -24,9 +24,12 @@ function load_config(){
 
             // set number of trials 
             window.time_limit = config["time_limit"];
-
-            // set number of practice trials
+            
+            // set number of practice trials without obstacles
             window.max_practice = config["max_practice"];
+
+            // set number of practice trials with obstacles
+            window.practice_obstacle = config["practice_obstacle"];
 
             // set number of practice trials
             window.max_moves = config["max_moves"];
@@ -61,7 +64,7 @@ function load_grid(gridId){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            callback(xmlHttp)
+            callback(xmlHttp);
         }
 
     }            
@@ -102,8 +105,7 @@ function saveSession(){
             if (xmlHttp.status == 201){
                 // After successful post, receive id of the created trial 
                 var resp = xmlHttp.responseText;
-                let id = parseInt(resp.id);
-                console.log("Received Session Id: "+id); 
+                let id = parseInt(resp.id);                                
             }
         }
     }
@@ -124,32 +126,32 @@ function loadSessionInfo(){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            let session = JSON.parse(xmlHttp.responseText);
-            console.log(session);
-
-            // set number of trials 
-            let session_id = session[0].id;
-            console.log("Session id: " + session_id);
-            
-            window.session_id = session_id;
-
-            return session_id
+        SessionInfo(xmlHttp)         
         }
     }    
     console.log("Loading session info..")
-    xmlHttp.open("GET", API_URL+"/sessions", true); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/sessions", false); // true for asynchronous 
     xmlHttp.send(null);            
 
     
 }
 
+function SessionInfo(xmlHttp){        
+    let session = JSON.parse(xmlHttp.responseText);
+    console.log(session);
+
+    // set number of trials 
+    window.session_id = session[session.length - 1].id;
+    console.log("Session id: " + session_id);    
+}
+
+
 function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
 
-    let id = loadSessionInfo();
-    console.log(id)
+    SessionInfo();
     
-    xhr.open("PATCH", API_URL+"/sessions/"+id);
+    xhr.open("PATCH", API_URL+"/sessions/"+session_id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
         comment: comment

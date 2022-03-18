@@ -6,14 +6,38 @@ export class SessionsService {
     private sessions: Session[] = [];    
 
     async saveSession(participant: number, code_version: string, comment: string) {        
+        const fs = require('fs');
+        
+        // Read session info
+        this.readSession();
+
+        // Create new session info
         const sessId = Math.random().toString(); // Create random numbers for Id. But same number can be generated
         const newSession = new Session(sessId, participant, code_version, comment);
+        
+        // Add data to the object
         this.sessions.push(newSession);
-
-        const fs = require('fs');
-        // fs.writeFileSync('sessions.json', JSON.stringify(newSession))
-        fs.writeFileSync('sessions.json', this.sessions)
+        console.log(newSession)
+        let json = JSON.stringify(this.sessions); // Convert it back to JSON
+        
+        
+        fs.writeFile("./sessions.json", json, 'utf8', (err) => {
+          if (err) {
+            console.log(`Error writing file: ${err}`);
+          } else {
+            console.log(`Session is written successfully!`);
+          }
+        });
         return sessId;
+    }
+
+    async readSession(){
+      const fs = require('fs');    
+      // Get content from file
+      var contents = fs.readFileSync("sessions.json");
+      // Define to JSON type
+      this.sessions = JSON.parse(contents);   
+      return this.sessions[this.sessions.length - 1]
     }
 
     getSessions() {
@@ -21,6 +45,7 @@ export class SessionsService {
     }
 
     getSingleSession(sessionId: string) { 
+        this.readSession();
         const session = this.findSession(sessionId)[0]; 
         if (!session) {
             throw new NotFoundException('Could not find session.');
@@ -42,9 +67,19 @@ export class SessionsService {
           updatedSession.comment = comm;
         }
         this.sessions[index] = updatedSession;
+
+        const fs = require('fs');
+        fs.writeFile("./sessions.json", JSON.stringify(this.sessions), 'utf8', (err) => {
+          if (err) {
+            console.log(`Error updating file: ${err}`);
+          } else {
+            console.log(`Session is updated successfully!`);
+          }
+        });
     }
 
     private findSession(id: string): [Session, number] { 
+        this.readSession();
         const sessionIndex = this.sessions.findIndex(session => session.id === id);
         const session = this.sessions[sessionIndex];
         if (!session) {

@@ -151,10 +151,10 @@ function Submit_Response(keyPressed, moveDirection) {
 				$(".grids").slideUp();    					
 				
 				// First round of practice ends
-				if (trial_n === (max_practice+1)) {					
+				if (trial_n === (max_practice)) {					
 					$(".instructions-obstacle").slideDown();
 				// Second round of practice ends
-				} else if (trial_n === (1 + (max_practice)*2)) {
+				} else if (trial_n === (max_practice + practice_obstacle)) {
 					$(".practice-end").slideDown(); 					
 				} else {
 					$(".inter-trial").slideDown(); 	 
@@ -210,11 +210,31 @@ function Start_New_Trial() {
 	var gridContext = getContext(0, 0, "white");
 	window.gridContext = gridContext;
 
+	//array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+	let array = ['1', '2', '3', '4'];
+	var grid_id = array[Math.floor(Math.random() * array.length)];
 
-	// Load grid from the server
-	load_grid('3');
-
-
+	// First round of practice trials
+	if (trial_n <= (max_practice)) {
+		// load practice map from the server
+		load_grid('0');
+	// Second round of practice trials
+	} else if ((trial_n > max_practice) && (trial_n <= (max_practice + practice_obstacle))) {
+		load_grid('0');
+		// Load obstacles 
+		for (var k = 0; k < obstacleLoc.x.length; k++) {
+			updateMatrix(obstacleLoc.y[k], obstacleLoc.x[k], 2);
+		}
+	// Experiment trials
+	} else {
+		load_grid(grid_id);
+		// Load obstacles 
+		for (var k = 0; k < obstacleLoc.x.length; k++) {
+			updateMatrix(obstacleLoc.y[k], obstacleLoc.x[k], 2);
+		}
+	}
+	
+	
 	// Initiate keyboard controls
 	updateMatrix(player.y,  player.x, 3);	
 
@@ -229,19 +249,6 @@ function Start_New_Trial() {
 	// Initialize the end point
 	updateMatrix(endLoc.y, endLoc.x,5);
 
-	// Locate the obstacles if the player is not in the practice round
-	if (trial_n === (max_practice+1+1)) {	
-		for( var i = 0; i < obstacleLoc.x.length; i++){
-			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 2);
-		}
-	} else if (trial_n === (max_practice+1+2)) {
-		let obstacleLoc = {x: [2,3], y:[2,3]}
-		for( var k = 0; k < obstacleLoc.y.length; k++){
-			for( var i = 0; i < obstacleLoc.x.length; i++){
-				updateMatrix(obstacleLoc.y[k], obstacleLoc.x[i], 2);
-			}
-		}}
-	
 	// Render the updated locations
 	render();
 	renderKeyboard();
