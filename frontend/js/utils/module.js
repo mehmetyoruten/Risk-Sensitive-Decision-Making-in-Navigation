@@ -78,7 +78,7 @@ function load_grid(gridId){
             return gridWorld
         }
     }    
-    console.log("Loading grid..")
+    console.log("Loading grid with id: " + gridId + "...");
     xmlHttp.open("GET", API_URL+"/grids/"+gridId, true); // true for asynchronous 
     xmlHttp.send(null);        
     

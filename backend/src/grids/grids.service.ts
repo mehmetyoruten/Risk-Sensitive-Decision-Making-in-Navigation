@@ -31,6 +31,7 @@ export class GridService {
   }
 
   async getSingleGrid(gridId: string) {
+    console.log("Load grid "+ gridId);
     const grid = this.findGrid(gridId)[0]; 
     if (!grid) {
         throw new NotFoundException('Could not find grid.');

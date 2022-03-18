@@ -8,6 +8,6 @@
     "number_of_moves" : 0,
     "total_loss": 0,
     "session" : 1,
-    "timeLag": 250,
+    "timeLag": 500,
     "background_color": "white"
 }

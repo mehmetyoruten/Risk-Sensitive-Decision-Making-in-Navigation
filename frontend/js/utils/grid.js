@@ -209,8 +209,7 @@ function Start_New_Trial() {
 						[0, 0, 1, 1, 1, 0, 0],
 						[0, 1, 1, 1, 1, 1, 1]];
 
-	
-	
+		
 	
 	var matrix = gridTrial;
 	window.matrix = matrix;
@@ -307,13 +306,13 @@ function Start_New_Move(max_trials, number_of_moves, max_moves) {
 function Flash_Background_Correct() {
 	// Note: jquery-ui necessary to animate colors.
 	$('body').stop().animate({backgroundColor:'#006622'}, 10);	
-	$('body').animate({backgroundColor:background_color}, 1000);
+	$('body').animate({backgroundColor:background_color}, 2000);
 }
 
 function Flash_Background_Incorrect() {
 	// Note: jquery-ui necessary to animate colors.
 	$('body').stop().animate({backgroundColor:'#800000'}, 10);	
-	$('body').animate({backgroundColor:background_color}, 1000);
+	$('body').animate({backgroundColor:background_color}, 2000);
 }
 
 // Put arrow images on keyboard

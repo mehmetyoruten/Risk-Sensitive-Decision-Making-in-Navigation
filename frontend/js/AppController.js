@@ -17,7 +17,7 @@ $(document).ready(function() {
   // Initialize variables
   load_config();
   saveSession();
-  //load_grid('1');
+  load_grid('1');
 
   var background_color = "white";  
 
