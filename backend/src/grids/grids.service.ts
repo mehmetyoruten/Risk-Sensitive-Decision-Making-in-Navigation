@@ -13,8 +13,10 @@ export class GridService {
         if (err)
           return reject(err);
         resolve(JSON.parse(data));
+        this.grids = data;
+        console.log(this.grids);
       });
-    });
+    });    
   }
 
   async saveGrid(gridId: string, gridWorld: number, endLoc: number, startLoc: number, player: number, obstacleLoc: number){
@@ -63,6 +65,7 @@ export class GridService {
   }
 
   private findGrid(id: string): [Grid, number] { 
+    console.log("Looking for grid" + id);
     const gridIndex = this.grids.findIndex(grid => grid.id === id);
     const grid = this.grids[gridIndex];
     if (!grid) {
