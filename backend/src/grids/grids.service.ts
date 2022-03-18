@@ -3,9 +3,11 @@ import { Grid } from './grids.model'
 
 @Injectable()
 export class GridService {
+  //private grids: Grid[] = [];  
   private grids: Grid[] = [];
 
   // try to call the grid with its Id
+  /*
   async readGrid(){
     const fs = require('fs');
     return new Promise<Object>((resolve, reject) =>{
@@ -13,10 +15,17 @@ export class GridService {
         if (err)
           return reject(err);
         resolve(JSON.parse(data));
-        this.grids = data;
-        console.log(this.grids);
-      });
-    });    
+      });            
+    });        
+  }
+*/
+
+  async readGrid(){
+    const fs = require('fs');
+    const path = require('path');
+    let rawdata = fs.readFileSync(path.resolve(__dirname, 'grids.json'));
+    let data = JSON.parse(rawdata);
+    console.log(data);  
   }
 
   async saveGrid(gridId: string, gridWorld: number, endLoc: number, startLoc: number, player: number, obstacleLoc: number){
@@ -65,8 +74,8 @@ export class GridService {
   }
 
   private findGrid(id: string): [Grid, number] { 
-    console.log("Looking for grid" + id);
     const gridIndex = this.grids.findIndex(grid => grid.id === id);
+
     const grid = this.grids[gridIndex];
     if (!grid) {
       throw new NotFoundException('Could not find grid.');
