@@ -47,7 +47,7 @@ function load_config(){
 
             window.timeLag = config["timeLag"];
 
-            window.background_color = config["white"];
+            window.background_color = config["background_color"];
 
         }
     }    

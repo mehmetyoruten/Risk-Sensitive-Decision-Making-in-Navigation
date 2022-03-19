@@ -6,14 +6,11 @@ const API_URL = "http://134.76.24.103/node"
 const keyboardWorld = [[0,1,0],
 					  [1,1,1]];
 
-var background_color = "white";  
-
-var max_n_moves = 20;
-window.max_n_moves = max_n_moves;
 
 // config settings
 var cellSize = 60;
 var padding = 3;
+
 
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
@@ -91,24 +88,34 @@ function render() {
 			// 5 for target cell
 			if (cellVal === 0 ) {
 				color = 'white';
+			} else if (cellVal == 1){
+				color = 'gray';
 			} else if (cellVal === 2) {
-				color = "red";				
+				color = "red";		
+				drawFlames(gridContext, col, row, cellSize, padding);
 			} else if (cellVal === 3) {
-				color =  player.color;
+				color =  player.color;		
 			} else if (cellVal === 4) {
-				color = "#d8c627"				
+				color = "#d8c627";										
 			} else if (cellVal === 5) {
-				color = "green"						
+				color = "green"					
+				drawDoor(gridContext, col, row, cellSize, padding);							
 			}								
 
-			gridContext.lineWidth = 1;
-			gridContext.strokeStyle="#000000";
-			gridContext.stroke()										
 
 			gridContext.fillStyle = color;
 			gridContext.fillRect(col * ( cellSize +  padding),
 				row * ( cellSize +  padding),
 				cellSize,  cellSize);
+
+			
+			/*
+			gridContext.lineWidth = 1;
+			gridContext.strokeStyle="#000000";
+			gridContext.stroke()										
+			
+
+		
 
 			// Draw borders
 			if (cellVal > 0) {
@@ -123,7 +130,9 @@ function render() {
 					drawDoor(gridContext, col, row, cellSize, padding);	
 				} 
 			} 		
-		}									
+			*/
+		}	
+
 	}	
 		gridContext.font = "10px";
 		gridContext.fillStyle = "white";				
@@ -141,14 +150,14 @@ function Submit_Response(keyPressed, moveDirection) {
 	window.last_move = last_move
 	console.log(last_move);      
 
-	if (number_of_moves <= max_n_moves) {
+	if (number_of_moves <= max_moves) {
 		// Check if the target is reached
 		if (matrix[endLoc.y][endLoc.x] === 3) {                 
 			document.removeEventListener('keydown', movePlayer);
-			setTimeout(function() {
-				Flash_Background_Correct();
+			
+			setTimeout(function() {				
 				$(".grids").slideUp();    					
-				
+				Flash_Background_Correct();	
 				// First round of practice ends
 				if (trial_n === (max_practice)) {					
 					$(".instructions-obstacle").slideDown();
@@ -355,8 +364,8 @@ Move Player
 function isValidMove(x, y) {
 	if ( matrix[ player.y + y][ player.x + x] === 1 ) {
 		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 2) {
-		setTimeout(function() {
+	} else if (matrix[ player.y + y][ player.x + x] === 2) {		
+		setTimeout(function() {			
 			Flash_Background_Incorrect();	
 			total_loss += 1;
 			$(".grids").slideUp();    
@@ -545,7 +554,7 @@ var movePlayer = function (e) {
 			window.player = player;
 
 	} else {
-		alert("Please use only the arrow keys!");
+		//alert("Please use only the arrow keys!");
 	}	
 }
 
