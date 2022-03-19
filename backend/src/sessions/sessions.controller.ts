@@ -9,11 +9,13 @@ export class SessionController{
 
     @Post()
     addSession(        
+        @Body('id') sessId: string,
         @Body('participant') sessPart: number,
         @Body('code_version') sessCode: string,
         @Body('comment') sessComm: string
     ): any {
         const generatedId = this.sessionsService.saveSession(             
+            sessId,
             sessPart,
             sessCode,
             sessComm

@@ -1,6 +1,5 @@
 import { load_grid, loadSessionInfo } from "./module.js";
 
-//const API_URL = "http://127.0.0.1:5502/backend"
 const API_URL = "http://134.76.24.103/node"
 
 

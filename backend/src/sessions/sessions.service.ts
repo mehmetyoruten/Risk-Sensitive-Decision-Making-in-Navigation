@@ -5,16 +5,19 @@ import { Session } from './session.model'
 export class SessionsService {
     private sessions: Session[] = [];    
 
-    async saveSession(participant: number, code_version: string, comment: string) {        
+    async saveSession(sessId:string, participant: number, code_version: string, comment: string) {        
         const fs = require('fs');
+        
+       
+        //this.sessions[this.sessions.length - 1].id
+
+        // Create new session info        
+        //const sessId = Math.random().toString(16).substr(2, 16) // Create random hash for session Id.
+        const newSession = new Session(sessId, participant, code_version, comment);
         
         // Read session info
         this.readSession();
 
-        // Create new session info        
-        const sessId = Math.random().toString(16).substr(2, 16) // Create random hash for session Id.
-        const newSession = new Session(sessId, participant, code_version, comment);
-        
         // Add data to the object
         this.sessions.push(newSession);
         console.log(newSession)

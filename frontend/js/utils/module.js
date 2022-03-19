@@ -6,8 +6,6 @@ Experiment Settings
 */
 
 const API_URL = "http://134.76.24.103/node"
-//const API_URL = "http://127.0.0.1:5502/backend"
-
 
 /*
 ================================================================================
@@ -97,6 +95,9 @@ function saveSession(){
     let participant = 1337;
     let code_version = "1"; 
     
+    var session_id = Math.random().toString(16).substr(2, 16);
+    window.session_id = session_id;
+    
     var xmlHttp = new XMLHttpRequest();
     // create API call to create new session 
     xmlHttp.open("POST", API_URL+"/sessions");        
@@ -112,7 +113,7 @@ function saveSession(){
 
     // send Post request to API
     var body = JSON.stringify({
-        id: 2000,
+        id: session_id,
         participant: participant,
         code_version: code_version,
         comment : 1
@@ -130,7 +131,7 @@ function loadSessionInfo(){
         }
     }    
     console.log("Loading session info..")
-    xmlHttp.open("GET", API_URL+"/sessions", false); // true for asynchronous 
+    xmlHttp.open("GET", API_URL+"/sessions", true); // true for asynchronous 
     xmlHttp.send(null);            
 
     
@@ -141,16 +142,14 @@ function SessionInfo(xmlHttp){
     let session = JSON.parse(xmlHttp.responseText);    
 
     // Declare the current session id
-    window.session_id = session[session.length - 1].id;
+    //window.session_id = session[session.length - 1].id;
     console.log("Session id: " + session_id);    
 }
 
 
 function saveSessionResult(comment){
     var xhr = new XMLHttpRequest();
-
-    SessionInfo();
-    
+        
     xhr.open("PATCH", API_URL+"/sessions/"+session_id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
