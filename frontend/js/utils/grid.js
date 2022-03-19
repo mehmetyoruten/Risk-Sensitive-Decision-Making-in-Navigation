@@ -1,4 +1,4 @@
-import { load_config, load_grid } from "./module.js";
+import { load_grid, loadSessionInfo } from "./module.js";
 
 //const API_URL = "http://127.0.0.1:5502/backend"
 const API_URL = "http://134.76.24.103/node"
@@ -138,7 +138,7 @@ function Submit_Response(keyPressed, moveDirection) {
 	let submittedY = player.y;
 	
 	// update the last move
-	var last_move = saveMoveResult(number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection);
+	var last_move = saveMoveResult(session_id, number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection);
 	window.last_move = last_move
 	console.log(last_move);      
 
@@ -172,12 +172,13 @@ function Submit_Response(keyPressed, moveDirection) {
 	}               
 }  
 
-function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection){          
+function saveMoveResult(session_id, number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection){          
 	// create API call to save building block choice
 	var xhr = new XMLHttpRequest();
 	console.log("Sending API Call to save move choice")
 
 	const saved_response = {
+		"session_id": session_id,
 		"trial_n": trial_n,
 		"move_n": number_of_moves.toString(),                 
 		"response_time": response_time,

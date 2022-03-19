@@ -1,11 +1,12 @@
-import { Body, Controller, Get, Post, Param } from "@nestjs/common";
+import { Body, Controller, Get, Post, Param, Inject } from "@nestjs/common";
+import { SessionsService } from "src/sessions/sessions.service";
 import { MoveService } from './move.service'
 // import { Config } from './config.model'
 import { Move } from './move_dto'
 
 
 @Controller("move")
-export class MoveController {
+export class MoveController {    
     constructor(private readonly moveService: MoveService) {}
         
     @Get()

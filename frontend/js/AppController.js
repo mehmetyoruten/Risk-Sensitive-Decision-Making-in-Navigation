@@ -1,4 +1,4 @@
-import { load_config, load_grid, saveSession, saveSessionResult} from './utils/module.js' ;
+import { load_config, load_grid, saveSession, saveSessionResult, loadSessionInfo } from './utils/module.js' ;
 
 import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
 
@@ -17,7 +17,7 @@ $(document).ready(function() {
   // Initialize variables
   load_config();
   saveSession();
-
+  loadSessionInfo();
   var background_color = "white";  
 
 

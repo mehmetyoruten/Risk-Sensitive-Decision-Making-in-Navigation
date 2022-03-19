@@ -6,19 +6,19 @@ import { SessionsService } from "../sessions/sessions.service"
 @Injectable()
 export class MoveService {
     private moves: Move[] = [];        
+
     async saveMove( move: Move) {                        
-        const fs = require('fs');
+        const fs = require('fs');                
+
+        // Read moves files    
+        //this.readMoves();        
         
-        //SessionsService.readSession()
-
-        // Read moves files
-        this.readMoves();
-
         // Add new move to the file
         this.moves.push(move);
         let json = JSON.stringify(this.moves); // Convert object back to JSON
+        let session_id = this.moves[this.moves.length-1].session_id;
         
-        fs.writeFile("./moves/moves.json", json, 'utf8', (err) => {
+        fs.writeFile("./moves/" + session_id + ".json", json, 'utf8', (err) => {
             if (err) {
               console.log(`Error writing file: ${err}`);
             } else {

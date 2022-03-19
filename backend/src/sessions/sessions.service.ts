@@ -11,8 +11,8 @@ export class SessionsService {
         // Read session info
         this.readSession();
 
-        // Create new session info
-        const sessId = Math.random().toString(); // Create random numbers for Id. But same number can be generated
+        // Create new session info        
+        const sessId = Math.random().toString(16).substr(2, 16) // Create random hash for session Id.
         const newSession = new Session(sessId, participant, code_version, comment);
         
         // Add data to the object
@@ -36,7 +36,7 @@ export class SessionsService {
       // Get content from file
       var contents = fs.readFileSync("sessions.json");
       // Define to JSON type
-      this.sessions = JSON.parse(contents);   
+      this.sessions = JSON.parse(contents);         
       return this.sessions[this.sessions.length - 1]
     }
 

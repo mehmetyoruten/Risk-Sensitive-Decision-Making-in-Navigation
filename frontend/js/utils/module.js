@@ -137,10 +137,10 @@ function loadSessionInfo(){
 }
 
 function SessionInfo(xmlHttp){        
-    let session = JSON.parse(xmlHttp.responseText);
-    console.log(session);
+    // Get all the sessions
+    let session = JSON.parse(xmlHttp.responseText);    
 
-    // set number of trials 
+    // Declare the current session id
     window.session_id = session[session.length - 1].id;
     console.log("Session id: " + session_id);    
 }
@@ -190,4 +190,5 @@ export {load_config,
         load_grid,
         saveSession, 
         saveSessionResult, 
-        saveTrial } ;
+        saveTrial,
+        loadSessionInfo } ;
