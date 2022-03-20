@@ -5,7 +5,7 @@ import { Session } from './session.model'
 export class SessionsService {
     private sessions: Session[] = [];    
 
-    async saveSession(sessId:string, participant: number, code_version: string, comment: string) {        
+    async saveSession(sessId:string, sess_start: number, sess_end: number, maps: number, results: number, code_version: string, comment: string) {        
         const fs = require('fs');
         
        
@@ -13,7 +13,7 @@ export class SessionsService {
 
         // Create new session info        
         //const sessId = Math.random().toString(16).substr(2, 16) // Create random hash for session Id.
-        const newSession = new Session(sessId, participant, code_version, comment);
+        const newSession = new Session(sessId, sess_start, sess_end, maps, results, code_version, comment);
         
         // Read session info
         this.readSession();
@@ -56,15 +56,18 @@ export class SessionsService {
         return {...session}; 
     }
 
-    updateSession(sessionId: string, participant: number, code_version: string, comm: string) {
+    updateSession(sessionId: string, sess_start: number, sess_end: number, maps: number, results: number, code_version: string, comm: string) {
         const [session, index] = this.findSession(sessionId);        
 
         const updatedSession = { ...session };
-        if (participant) {
-          updatedSession.participant = participant;
+        if (maps) {
+          updatedSession.maps = maps;
         }
-        if (code_version) {
-          updatedSession.code_version = code_version;
+        if (sess_end) {
+          updatedSession.end_time = sess_end;
+        }
+        if (results) {
+          updatedSession.results = results;
         }
         if (comm) {
           updatedSession.comment = comm;

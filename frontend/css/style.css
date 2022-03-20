@@ -46,11 +46,19 @@ body {
   display: none;
 }
 
-.instructions {
+.instructions-1 {
   display: none;
 }
 
-.instructions-obstacle {
+.instructions-2 {
+  display: none;
+}
+
+.instructions-3 {
+  display: none;
+}
+
+.instructions-4 {
   display: none;
 }
 
@@ -176,8 +184,9 @@ Block: Grids
 
 
 #instructions_grid_pic {
-  /* margin-left: auto; */
-  width: 90%;
+  margin-left: auto;
+  width: 50%;
   text-align: center;  
-  padding: 5%;
+  padding: 5%;  
 }
+

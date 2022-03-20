@@ -11,7 +11,6 @@ const keyboardWorld = [[0,1,0],
 var cellSize = 60;
 var padding = 3;
 
-
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
 }
@@ -154,20 +153,21 @@ function Submit_Response(keyPressed, moveDirection) {
 		// Check if the target is reached
 		if (matrix[endLoc.y][endLoc.x] === 3) {                 
 			document.removeEventListener('keydown', movePlayer);
-			
+			results.push('1');
+			console.log(results);
 			setTimeout(function() {				
 				$(".grids").slideUp();    					
 				Flash_Background_Correct();	
 				// First round of practice ends
 				if (trial_n === (max_practice)) {					
-					$(".instructions-obstacle").slideDown();
+					$(".instructions-4").slideDown();
 				// Second round of practice ends
 				} else if (trial_n === (max_practice + practice_obstacle)) {
 					$(".practice-end").slideDown(); 					
 				} else {
 					$(".inter-trial").slideDown(); 	 
 				}
-			}, 1000)
+			}, 2000)
 		} else {        		
 			// Start the next move, if the end point is not reached               
 			setTimeout(function(){                     
@@ -175,6 +175,7 @@ function Submit_Response(keyPressed, moveDirection) {
 			}, time_limit);
 		}  
 	} else {
+		results.push('0');
 		$(".grids").slideUp();
 		$(".number-of-moves").slideDown()
 	}               
@@ -223,13 +224,16 @@ function Start_New_Trial() {
 	let array = ['1', '2', '3', '4'];
 	var grid_id = array[Math.floor(Math.random() * array.length)];
 
+	
 	// First round of practice trials
 	if (trial_n <= (max_practice)) {
 		// load practice map from the server
-		load_grid('0');
+		grid_id = 0;
+		load_grid(grid_id);
 	// Second round of practice trials
 	} else if ((trial_n > max_practice) && (trial_n <= (max_practice + practice_obstacle))) {
-		load_grid('0');
+		grid_id = 0;
+		load_grid(grid_id);
 		// Load obstacles 
 		for (var k = 0; k < obstacleLoc.x.length; k++) {
 			updateMatrix(obstacleLoc.y[k], obstacleLoc.x[k], 2);
@@ -243,6 +247,8 @@ function Start_New_Trial() {
 		}
 	}
 	
+	// Save chosen map id 
+	maps.push(grid_id);
 	
 	// Initiate keyboard controls
 	updateMatrix(player.y,  player.x, 3);	
@@ -371,8 +377,8 @@ function isValidMove(x, y) {
 			$(".grids").slideUp();    
 			$(".lost-page").slideDown(); 		
 			document.removeEventListener('keydown', movePlayer);		
-		}, 1000)		
-		
+		}, 2000)		
+		results.push('-1');
 		return true;
 	} else if (matrix[ player.y + y][ player.x + x] === 5) {
 		return true

@@ -91,9 +91,17 @@ function callback(xmlHttp) {
 }
 
 
-function saveSession(){
-    let participant = 1337;
+function saveSession(){        
     let code_version = "1"; 
+    
+    let sess_start_time = new Date().getTime();
+
+    // Create empty arrays to save used maps and results of the trials
+    var maps = [];
+    window.maps = maps;
+
+    var results = [];
+    window.results = results;
     
     var session_id = Math.random().toString(16).substr(2, 16);
     window.session_id = session_id;
@@ -114,7 +122,10 @@ function saveSession(){
     // send Post request to API
     var body = JSON.stringify({
         id: session_id,
-        participant: participant,
+        start_time: sess_start_time,
+        end_time: 0,
+        results: results,
+        maps: maps,
         code_version: code_version,
         comment : 1
         })
@@ -148,11 +159,16 @@ function SessionInfo(xmlHttp){
 
 
 function saveSessionResult(comment){
+    let sess_end_time = new Date().getTime();
+    
     var xhr = new XMLHttpRequest();
         
     xhr.open("PATCH", API_URL+"/sessions/"+session_id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
+        end_time: sess_end_time,
+        maps: maps,
+        results: results,
         comment: comment
     }));
     }

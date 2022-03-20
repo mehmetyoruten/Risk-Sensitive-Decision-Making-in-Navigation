@@ -17,49 +17,21 @@ $(document).ready(function() {
   load_config();
   saveSession();
   loadSessionInfo();
-  var background_color = "white";  
-
-
-
   /*
   ================================================================================
   jQuery Flow
   ================================================================================
   */  
   
-  
-  $(".class").keydown(function(event) { 
-    return false;
-  });
-  
-
   // Count number of enters
-  //var i = 0;
-  //window.i = i;
-  
+  var n_enters = 0;    
   //document.removeEventListener('keydown', movePlayer);
   
   $("#welcome__button").click(function() {
-    $(".welcome").slideUp();
+    $(".welcome").slideUp();    
     $(".consent").slideDown();    
   });
   
-  $("#welcome").keyup(function (e) {
-    if(e.keyCode == 13) {
-      $('#welcome__button').click()
-    };
-  });
-
-  
-  $(document).keyup(function (e) {
-    if (e.keyCode == 37) {
-        $('#prev').click();
-        return false;
-    }
-    if (e.keyCode == 13) {
-        $('#consent__button__agree').click();
-    }
-  });
 
 
   var consent_disagree_slide = function() {
@@ -74,7 +46,7 @@ $(document).ready(function() {
 
   $("#consent__button__agree").click(function() {
     $(".consent").slideUp();    
-    $(".instructions").slideDown();
+    $(".instructions-1").slideDown();
   });
 
   $("#consent__button__disagree").click(function() {
@@ -88,15 +60,27 @@ $(document).ready(function() {
     });
 
 
-  $("#next-button-instructions").click(function() {
-    $(".instructions").slideUp();    
+  
+  $("#next-button-instructions-1").click(function() {
+      $(".instructions-1").slideUp();    
+      $(".instructions-2").slideDown();                    
+  });
+
+
+  $("#next-button-instructions-2").click(function() {
+      $(".instructions-2").slideUp();    
+      $(".instructions-3").slideDown();                    
+  });
+
+  $("#next-button-instructions-3").click(function() {
+    $(".instructions-3").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);        
   });
 
-  $("#next-button-instructions-2").click(function() {
-    $(".instructions-obstacle").slideUp();    
+  $("#next-button-instructions-4").click(function() {
+    $(".instructions-4").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);        
@@ -157,6 +141,29 @@ $(document).ready(function() {
   });
 
 
+  /* KEYBOARD CONTROL
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.welcome').height() > 100 )) {
+      $(".welcome").slideUp();
+      $(".consent").slideDown();      
+    }
+  });
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.consent').height() > 100)) {
+      $(".consent").slideUp();    
+      $(".instructions-1").slideDown();               
+    }    
+  });
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.instructions-1').height() > 100)) {
+      $(".instructions-1").slideUp();    
+      $(".instructions-2").slideDown();        
+    }    
+  });
+  */
 })
   
 
