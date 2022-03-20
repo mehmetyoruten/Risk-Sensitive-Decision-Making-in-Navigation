@@ -1,16 +1,41 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { Move } from './move_dto'
+import { SessionsService } from "../sessions/sessions.service"
+
 
 @Injectable()
 export class MoveService {
-    private moves: Move[] = [];    
+    private moves: Move[] = [];        
 
     async saveMove( move: Move) {                        
+        const fs = require('fs');                
+
+        // Read moves files    
+        //this.readMoves();        
+        
+        // Add new move to the file
         this.moves.push(move);
-        const fs = require('fs');
-        fs.writeFileSync('moves.json', JSON.stringify(move))
-        return console.log("Move saved...");
+        let json = JSON.stringify(this.moves); // Convert object back to JSON
+        let session_id = this.moves[this.moves.length-1].session_id;
+        
+        fs.writeFile("./moves/" + session_id + ".json", json, 'utf8', (err) => {
+            if (err) {
+              console.log(`Error writing file: ${err}`);
+            } else {
+              console.log(`Move is saved`);
+            }
+        });
     }
+
+
+    async readMoves(){
+        const fs = require('fs');    
+        // Get content from file
+        var contents = fs.readFileSync("./moves/moves.json");
+        // Define to JSON type
+        this.moves = JSON.parse(contents);        
+    }
+
 
     getMoves() {
         return [...this.moves]; 

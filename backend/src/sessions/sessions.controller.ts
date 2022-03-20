@@ -9,12 +9,20 @@ export class SessionController{
 
     @Post()
     addSession(        
-        @Body('participant') sessPart: number,
+        @Body('id') sessId: string,
+        @Body('start_time') sessStart: number,
+        @Body('end_time') sessEnd: number,
+        @Body('maps') sessMaps: number,
+        @Body('results') sessResults: number,
         @Body('code_version') sessCode: string,
         @Body('comment') sessComm: string
     ): any {
         const generatedId = this.sessionsService.saveSession(             
-            sessPart,
+            sessId,
+            sessStart,
+            sessEnd,
+            sessMaps,
+            sessResults,
             sessCode,
             sessComm
         );
@@ -34,11 +42,14 @@ export class SessionController{
     @Patch(':id')
     async updateProduct(
         @Param('id') sessId: string,
-        @Body('participant') sessPart: number,
+        @Body('start_time') sessStart: number,
+        @Body('end_time') sessEnd: number,
+        @Body('maps') sessMaps: number,
+        @Body('results') sessResults: number,
         @Body('code_version') sessCode: string,
         @Body('comment') sessComm: string,
     ) {
-        this.sessionsService.updateSession(sessId, sessPart, sessCode, sessComm);
+        this.sessionsService.updateSession(sessId, sessStart, sessEnd, sessMaps, sessResults, sessCode, sessComm);
         return "Updated"
     }    
 

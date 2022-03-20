@@ -19,7 +19,7 @@
 
   <body>
     <!-- welcome -->
-    <div class="container welcome">
+    <div id= "welcome" class="container welcome">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Consent -->
-    <div class="container consent">
+    <div id="consent" class="container consent">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
@@ -219,20 +219,15 @@
     </div>
 
 
-    <div class="container instructions">
+    <div class="container instructions-1">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
                 <h1>Instructions</h1>                
-                <p>In every trial, you will see a grid which consists of 28 rectangles in total. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
+                <p>In every trial, you will see a grid which consists of several rectangles. Your position on the grid will be indicated with a blue dot. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:</p>
                 <div class="instructions_img">
-                    <img  id="instructions_grid_pic" src=js/utils/pics/instructions_grid.png>
+                    <img  class="mx-auto d-block" id="instructions_grid_pic" src=js/utils/pics/instructions_grid.png>
                 </div>
-                <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow frame. If you wait for a second, the color of the frame will be darker yellow and the selection will be made. If you would like to change your selection, you can press on another arrow key before the time to process is completed. If your selection is valid, then the background will flash green. If your selection is not valid, the background will flash red and you will need to reselect the tile.</p>
-                <p>Each time you select your move, there will be some probability of falling off from the row. You are required to reach end point without falling off the grid. Additionally, you should avoid the red tile.</p>
-                <p>After you reach the end point or fail, a new trial will start.</p>
-                <p>The first 10 trials will be practice trials to familiarize you with the experiment.</p>                
-                <p>Good luck, and thank you for participating</p>
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -241,7 +236,7 @@
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
-                <div id="next-button-instructions" class='custom-button custom-button_enabled'>
+                <div id="next-button-instructions-1" class='custom-button custom-button_enabled'>
                     Next
                 </div>
             </div>
@@ -249,7 +244,61 @@
         </div>
     </div>
 
-    <div class="container instructions-obstacle">
+    <div class="container instructions-2">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Instructions</h1>                                
+                <div class="instructions_img">
+                    <img  id="instructions_grid_gif" src=js/utils/pics/instructions_highlight.gif width="250">
+                </div>
+                <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow color. If you wait for a second, the color of the frame will turn to orange and your selection will be processed.</p>
+                <p>You need to wait for your move to be processed to initiate another move.</p>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-instructions-2" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+
+    <div class="container instructions-3">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Instructions</h1>                                
+                <div class="instructions_img">
+                    <img  id="instructions_grid_3" src=js/utils/pics/instructions_grid.png width="250">
+                </div>                
+                <p>Each time you select your move, there will be some probability of moving to the other surrounding tiles.</p>
+                <p>After you reach the end, a new trial will start.</p>
+                <p>You should reach your target in 20 moves. Otherwise, the trial will be terminated.</p>
+                <p>The first 10 trials will be practice trials to familiarize you with the experiment. Click on the Next button to start practice trials.</p>                
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id="next-button-instructions-3" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+    
+    <div class="container instructions-4">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
@@ -268,7 +317,7 @@
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">
-                <div id="next-button-instructions-2" class='custom-button custom-button_enabled'>
+                <div id="next-button-instructions-4" class='custom-button custom-button_enabled'>
                     Next
                 </div>
             </div>

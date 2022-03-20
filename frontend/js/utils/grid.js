@@ -1,16 +1,15 @@
-import { load_config, load_grid } from "./module.js";
+import { load_grid, loadSessionInfo } from "./module.js";
 
-//const API_URL = "http://127.0.0.1:5502/backend"
 const API_URL = "http://134.76.24.103/node"
 
 
 const keyboardWorld = [[0,1,0],
 					  [1,1,1]];
 
-var background_color = "white";  
 
-var max_n_moves = 20;
-window.max_n_moves = max_n_moves;
+// config settings
+var cellSize = 60;
+var padding = 3;
 
 function updateMatrix(y, x, val) {
 	matrix[y][x] = val;
@@ -71,54 +70,71 @@ function renderKeyboard() {
 	
 }
 	
-function render() {
+function render() {	
 	const w = ( cellSize +  padding) *  matrix[0].length - ( padding);
 	const h = ( cellSize +  padding) *  matrix.length - ( padding);
 		
-	var cellSize = 60;
 	// Color every cell in the grid
 	for (let row = 0; row <  matrix.length; row ++) {
 		for (let col = 0; col <  matrix[row].length; col ++) {
 			const cellVal =  matrix[row][col];
 			let color = "gray"; // cell colors						
 			
-			// If the matrix value is 1, put red. If 2, yellow for the player. 4 for target cell
-			if (cellVal === 1) {
-				color = "red";				
+			// If the matrix value is 1, generate tiles. 
+			// If 2, generate obstacles. 
+			// 3 highlights the location of the player
+			// 4 indicates that the move is in the process 
+			// 5 for target cell
+			if (cellVal === 0 ) {
+				color = 'white';
+			} else if (cellVal == 1){
+				color = 'gray';
 			} else if (cellVal === 2) {
-				color =  player.color;
+				color = "red";		
+				drawFlames(gridContext, col, row, cellSize, padding);
 			} else if (cellVal === 3) {
-				color = "#d8c627"				
+				color =  player.color;		
 			} else if (cellVal === 4) {
-				color = "green"						
+				color = "#d8c627";										
+			} else if (cellVal === 5) {
+				color = "green"					
+				drawDoor(gridContext, col, row, cellSize, padding);							
 			}								
+
 
 			gridContext.fillStyle = color;
 			gridContext.fillRect(col * ( cellSize +  padding),
 				row * ( cellSize +  padding),
 				cellSize,  cellSize);
-			
-			if (cellVal === 1) {
-				drawFlames(gridContext, col, row, cellSize, padding);
-			} else if (cellVal == 4){
-				drawDoor(gridContext, col, row, cellSize, padding);	
-			}
-			
 
-			// Draw borders
-			gridContext.rect(col * ( cellSize +  padding),
-				row * ( cellSize +  padding),
-				cellSize,  cellSize);			
-				gridContext.stroke();
-
+			
+			/*
 			gridContext.lineWidth = 1;
 			gridContext.strokeStyle="#000000";
 			gridContext.stroke()										
-		}				
-	}
+			
 
-	gridContext.font = "10px";
-	gridContext.fillStyle = "white";	
+		
+
+			// Draw borders
+			if (cellVal > 0) {
+				gridContext.rect(col * ( cellSize +  padding),
+					row * ( cellSize +  padding),
+					cellSize,  cellSize);			
+					gridContext.stroke();	
+				// Draw images on tiles
+				if (cellVal === 2) {
+					drawFlames(gridContext, col, row, cellSize, padding);
+				} else if (cellVal === 5){
+					drawDoor(gridContext, col, row, cellSize, padding);	
+				} 
+			} 		
+			*/
+		}	
+
+	}	
+		gridContext.font = "10px";
+		gridContext.fillStyle = "white";				
 }
 
 function Submit_Response(keyPressed, moveDirection) {          	
@@ -129,28 +145,29 @@ function Submit_Response(keyPressed, moveDirection) {
 	let submittedY = player.y;
 	
 	// update the last move
-	var last_move = saveMoveResult(number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection);
+	var last_move = saveMoveResult(session_id, number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection);
 	window.last_move = last_move
 	console.log(last_move);      
 
-	if (number_of_moves <= max_n_moves) {
+	if (number_of_moves <= max_moves) {
 		// Check if the target is reached
-		if (matrix[endLoc.y][endLoc.x] === 2) {                 
+		if (matrix[endLoc.y][endLoc.x] === 3) {                 
 			document.removeEventListener('keydown', movePlayer);
-			setTimeout(function() {
-				Flash_Background_Correct();
+			results.push('1');
+			console.log(results);
+			setTimeout(function() {				
 				$(".grids").slideUp();    					
-				
+				Flash_Background_Correct();	
 				// First round of practice ends
-				if (trial_n === (max_practice+1)) {					
-					$(".instructions-obstacle").slideDown();
+				if (trial_n === (max_practice)) {					
+					$(".instructions-4").slideDown();
 				// Second round of practice ends
-				} else if (trial_n === (1 + (max_practice)*2)) {
+				} else if (trial_n === (max_practice + practice_obstacle)) {
 					$(".practice-end").slideDown(); 					
 				} else {
 					$(".inter-trial").slideDown(); 	 
 				}
-			}, 1000)
+			}, 2000)
 		} else {        		
 			// Start the next move, if the end point is not reached               
 			setTimeout(function(){                     
@@ -158,17 +175,19 @@ function Submit_Response(keyPressed, moveDirection) {
 			}, time_limit);
 		}  
 	} else {
+		results.push('0');
 		$(".grids").slideUp();
 		$(".number-of-moves").slideDown()
 	}               
 }  
 
-function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection){          
+function saveMoveResult(session_id, number_of_moves, response_time, submittedX, submittedY, keyPressed, moveDirection){          
 	// create API call to save building block choice
 	var xhr = new XMLHttpRequest();
 	console.log("Sending API Call to save move choice")
 
 	const saved_response = {
+		"session_id": session_id,
 		"trial_n": trial_n,
 		"move_n": number_of_moves.toString(),                 
 		"response_time": response_time,
@@ -186,33 +205,13 @@ function saveMoveResult(number_of_moves, response_time, submittedX, submittedY, 
 }
 
 function Start_New_Trial() {
+	// Scroll to top and disable further scrolls
 	window.scrollTo(0, 0);
 	disableScroll();
+
 	// Inrease the trial no
 	trial_n +=1;      
 	window.trial_n = trial_n
-
-	// Grid info
-	const gridPractice = [[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0]];
-
-	const gridTrial = [[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0]];
-	
-	
-	var matrix = gridTrial;
-	window.matrix = matrix;
-	
-						
-	// Position of the player
-	var playerX = 0;
-	var playerY = matrix.length-1;
-	var player = { x: playerX, y: playerY, color: "orange" };
-	window.player = player;
 
 
 	var keyboardMatrix = keyboardWorld;
@@ -221,39 +220,50 @@ function Start_New_Trial() {
 	var gridContext = getContext(0, 0, "white");
 	window.gridContext = gridContext;
 
+	//array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+	let array = ['1', '2', '3', '4'];
+	var grid_id = array[Math.floor(Math.random() * array.length)];
 
-	var endLoc = {x: 6, y:3};
-	var startLoc = {x:0, y:3};
-	var obstacleLoc = {x: [2,3,4], y:3}
-		
-
+	
+	// First round of practice trials
+	if (trial_n <= (max_practice)) {
+		// load practice map from the server
+		grid_id = 0;
+		load_grid(grid_id);
+	// Second round of practice trials
+	} else if ((trial_n > max_practice) && (trial_n <= (max_practice + practice_obstacle))) {
+		grid_id = 0;
+		load_grid(grid_id);
+		// Load obstacles 
+		for (var k = 0; k < obstacleLoc.x.length; k++) {
+			updateMatrix(obstacleLoc.y[k], obstacleLoc.x[k], 2);
+		}
+	// Experiment trials
+	} else {
+		load_grid(grid_id);
+		// Load obstacles 
+		for (var k = 0; k < obstacleLoc.x.length; k++) {
+			updateMatrix(obstacleLoc.y[k], obstacleLoc.x[k], 2);
+		}
+	}
+	
+	// Save chosen map id 
+	maps.push(grid_id);
+	
 	// Initiate keyboard controls
-	updateMatrix(player.y,  player.x, 0);	
+	updateMatrix(player.y,  player.x, 3);	
 
 	// Initialize the end point
-	updateMatrix(endLoc.y, endLoc.x,0);
+	updateMatrix(endLoc.y, endLoc.x,1);
 	
 	// Initialize the starting position of the player	
-	updateMatrix(startLoc.y, startLoc.x, 2);
-	player.x = 0;
-	player.y = 3;
+	updateMatrix(startLoc.y, startLoc.x, 3);
+	player.x = startLoc.x;
+	player.y = startLoc.y;
 	
 	// Initialize the end point
-	updateMatrix(endLoc.y, endLoc.x,4);
+	updateMatrix(endLoc.y, endLoc.x,5);
 
-	// Locate the obstacles if the player is not in the practice round
-	if (trial_n === (max_practice+1+1)) {	
-		for( var i = 0; i < obstacleLoc.x.length; i++){
-			updateMatrix(obstacleLoc.y, obstacleLoc.x[i], 1);
-		}
-	} else if (trial_n === (max_practice+1+2)) {
-		let obstacleLoc = {x: [2,3,4], y:[2,3]}
-		for( var k = 0; k < obstacleLoc.y.length; k++){
-			for( var i = 0; i < obstacleLoc.x.length; i++){
-				updateMatrix(obstacleLoc.y[k], obstacleLoc.x[i], 1);
-			}
-		}}
-	
 	// Render the updated locations
 	render();
 	renderKeyboard();
@@ -292,13 +302,13 @@ function Start_New_Move(max_trials, number_of_moves, max_moves) {
 function Flash_Background_Correct() {
 	// Note: jquery-ui necessary to animate colors.
 	$('body').stop().animate({backgroundColor:'#006622'}, 10);	
-	$('body').animate({backgroundColor:background_color}, 1000);
+	$('body').animate({backgroundColor:background_color}, 2000);
 }
 
 function Flash_Background_Incorrect() {
 	// Note: jquery-ui necessary to animate colors.
 	$('body').stop().animate({backgroundColor:'#800000'}, 10);	
-	$('body').animate({backgroundColor:background_color}, 1000);
+	$('body').animate({backgroundColor:background_color}, 2000);
 }
 
 // Put arrow images on keyboard
@@ -358,19 +368,19 @@ Move Player
 
 // if there is no obstacle, and if you are in the grid, you can move
 function isValidMove(x, y) {
-	if ( matrix[ player.y + y][ player.x + x] === 0 ) {
+	if ( matrix[ player.y + y][ player.x + x] === 1 ) {
 		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 1) {
-		setTimeout(function() {
+	} else if (matrix[ player.y + y][ player.x + x] === 2) {		
+		setTimeout(function() {			
 			Flash_Background_Incorrect();	
 			total_loss += 1;
 			$(".grids").slideUp();    
 			$(".lost-page").slideDown(); 		
 			document.removeEventListener('keydown', movePlayer);		
-		}, 1000)		
-		
+		}, 2000)		
+		results.push('-1');
 		return true;
-	} else if (matrix[ player.y + y][ player.x + x] === 4) {
+	} else if (matrix[ player.y + y][ player.x + x] === 5) {
 		return true
 	}
 	return false;	
@@ -408,9 +418,9 @@ var movePlayer = function (e) {
 			if ( isValidMove(-1, 0)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y,  player.x, 1);
 				// Highlight the cell being processed
-				updateMatrix( player.y,  player.x - 1, 3);	
+				updateMatrix( player.y,  player.x - 1, 4);	
 				
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,0,2);
@@ -422,7 +432,7 @@ var movePlayer = function (e) {
 
 				// Render the grid
 				render();
-				updateMatrix( player.y,  player.x -1 , 2);	
+				updateMatrix( player.y,  player.x -1 , 3);	
 				player.x --	
 
 				setTimeout(function(){			
@@ -445,8 +455,8 @@ var movePlayer = function (e) {
 			if ( isValidMove(1, 0)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
-				updateMatrix( player.y,  player.x + 1, 3);
+				updateMatrix( player.y,  player.x, 1);
+				updateMatrix( player.y,  player.x + 1, 4);
 
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,2,2);
@@ -458,7 +468,7 @@ var movePlayer = function (e) {
 
 				// Render the grid
 				render();
-				updateMatrix( player.y,  player.x + 1, 2);
+				updateMatrix( player.y,  player.x + 1, 3);
 				player.x ++;
 
 				setTimeout(function(){
@@ -479,8 +489,8 @@ var movePlayer = function (e) {
 		} else if ((key === 38) && (n_keypress == 0)) { 
 			if ( isValidMove(0, -1)) {
 				n_keypress += 1; 
-				updateMatrix( player.y,  player.x, 0);
-				updateMatrix( player.y - 1,  player.x, 3);
+				updateMatrix( player.y,  player.x, 1);
+				updateMatrix( player.y - 1,  player.x, 4);
 				
 				// Highlight the keyboard
 				updateKeyboardMatrix(0,1,2);
@@ -493,7 +503,7 @@ var movePlayer = function (e) {
 				// Render the grid
 				render();
 				
-				updateMatrix( player.y - 1,  player.x, 2);
+				updateMatrix( player.y - 1,  player.x, 3);
 				player.y --;
 				setTimeout(function(){
 					render();
@@ -514,9 +524,9 @@ var movePlayer = function (e) {
 			if ( isValidMove(0, 1)) {
 				n_keypress += 1; 
 
-				updateMatrix( player.y,  player.x, 0);
+				updateMatrix( player.y,  player.x, 1);
 				// Highlight the target tile as being processed
-				updateMatrix( player.y + 1,  player.x, 3);
+				updateMatrix( player.y + 1,  player.x, 4);
 
 				// Highlight the keyboard
 				updateKeyboardMatrix(1,1,2);
@@ -527,7 +537,7 @@ var movePlayer = function (e) {
 				}, timeLag);
 
 				render();
-				updateMatrix( player.y + 1,  player.x, 2);
+				updateMatrix( player.y + 1,  player.x, 3);
 				player.y ++;
 
 				setTimeout(function(){
@@ -550,7 +560,7 @@ var movePlayer = function (e) {
 			window.player = player;
 
 	} else {
-		alert("Please use only the arrow keys!");
+		//alert("Please use only the arrow keys!");
 	}	
 }
 

@@ -1,4 +1,4 @@
-import { load_config, load_grid, saveSession, saveSessionResult} from './utils/module.js' ;
+import { load_config, load_grid, saveSession, saveSessionResult, loadSessionInfo } from './utils/module.js' ;
 
 import { Start_New_Trial, Start_New_Move } from './utils/grid.js';
 
@@ -16,49 +16,22 @@ $(document).ready(function() {
   // Initialize variables
   load_config();
   saveSession();
-  load_grid();
-
-  var background_color = "white";  
-
-
-
+  loadSessionInfo();
   /*
   ================================================================================
   jQuery Flow
   ================================================================================
   */  
   
+  // Count number of enters
+  var n_enters = 0;    
+  //document.removeEventListener('keydown', movePlayer);
   
-  $(".class").keydown(function(event) { 
-    return false;
+  $("#welcome__button").click(function() {
+    $(".welcome").slideUp();    
+    $(".consent").slideDown();    
   });
   
-
-  // Count number of enters
-  //var i = 0;
-  //window.i = i;
-
-  var welcome_slide = function() {
-    $(".welcome").slideUp();
-    $(".consent").slideDown();
-  }
-
-  $("#welcome__button").click(welcome_slide);
-  $(document).on("keypress", function(){
-    if(event.which == 13) welcome_slide();
-    });
-
-
-  var consent_agree_slide = function() {
-    $(".consent").slideUp();    
-    $(".instructions").slideDown();
-  }
-  
-  $("#consent__button__agree").click(consent_agree_slide);
-  $(document).on("keypress", function(){
-    if ($('.consent').is(':visible') && (event.which == 13)) consent_agree_slide();
-    //if((event.which == 13)) consent_agree_slide();
-    });
 
 
   var consent_disagree_slide = function() {
@@ -73,7 +46,7 @@ $(document).ready(function() {
 
   $("#consent__button__agree").click(function() {
     $(".consent").slideUp();    
-    $(".instructions").slideDown();
+    $(".instructions-1").slideDown();
   });
 
   $("#consent__button__disagree").click(function() {
@@ -87,19 +60,27 @@ $(document).ready(function() {
     });
 
 
+  
+  $("#next-button-instructions-1").click(function() {
+      $(".instructions-1").slideUp();    
+      $(".instructions-2").slideDown();                    
+  });
 
 
+  $("#next-button-instructions-2").click(function() {
+      $(".instructions-2").slideUp();    
+      $(".instructions-3").slideDown();                    
+  });
 
-
-  $("#next-button-instructions").click(function() {
-    $(".instructions").slideUp();    
+  $("#next-button-instructions-3").click(function() {
+    $(".instructions-3").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);        
   });
 
-  $("#next-button-instructions-2").click(function() {
-    $(".instructions-obstacle").slideUp();    
+  $("#next-button-instructions-4").click(function() {
+    $(".instructions-4").slideUp();    
     $(".grids").slideDown();              
     Start_New_Trial();  
     Start_New_Move(max_trials, number_of_moves, max_moves);        
@@ -160,6 +141,29 @@ $(document).ready(function() {
   });
 
 
+  /* KEYBOARD CONTROL
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.welcome').height() > 100 )) {
+      $(".welcome").slideUp();
+      $(".consent").slideDown();      
+    }
+  });
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.consent').height() > 100)) {
+      $(".consent").slideUp();    
+      $(".instructions-1").slideDown();               
+    }    
+  });
+
+  $(document).keyup(function (e) {
+    if ((e.keyCode == 13) &&  ($('.instructions-1').height() > 100)) {
+      $(".instructions-1").slideUp();    
+      $(".instructions-2").slideDown();        
+    }    
+  });
+  */
 })
   
 

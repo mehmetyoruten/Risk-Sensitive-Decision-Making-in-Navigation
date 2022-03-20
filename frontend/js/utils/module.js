@@ -6,8 +6,6 @@ Experiment Settings
 */
 
 const API_URL = "http://134.76.24.103/node"
-//const API_URL = "http://127.0.0.1:5502/backend"
-
 
 /*
 ================================================================================
@@ -24,9 +22,12 @@ function load_config(){
 
             // set number of trials 
             window.time_limit = config["time_limit"];
-
-            // set number of practice trials
+            
+            // set number of practice trials without obstacles
             window.max_practice = config["max_practice"];
+
+            // set number of practice trials with obstacles
+            window.practice_obstacle = config["practice_obstacle"];
 
             // set number of practice trials
             window.max_moves = config["max_moves"];
@@ -46,7 +47,7 @@ function load_config(){
 
             window.timeLag = config["timeLag"];
 
-            window.background_color = config["white"];
+            window.background_color = config["background_color"];
 
         }
     }    
@@ -55,42 +56,55 @@ function load_config(){
     xmlHttp.send(null);    
     
 }
-    
-function load_grid(){      
+
+
+function load_grid(gridId){      
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            const grids = JSON.parse(xmlHttp.responseText);
-            console.log(grids);
-
-            // set gridWorld
-            const gridWorld = grids["gridWorld"];
-            window.gridWorld = gridWorld;
-            
-            // set initialization parameters
-            window.endLoc = grids["endLoc"];
-            window.startLoc = grids["startLoc"];
-            window.obstacleLoc = grids["obstacleLoc"];
-
-            // grid visuals
-            window.cellSize = grids["cellSize"];
-            window.padding = grids["padding"]
-            
-            // set gridWorld for practice
-            const gridTrial = grids["gridPractice"]
-
-            return gridWorld
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp);
         }
-    }    
-    console.log("Loading grid..")
-    xmlHttp.open("GET", API_URL+"/grids", true); // true for asynchronous 
-    xmlHttp.send(null);        
-    
+
+    }            
+    console.log("Loading grid with id: " + gridId + "...");
+    xmlHttp.open("GET", API_URL+"/grids/"+gridId, false); // true for asynchronous 
+    xmlHttp.send(null);                
 }
 
-function saveSession(){
-    let participant = 1337;
+function callback(xmlHttp) {    
+    // it should print grid info
+    const grids = JSON.parse(xmlHttp.responseText);    
+
+    // set gridWorld
+    const gridWorld = grids["gridWorld"];
+    window.matrix = gridWorld;
+    
+    // set initialization parameters
+    window.endLoc = grids["endLoc"];
+    window.startLoc = grids["startLoc"];            
+    window.obstacleLoc = grids["obstacleLoc"];
+
+    // location of the player
+    window.player = grids["player"];          
+
+    console.log(grids)
+}
+
+
+function saveSession(){        
     let code_version = "1"; 
+    
+    let sess_start_time = new Date().getTime();
+
+    // Create empty arrays to save used maps and results of the trials
+    var maps = [];
+    window.maps = maps;
+
+    var results = [];
+    window.results = results;
+    
+    var session_id = Math.random().toString(16).substr(2, 16);
+    window.session_id = session_id;
     
     var xmlHttp = new XMLHttpRequest();
     // create API call to create new session 
@@ -100,16 +114,18 @@ function saveSession(){
             if (xmlHttp.status == 201){
                 // After successful post, receive id of the created trial 
                 var resp = xmlHttp.responseText;
-                let id = parseInt(resp.id);
-                console.log("Received Session Id: "+id); 
+                let id = parseInt(resp.id);                                
             }
         }
     }
 
     // send Post request to API
     var body = JSON.stringify({
-        id: 2000,
-        participant: participant,
+        id: session_id,
+        start_time: sess_start_time,
+        end_time: 0,
+        results: results,
+        maps: maps,
         code_version: code_version,
         comment : 1
         })
@@ -122,16 +138,7 @@ function loadSessionInfo(){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            let session = JSON.parse(xmlHttp.responseText);
-            console.log(session);
-
-            // set number of trials 
-            let session_id = session[0].id;
-            console.log("Session id: " + session_id);
-            
-            window.session_id = session_id;
-
-            return session_id
+        SessionInfo(xmlHttp)         
         }
     }    
     console.log("Loading session info..")
@@ -141,15 +148,27 @@ function loadSessionInfo(){
     
 }
 
-function saveSessionResult(comment){
-    var xhr = new XMLHttpRequest();
+function SessionInfo(xmlHttp){        
+    // Get all the sessions
+    let session = JSON.parse(xmlHttp.responseText);    
 
-    let id = loadSessionInfo();
-    console.log(id)
+    // Declare the current session id
+    //window.session_id = session[session.length - 1].id;
+    console.log("Session id: " + session_id);    
+}
+
+
+function saveSessionResult(comment){
+    let sess_end_time = new Date().getTime();
     
-    xhr.open("PATCH", API_URL+"/sessions/"+id);
+    var xhr = new XMLHttpRequest();
+        
+    xhr.open("PATCH", API_URL+"/sessions/"+session_id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({
+        end_time: sess_end_time,
+        maps: maps,
+        results: results,
         comment: comment
     }));
     }
@@ -186,4 +205,5 @@ export {load_config,
         load_grid,
         saveSession, 
         saveSessionResult, 
-        saveTrial } ;
+        saveTrial,
+        loadSessionInfo } ;

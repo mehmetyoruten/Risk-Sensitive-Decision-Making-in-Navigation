@@ -1,4 +1,5 @@
 export class Move {
+    session_id: string;
     trial_n: number;
     move_n: string;
     response_time: number;

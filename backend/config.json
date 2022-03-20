@@ -1,13 +1,14 @@
 {
-    "time_limit" : 1000,
+    "time_limit" : 1000,    
     "max_practice" : 2,
+    "practice_obstacle": 2,
     "max_moves" : 20,
-    "max_trials" : 5,
+    "max_trials" : 10,
     "max_grids" : 1,
     "trial_n" : 0,
     "number_of_moves" : 0,
     "total_loss": 0,
     "session" : 1,
-    "timeLag": 250,
+    "timeLag": 1000,
     "background_color": "white"
 }
