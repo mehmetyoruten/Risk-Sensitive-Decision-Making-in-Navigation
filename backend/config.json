@@ -3,7 +3,7 @@
     "max_practice" : 2,
     "practice_obstacle": 2,
     "max_moves" : 20,
-    "max_trials" : 10,
+    "max_trials" : 24,
     "max_grids" : 1,
     "trial_n" : 0,
     "number_of_moves" : 0,

@@ -220,19 +220,20 @@ function Start_New_Trial() {
 	var gridContext = getContext(0, 0, "white");
 	window.gridContext = gridContext;
 
-	//array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-	let array = ['1', '2', '3', '4'];
-	var grid_id = array[Math.floor(Math.random() * array.length)];
+	let array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];	
+	var grid_id = 0;
+	// To randomize
+	//var grid_id = array[Math.floor(Math.random() * array.length)];
 
 	
 	// First round of practice trials
 	if (trial_n <= (max_practice)) {
 		// load practice map from the server
-		grid_id = 0;
+		//grid_id = 0;
 		load_grid(grid_id);
 	// Second round of practice trials
 	} else if ((trial_n > max_practice) && (trial_n <= (max_practice + practice_obstacle))) {
-		grid_id = 0;
+		//grid_id = 0;
 		load_grid(grid_id);
 		// Load obstacles 
 		for (var k = 0; k < obstacleLoc.x.length; k++) {
@@ -240,6 +241,7 @@ function Start_New_Trial() {
 		}
 	// Experiment trials
 	} else {
+		grid_id = array[(trial_n-(max_practice+practice_obstacle)-1)]
 		load_grid(grid_id);
 		// Load obstacles 
 		for (var k = 0; k < obstacleLoc.x.length; k++) {
@@ -290,9 +292,7 @@ function Start_New_Move(max_trials, number_of_moves, max_moves) {
 		document.removeEventListener('keydown', movePlayer);
 		$(".grids").slideUp();
 		$(".session-end").slideDown();        
-		
-		// Send session info to server        
-		// saveSessionResult("0");     		 
+				 
 	}
 
 	number_of_moves += 1;	
