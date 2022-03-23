@@ -17,11 +17,14 @@ $(document).ready(function() {
 
 
 const API_URL = "http://134.76.24.103/node"
+const ENTRY_CORRECT_ANSWERS_NEEDED = 3;
 
 // Initialize variables
 load_config();
 saveSession();
 loadSessionInfo();
+
+
 /*
 ================================================================================
 jQuery Flow
@@ -76,9 +79,7 @@ $("#next-button-instructions-2").click(function() {
 
 $("#next-button-instructions-3").click(function() {
   $(".instructions-3").slideUp();    
-  $(".grids").slideDown();              
-  Start_New_Trial();  
-  Start_New_Move(max_trials, number_of_moves, max_moves);        
+  $(".entry-quiz").slideDown();              
 });
 
 $("#next-button-instructions-4").click(function() {
@@ -87,6 +88,49 @@ $("#next-button-instructions-4").click(function() {
   Start_New_Trial();  
   Start_New_Move(max_trials, number_of_moves, max_moves);        
 });
+
+$("#entry_quiz_submit").click(function () {
+  var inputs = document.getElementsByTagName('input');
+  var num_correct = 0; 
+  var num_checked = 0; 
+
+  for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].name.startsWith("entry")){
+          if (inputs[i].value === "correct" && inputs[i].checked){
+              num_correct++; 
+          }
+          if(inputs[i].type === "radio" && inputs[i].checked){
+             num_checked++; 
+          }
+      }
+  }
+
+  // check if all questions are answered
+  if (num_checked < 3 ) {
+      alert("Please answer all of the questions");
+      return;
+  }
+  else{
+      for (var i = 0; i < inputs.length; i++) {
+          inputs[i].checked = false;
+      }
+  }
+
+  // check if passed
+  if (num_correct >= ENTRY_CORRECT_ANSWERS_NEEDED){
+      //passed!      
+      $(".entry-quiz").slideUp();
+      $(".grids").slideDown();              
+      Start_New_Trial();  
+      Start_New_Move(max_trials, number_of_moves, max_moves);                  
+  }
+  else{
+      //not passed
+      alert("Quiz failed"); 
+      $(".entry-quiz").slideUp();
+      $(".begin-content").slideDown();
+  }
+})
 
 
 $("#next-button-trials").click(function() {
@@ -128,7 +172,30 @@ $("#session-end-button").click(function() {
     
 $("#finish-button").click(function() {
   $(".debriefing").slideUp();   
-  $(".comment").slideDown();
+  $(".personality-quiz").slideDown();
+});
+
+
+$("#personality_quiz_submit").click(function() {  
+
+  var pers_answers = [];
+
+  for (var i=1, iLen=21; i<iLen; i++) {
+    var answer = $('input:radio[name=q' + String(i) + ']:checked').val();    
+    pers_answers.push(answer);    
+  } 
+
+  if (pers_answers.indexOf(undefined) !== -1) {
+    alert('Please answer all the questions!')
+  } else {
+    $(".personality-quiz").slideUp();   
+    $(".comment").slideDown();
+  }
+
+  window.questionnaire = pers_answers;
+    
+
+  
 });
 
 // Add commment section
@@ -139,11 +206,14 @@ $("#submit-button").click(function() {
   $('#submit-button').addClass('custom-button_disabled');
   $('#submit-button').off('click');
   
-  saveSessionResult(comment);
+  saveSessionResult(comment, questionnaire);
 });
 
 
-/* KEYBOARD CONTROL
+/* 
+================================================================================
+Keyboard Control
+================================================================================
 */
 
 window.onload = function() {
@@ -209,6 +279,14 @@ window.onload = function() {
   });  
 
   $(document).keyup(function (e) {
+    if ((e.keyCode == 13) && ($('.entry-quiz').is(":visible"))) {      
+      setTimeout(function(){
+        $("#entry_quiz_submit").click();
+      }, delay)      
+    }    
+  });  
+
+  $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.instructions-4').is(":visible")) &&  (results.length == max_practice) ) {      
       $("#next-button-instructions-4").click();      
     }    
@@ -243,16 +321,19 @@ window.onload = function() {
   });  
 
   $(document).keyup(function (e) {
-    if ((e.keyCode == 13) && ($('.session-end').is(":visible")) ) {            
-      $("#session-end-button").click();
+    if ((e.keyCode == 13) && ($('.session-end').is(":visible")) ) {      
+      setTimeout(function(){      
+        $("#session-end-button").click();
+      }, delay);
     }    
   });  
 
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.debriefing').is(":visible")) ) {            
-      $("#finish-button").click();
+      setTimeout(function(){
+        $("#finish-button").click();
+      }, delay);
     }    
-  });  
-
+  });    
 }
 

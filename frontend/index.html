@@ -182,7 +182,7 @@
             <div class="col-xs-9 col-md-9">
                 <h1>You Lost!</h1>    
                 <p>You dropped into the lava pit.</p>
-                <p>Click next to proceed to next trial</p>            
+                <p>Click the button or press Enter to proceed to next trial</p>            
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -203,7 +203,7 @@
             <div class="col-xs-9 col-md-9">
                 <h1>Maximum number of moves was reached!</h1>    
                 <p>You cannot perform further moves</p>
-                <p>Click next to proceed to next trial</p>            
+                <p>Click the button or press Enter to proceed to next trial</p>            
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-
+    <!-- Instructions-->
     <div class="container instructions-1">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
@@ -250,7 +250,7 @@
             <div class="col-xs-9 col-md-9">
                 <h1>Instructions</h1>                                
                 <div class="instructions_img">
-                    <img  id="instructions_grid_gif" src=js/utils/pics/instructions_highlight.gif width="250">
+                    <img  id="instructions_grid_gif" src=js/utils/pics/instructions_highlight.png width="600">
                 </div>
                 <p>When you have selected a tile to move, your selection will be highlighted with a lighter yellow color. If you wait for a second, the color of the frame will turn to orange and your selection will be processed.</p>
                 <p>You need to wait for your move to be processed to initiate another move.</p>
@@ -276,12 +276,12 @@
             <div class="col-xs-9 col-md-9">
                 <h1>Instructions</h1>                                
                 <div class="instructions_img">
-                    <img  id="instructions_grid_3" src=js/utils/pics/instructions_grid.png width="250">
+                    <img  id="instructions_grid_3" src=js/utils/pics/instructions_prob.png width="250">
                 </div>                
                 <p>Each time you select your move, there will be some probability of moving to the other surrounding tiles.</p>
                 <p>After you reach the end, a new trial will start.</p>
                 <p>You should reach your target in 20 moves. Otherwise, the trial will be terminated.</p>
-                <p>The first 10 trials will be practice trials to familiarize you with the experiment. Click on the Next button to start practice trials.</p>                
+                <p>The first 4 trials will be practice trials to familiarize you with the experiment. Click the button or press Enter to start practice trials.</p>                
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -325,6 +325,46 @@
         </div>
     </div>
 
+    <!-- Entry Quiz -->
+    <div class="container entry-quiz">
+        <div class="row exp-condition" id="t1">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <h1>Entry Quiz</h1>
+
+                <form id="quiz" method="post" name="buttons" name="quiz" onsubmit="return false">
+
+                    <div class="question">How many tiles does every map contain?</div>
+                    <input id="answer" name="entrygroup1" class = "personality-answer" type="radio" value="wrong"> 12 tiles<br>
+                    <input id="answer" name="entrygroup1" class = "personality-answer" type="radio" value="correct"> There is no fixed size<br>
+                    <input id="answer" name="entrygroup1" class = "personality-answer" type="radio" value="wrong"> 28 tiles
+                    <hr>
+
+                    <div class="question">How many practice trials does the experiment have?</div>
+                    <input id="answer" name="entrygroup2" class = "personality-answer" type="radio" value="correct"> 4<br>
+                    <input id="answer" name="entrygroup2" class = "personality-answer" type="radio" value="wrong"> 5<br>
+                    <input id="answer" name="entrygroup2" class = "personality-answer" type="radio" value="wrong"> 6
+                    <hr>
+
+                    <div class="question">How many moves do you have to reach the final tile?</div>
+                    <input id="answer" name="entrygroup3" class = "personality-answer" type="radio" value="wrong"> 10 moves<br>
+                    <input id="answer" name="entrygroup3" class = "personality-answer" type="radio" value="wrong"> 15 moves<br>
+                    <input id="answer" name="entrygroup3" class = "personality-answer" type="radio" value="correct"> 20 moves
+                    <hr>
+                </form>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id='entry_quiz_submit' class='custom-button custom-button_enabled'> Press Enter to submit the quiz</div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+    </div>
+    
     <div class="container practice-end">
         <div class="row">
             <div class="col-xs-2 col-md-2"></div>
@@ -351,7 +391,7 @@
             <div class="col-xs-2 col-md-2"></div>
             <div class="col-xs-9 col-md-9">        
                 <h1>Trial Ended</h1>                
-                <p>To start next trial, click next:</p>
+                <p>To start next trial, click the button or press Enter:</p>
             </div>
             <div class="col-xs-2 col-md-2"></div>
         </div>
@@ -408,7 +448,203 @@
 
     </div>
 
+     <!-- Personality Quiz -->
+    <div class = "container personality-quiz">
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <table id = personality-quiz-likert class="striped-columns border">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th> <b>Question</b> </th>
+                            <th> <b> &ensp; Not at all &ensp;</b></th>
+                            <th> <b> &ensp; Somewhat &ensp; </b> </th>
+                            <th> <b> &ensp; Moderately so &ensp; </b></th>
+                            <th> <b> &ensp; Very much so &ensp; </b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>I feel calm</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q1"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q1"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q1"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q1"/></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>I feel secure</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q2"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q2"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q2"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q2"/></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>I am tense</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q3"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q3"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q3"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q3"/></td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td>I feel strained</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q4"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q4"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q4"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q4"/></td>
+                        </tr>
 
+                        <tr>
+                            <td>5.</td>
+                            <td>I feel at ease</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q5"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q5"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q5"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q5"/></td>
+                        </tr>
+                        <tr>
+                            <td>6.</td>
+                            <td>I feel upset</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q6"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q6"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q6"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q6"/></td>
+                        </tr>
+                        <tr>
+                            <td>7.</td>
+                            <td>I am presently worrying over possible misfortunes</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q7"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q7"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q7"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q7"/></td>
+                        </tr>
+                        <tr>
+                            <td>8.</td>
+                            <td>I feel satisfied</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q8"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q8"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q8"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q8"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>9.</td>
+                            <td>I feel frightened</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q9"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q9"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q9"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q9"/></td>
+                        </tr>
+                        <tr>
+                            <td>10.</td>
+                            <td>I feel comfortable</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q10"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q10"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q10"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q10"/></td>
+                        </tr>
+                        <tr>
+                            <td>11.</td>
+                            <td>I feel self-confident</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q11"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q11"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q11"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q11"/></td>
+                        </tr>
+                        <tr>
+                            <td>12.</td>
+                            <td>I feel nervous</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q12"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q12"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q12"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q12"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>13.</td>
+                            <td>I am jittery</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q13"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q13"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q13"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q13"/></td>
+                        </tr>
+                        <tr>
+                            <td>14.</td>
+                            <td>I feel indecisive</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q14"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q14"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q14"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q14"/></td>
+                        </tr>
+                        <tr>
+                            <td>15.</td>
+                            <td>I am relaxed</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q15"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q15"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q15"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q15"/></td>
+                        </tr>
+                        <tr>
+                            <td>16.</td>
+                            <td>I feel content</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q16"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q16"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q16"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q16"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>17.</td>
+                            <td>I am worried</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q17"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q17"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q17"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q17"/></td>
+                        </tr>
+                        <tr>
+                            <td>18.</td>
+                            <td>I feel confused</td>                            
+                            <td><input class = "personality-answer" type="radio" value="1" name="q18"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q18"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q18"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q18"/></td>
+                        </tr>
+                        <tr>
+                            <td>19.</td>
+                            <td>I feel confused</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q19"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q19"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q19"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q19"/></td>
+                        </tr>
+                        <tr>
+                            <td>20.</td>
+                            <td>I feel pleasant</td>
+                            <td><input class = "personality-answer" type="radio" value="1" name="q20"/></td>
+                            <td><input class = "personality-answer" type="radio" value="2" name="q20"/></td>
+                            <td><input class = "personality-answer" type="radio" value="3" name="q20"/></td>
+                            <td><input class = "personality-answer" type="radio" value="4" name="q20"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-9 col-md-9">
+                <div id='personality_quiz_submit' class='custom-button custom-button_enabled'> Click to Submit the Quiz</div>
+            </div>
+            <div class="col-xs-2 col-md-2"></div>
+        </div>                
+
+    </div>
+    
   </body>
 
 </html>
