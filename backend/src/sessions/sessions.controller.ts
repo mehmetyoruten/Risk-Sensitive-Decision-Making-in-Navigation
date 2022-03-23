@@ -14,6 +14,7 @@ export class SessionController{
         @Body('end_time') sessEnd: number,
         @Body('maps') sessMaps: number,
         @Body('results') sessResults: number,
+        @Body('questionnaire') sessQuestionnaire: number,
         @Body('code_version') sessCode: string,
         @Body('comment') sessComm: string
     ): any {
@@ -23,6 +24,7 @@ export class SessionController{
             sessEnd,
             sessMaps,
             sessResults,
+            sessQuestionnaire,
             sessCode,
             sessComm
         );
@@ -46,10 +48,11 @@ export class SessionController{
         @Body('end_time') sessEnd: number,
         @Body('maps') sessMaps: number,
         @Body('results') sessResults: number,
+        @Body('questionnaire') sessQuestionnaire: number,
         @Body('code_version') sessCode: string,
         @Body('comment') sessComm: string,
     ) {
-        this.sessionsService.updateSession(sessId, sessStart, sessEnd, sessMaps, sessResults, sessCode, sessComm);
+        this.sessionsService.updateSession(sessId, sessStart, sessEnd, sessMaps, sessResults, sessQuestionnaire, sessCode, sessComm);
         return "Updated"
     }    
 

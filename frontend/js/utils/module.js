@@ -102,6 +102,9 @@ function saveSession(){
 
     var results = [];
     window.results = results;
+
+    var questionnaire = [];
+    window.questionnaire = questionnaire;
     
     var session_id = Math.random().toString(16).substr(2, 16);
     window.session_id = session_id;
@@ -126,6 +129,7 @@ function saveSession(){
         end_time: 0,
         results: results,
         maps: maps,
+        questionnaire: questionnaire,
         code_version: code_version,
         comment : 1
         })
@@ -158,7 +162,7 @@ function SessionInfo(xmlHttp){
 }
 
 
-function saveSessionResult(comment){
+function saveSessionResult(comment, questionnaire){
     let sess_end_time = new Date().getTime();
     
     var xhr = new XMLHttpRequest();
@@ -169,6 +173,7 @@ function saveSessionResult(comment){
         end_time: sess_end_time,
         maps: maps,
         results: results,
+        questionnaire: questionnaire,
         comment: comment
     }));
     }

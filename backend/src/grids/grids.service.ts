@@ -22,7 +22,7 @@ export class GridService {
     this.grids.push(newGrid);
 
     const fs = require('fs');
-    fs.writeFileSync('grids.json', JSON.stringify(newGrid))
+    fs.writeFileSync('grids.json', JSON.stringify(newGrid, null, 4))
     return gridId;
 
   }

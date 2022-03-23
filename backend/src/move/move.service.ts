@@ -15,7 +15,7 @@ export class MoveService {
         
         // Add new move to the file
         this.moves.push(move);
-        let json = JSON.stringify(this.moves); // Convert object back to JSON
+        let json = JSON.stringify(this.moves, null, 4); // Convert object back to JSON
         let session_id = this.moves[this.moves.length-1].session_id;
         
         fs.writeFile("./moves/" + session_id + ".json", json, 'utf8', (err) => {

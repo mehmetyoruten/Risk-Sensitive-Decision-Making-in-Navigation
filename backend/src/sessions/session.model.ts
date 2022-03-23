@@ -5,6 +5,7 @@ export class Session {
       public end_time: number,
       public maps: number,
       public results: number,
+      public questionnaire: number,
       public code_version: string,      
       public comment: string,
     ) {}
