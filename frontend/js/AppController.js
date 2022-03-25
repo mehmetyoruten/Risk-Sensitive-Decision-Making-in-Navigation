@@ -288,20 +288,26 @@ window.onload = function() {
 
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.instructions-4').is(":visible")) &&  (results.length == max_practice) ) {      
-      $("#next-button-instructions-4").click();      
+      setTimeout(function(){
+      $("#next-button-instructions-4").click();
+      },delay);
     }    
   });  
 
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.inter-trial').is(":visible")) ) {      
-      $("#next-button-trials").click();      
+      setTimeout(function(){
+        $("#next-button-trials").click();      
+      },delay);
     }    
   });  
 
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.lost-page').is(":visible")) ) {      
       // When the participant loses the trial due to the obstacle
-      $("#next-button-lost-trials").click();  
+      setTimeout(function(){
+        $("#next-button-lost-trials").click();  
+      },delay);
     }    
   });  
 
@@ -309,14 +315,18 @@ window.onload = function() {
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.number-of-moves').is(":visible")) ) {      
       // When the maximum number of moves is reached
-      $("#next-button-max-moves").click();
+      setTimeout(function(){
+        $("#next-button-max-moves").click();
+      },delay);
     }    
   });  
 
   $(document).keyup(function (e) {
     if ((e.keyCode == 13) && ($('.practice-end').is(":visible")) ) {      
-      // Practice session ends
-      $("#start-button").click();
+      setTimeout(function(){
+        // Practice session ends
+        $("#start-button").click();
+      },delay);
     }    
   });  
 

@@ -140,13 +140,13 @@ Block: custom-button
 
 
 #gridCanvas {
-  padding: 10px;
+  padding: 7px;
   margin: auto;
-  margin-top: 10px;  
+  margin-top: 7px;  
   margin-left: 5%;  
   display: block;  
   position: relative;   
-  width: 150%;
+  width: 140%;  
 }
 
 #keyboardCanvas {
@@ -154,7 +154,7 @@ Block: custom-button
   margin-left: 40%;
   display: block;  
   position: relative; 
-  width: 60%;
+  width: 50%;
 }
 
 .stop-scrolling {

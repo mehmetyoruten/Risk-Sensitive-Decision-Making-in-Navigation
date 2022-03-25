@@ -160,14 +160,15 @@ function Submit_Response(keyPressed, moveDirection) {
 				Flash_Background_Correct();	
 				// First round of practice ends
 				if (trial_n === (max_practice)) {					
-					$(".instructions-4").slideDown();
+					$(".instructions-4").slideDown();					
 				// Second round of practice ends
 				} else if (trial_n === (max_practice + practice_obstacle)) {
 					$(".practice-end").slideDown(); 					
 				} else {
-					$(".inter-trial").slideDown(); 	 
+					$(".inter-trial").slideDown(); 	 					
 				}
-			}, 2000)
+				enableScroll();
+			}, 1500)
 		} else {        		
 			// Start the next move, if the end point is not reached               
 			setTimeout(function(){                     
@@ -222,6 +223,7 @@ function Start_New_Trial() {
 
 	let array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];	
 	var grid_id = 0;
+	
 	// To randomize
 	//var grid_id = array[Math.floor(Math.random() * array.length)];
 
@@ -377,7 +379,7 @@ function isValidMove(x, y) {
 			$(".grids").slideUp();    
 			$(".lost-page").slideDown(); 		
 			document.removeEventListener('keydown', movePlayer);		
-		}, 2000)		
+		}, 1500)		
 		results.push('-1');
 		return true;
 	} else if (matrix[ player.y + y][ player.x + x] === 5) {
