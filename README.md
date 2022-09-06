@@ -1,6 +1,6 @@
 # Navigation Experiment
 
-In *Investigating Risk-Sensitive Decision Making with Online Experiment*, I coded up an online experiment under the supervision of Dr. Chris Gagne. The task of the participants in this experiment is reaching the target point highlighted in the map. Because each tile has different probability and each map has different obstacle layouts, participants will follow different trajectories depending on the map. 
+In *Investigating Risk-Sensitive Decision Making with Online Experiment* project, I coded up an online experiment under the supervision of Dr. Chris Gagne. The task of the participants in this experiment is reaching the target point highlighted on the map. Because each tile has different probability and each map has different obstacle layouts, participants ahve to follow different trajectories depending on the layout. 
 
 With our experimental paradigm, we are able to measure risk sensitivity in a sequential setting. This online experiment will be used to compare human planning with conditional value-at-risk (CVaR) [^fn][^f2].
 
