@@ -1,8 +1,8 @@
 # Navigation Experiment
 
-We apply different strategies when the outcomes of our decisions are not certain. In order to test this idea, I coded up an online experiment. The task of the participants in this experiment is reaching the target point highlighted in the map. Because each tile has different probability and each map has different obstacle layouts, participants will follow different trajectories depending on the map. 
+In *Investigating Risk-Sensitive Decision Making with Online Experiment*, I coded up an online experiment under the supervision of Dr. Chris Gagne. The task of the participants in this experiment is reaching the target point highlighted in the map. Because each tile has different probability and each map has different obstacle layouts, participants will follow different trajectories depending on the map. 
 
-With our experimental paradigm, we are able to measure risk sensitivity in a sequential setting. This online experiment will be used to compare human planning with conditional value-at-risk (CVaR) [^fn].
+With our experimental paradigm, we are able to measure risk sensitivity in a sequential setting. This online experiment will be used to compare human planning with conditional value-at-risk (CVaR) [^fn][^f2].
 
 ## Instructions
 In every trial, you will see a grid which consists of several rectangles. Your position on the grid will be indicated with an orange square. Your task is reaching the end point using the arrow keys on your keyboard. You can only move to the neighboring tiles. A trial will look like this:
@@ -32,3 +32,4 @@ Try to avoid the lava pits. If you step onto them, you will lose that trial roun
 
 ## References
 [^fn]: Philippe Artzner, Freddy Delbaen, Jean-Marc Eber, and David Heath. Coherent measures of risk. Mathematical finance, 9(3):203–228, 1999.
+[^f2]: Gagne, C., & Dayan, P. (2021). Catastrophe, Compounding & Consistency in Choice. arXiv preprint arXiv:2111.06804.
